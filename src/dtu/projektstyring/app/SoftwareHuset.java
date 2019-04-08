@@ -1,30 +1,30 @@
 package dtu.projektstyring.app;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SoftwareHuset {
 	
-	Udviklingsmedarbejder udviklingsmedarbejdere = new Udviklingsmedarbejder();
-	Projekt projekter = new Projekt();
+	List<Developer> developers = new ArrayList<Developer>();
+	List<Project> projects = new ArrayList<Project>();
 	
-	public void opretProjekt() {
+	public void makeProject() {
 		
 	}
 	
-	public void tilføjAktivitet() {
+	public void addActivity() {
 		
 	}
 	
-	public void fåRapport() {
+	public void getRapport() {
 		
 	}
 	
-	public void sætErProjektLeder() {
+	public void setIsProjektLeader() {
 		
 	}
 	
-	public void registrerTid() {
+	public void registerTime() {
 		
-	}
-	
-	
-	
+	}	
 }
