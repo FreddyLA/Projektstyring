@@ -1,4 +1,4 @@
-$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("use_cases\\test.feature");
+$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("use_cases/test.feature");
 formatter.feature({
   "name": "Cucumber test",
   "description": "\tDescription: Test that cucumber works\n\tActors: me",
