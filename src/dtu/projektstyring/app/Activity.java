@@ -5,12 +5,20 @@ import java.util.Date;
 import java.util.List;
 
 public class Activity {
-	private String name;
+	private String name; //Unique for activities in project
 	private Date startTime;
 	private Date endTime;
 	private double budgetetTime;
 	private List<Developer> developers = new ArrayList<Developer>();
-	private String attachedProject;
+	private Project attachedProject;
+	
+	Activity(Project project, String name, Date startTime, Date endTime, double budgetTime){
+		this.attachedProject = project;
+		this.name = name;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.budgetetTime = budgetTime;
+	}
 	
 	public void registerTime(){
 		
@@ -68,11 +76,11 @@ public class Activity {
 		this.developers.clear();
 	}
 
-	public String getAttachedProject() {
+	public Project getAttachedProject() {
 		return attachedProject;
 	}
 
-	public void setAttachedProject(String attachedProject) {
+	public void setAttachedProject(Project attachedProject) {
 		this.attachedProject = attachedProject;
 	}
 }

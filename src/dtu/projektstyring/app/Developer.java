@@ -2,20 +2,35 @@ package dtu.projektstyring.app;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 public class Developer {
 	private String name;
 	private String initials; //Unique
 	private boolean isProjectLeader;
 	private List<Activity> activities = new ArrayList<Activity>();
+	private List<String> schedule = new ArrayList<String>();
 	
 	public Developer(String name, String initials){
 		this.name = name;
 		this.initials = initials;
 	}
 	
-	public void registerTime() {
-		
+	public void registerSchedule(Date from, Date to, String description) {
+		String temp = from.toString().concat(",").concat(to.toString()).concat(",").concat(description);
+		schedule.add(temp);
+	}
+	
+	public void removeFromSchedule(int index) {
+		schedule.remove(index);
+	}
+	
+	public List<String> getFullSchedule(){
+		return schedule;
+	}
+	
+	public String getSchedule(int index) {
+		return schedule.get(index);
 	}
 
 	public boolean isProjectLeader() {

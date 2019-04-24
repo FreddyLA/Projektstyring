@@ -1,6 +1,7 @@
 package dtu.projektstyring.app;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Project {
 	private String name; //Unique
@@ -10,8 +11,16 @@ public class Project {
 	private Developer projectLeader;
 	private Date startTime;
 
-	Project(){
+	Project(String name, Date date){
+		this.name = name;
+		this.startTime = date;
 		this.projectNumber = projectCounter++;
+	}
+	
+	public void createAndAddActivity(String activityName, Date activityStartTime, Date activityEndTime,
+			double activityBudgetTime) {
+		Activity newActivity = new Activity(this, activityName, activityStartTime, activityEndTime, activityBudgetTime);
+		activities.add(newActivity);
 	}
 	
 	public String getName() {
@@ -30,8 +39,17 @@ public class Project {
 		return activities;
 	}
 
-	public void addActivity(Activity activities) {
-		this.activities.add(activities);
+	public void addActivity(Activity activity) {
+		this.activities.add(activity);
+	}
+	
+	public Activity getActivity(String activityName) {
+		for(Activity a : activities) {
+			if(a.getName().equals(activityName)) {
+				return a;
+			}
+		}
+		return null;
 	}
 	
 	public boolean removeActivity(Activity activity) {
