@@ -1,8 +1,8 @@
-Feature: Registrer tid paa aktivitet, som en udviklingsmedarbejder har hjulpet en anden udviklingsmedarbejder med
-Description: Udviklingsmedarbejder kan registrer tid hos en aktivitet, som man ikke er en del af, hvis en anden udviklingsmedarbejder paa aktiviteten soeger om hjaelp
-Actor: Udviklingsmedarbejder
+Feature: Register time on an activity of which a developemnt worker has helped another development worker with.
+Description: Development workers can register time on an activity, which she is not part of, if another development worker is part of the activity and needs help
+Actor: A development worker
 
-Scenario: Registrer tid paa aktivitet, som en udviklingsmedarbejder har hjulpet en anden udviklingsmedarbejder med
+Scenario: Register time on an activity of which a development worker has helped another development worker, which is part of the activity
 Given a project has been created
 And the project has an activity
 And a development worker is not assigned the activity
@@ -10,7 +10,7 @@ And a different development worker is assigned the activity
 And the worker inputs helping workhours to the activity together with the helped workers initials
 Then the system is updated with the given data 
 
-Scenario: Registrer tid paa aktivitet, som en udviklingsmedarbejder har hjulpet en anden udviklingsmedarbejder med, som den anden udviklingsmedarbejder ikke er en del af
+Scenario: Register time on an activity of which a development worker has helped another development worker, which is NOT part of the project
 Given a project has been created
 And the project has an activity
 And a development worker is not assigned the activity

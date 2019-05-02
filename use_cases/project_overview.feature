@@ -1,15 +1,15 @@
-Feature: Overblik over et projekt
-Description: Projektlederen kan se, hvordan timeforbruget udvikler sig per aktivitet og for hele projektet
-Actor: Projektleder
+Feature: Overview of a project
+Description: The projectleader views the statistics of each activity of a project and of total project
+Actor: Project leader
 
-Scenario: Projektleder tilgaar projekt overblik
+Scenario: Project leader views project overview
 Given a project has been created
 And the project has activities
 And the activities of the project has registrered workhours from assigned development workers
 And the project leader access an overview of the project development
 Then an overview of the project development is presented
 
-Scenario: Udviklingsmedarbejder tilgaar projekt overblik
+Scenario: A development worker attempts to view project overview
 Given a project has been created
 And the project has activities
 And the activities of the project has registrered workhours from assigned development workers

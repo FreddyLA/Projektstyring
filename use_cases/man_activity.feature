@@ -1,22 +1,22 @@
-Feature: Bemanding af aktivitet
-Description: Tilfoej en udviklingsmedarbejder til en aktivitet
-Actor: Projektleder
+Feature: Manning of activities
+Description: Add development workers to an activities
+Actor: Project leader
 
-Scenario: Projekt leder tilfoejer udviklingsmedarbejder til aktivitet
+Scenario: Project leader adds a development worker to an activity
 Given a project has been created
 And a project leader has been selected
 And the project leader creates a new activity with the name "Activity"
 And the project leader adds a development worker to an activity
 Then the development worker has been added to the activity
 
-Scenario: Projekt leder tilfoejer udviklingsmedarbejder til aktivitet, som allerede er sat paa 10 aktiviteter
+Scenario: Project leader attempts to add a development worker, of which is already on 10 activities, to an activity
 Given a project has been created
 And a project leader has been selected
 And the project leader creates a new activity with the name "Activity"
 And the project leader adds a development worker to an activity which is already assigned 10 activities
 Then an error message "Selected development worker already assigned to 10 activities" is presented
 
-Scenario: Udviklingsmedarbejder tilfoejer udviklingsmedarbejder til aktivitet
+Scenario: A development worker attempts to add another developemnt worker to an activity
 Given a project has been created
 And the project has an activity
 And a development worker is assigned the activity

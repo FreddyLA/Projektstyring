@@ -1,8 +1,8 @@
-Feature: Rediger registreret data
-Description: Udviklingsmedarbejder retter hvor meget tid der er brugt paa en aktivitet
-Actor: Udviklingsmedarbejder
+Feature: Edit previously registered data
+Description: Development worker edits previously registered time on an activity
+Actor: Development worker
 
-Scenario: Ret i registreret tid
+Scenario: Editing previously registred time on an activity
 Given a project has been created
 And the project has an activity
 And a development worker is assigned the activity

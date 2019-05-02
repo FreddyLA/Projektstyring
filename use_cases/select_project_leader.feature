@@ -1,6 +1,6 @@
-Feature: Valg af projektleder
-	Description: En projektleder vaelges til et projekt
-	Actors: Udviklingsmedarbejder
+Feature: Choosing a project leader
+	Description: A project leader is chosen for a project
+	Actors: A development worker
 
 Scenario: Choosing project leader
 Given a project has been created

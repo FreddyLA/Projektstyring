@@ -1,15 +1,15 @@
-Feature: Registrering af tid paa aktivitet
-Description: Udviklingsmedarbejder registrer hvor meget tid de har brugt paa en aktivitet
-Actor: Udviklingsmedarbejder
+Feature: Registering time on an activity
+Description: Development workers register daily time used on an activity
+Actor: Development worker
 
-Scenario: Udviklingsmedarbejder registrer tid brugt paa en aktivitet
+Scenario: A development worker registers time spend on an activity
 Given a project has been created
 And the project has an activity
 And a development worker is assigned the activity
 And the development worker inputs amount of hours worked for the day into the system
 Then the system is updated with the given data
 
-Scenario: Registrer tid paa aktivitet, som udviklingsmedarbejderen ikke er paa, eller hjaelper med
+Scenario: Development worker registers time on an activity of which she is not part of or has helped with
 Given a project has been created
 And the project has an activity
 And a development worker is not assigned the activity

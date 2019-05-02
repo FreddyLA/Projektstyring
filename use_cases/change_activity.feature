@@ -1,22 +1,22 @@
-Feature: Aendring af aktivitet
-Description: En projektleder aendrer en aktivitet
-Actor: Projektleder
+Feature: Change activity
+Description: A project leader edits activies
+Actor: Project leader
 
-Scenario: Projekt leder aendrer en aktivitet
+Scenario: Project leader edits an activity
 Given a project has been created
 And a project leader has been selected
 And the project leader creates a new activity with the name "Activity"
 And the project leader edits activity
 Then the activity is changed
 
-Scenario: En udviklingsmedarbejder aendrer en aktivitet
+Scenario: A development worker edits an activity
 Given a project has been created
 And a project leader has been selected
 And the project leader creates a new activity with the name "Activity"
-And a development worker tries to edit an activity
+And a development worker attempts to edit an activity
 Then an error message "Only project leader is allowed to edit activities"
 
-Scenario: projekt leder aendrer sluttidspunkt til at vaere foer starttidspunkt
+Scenario: The project leader changes the deadline to be before the start time
 Given a project has been created
 And a project leader has been selected
 And the project leader creates a new activity with the name "Activity"
