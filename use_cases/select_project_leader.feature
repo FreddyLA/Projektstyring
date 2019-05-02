@@ -13,7 +13,7 @@ And a project leader has been selected
 And the development worker that created the project assigns a development worker to be project leader
 Then an error message "Project leader already assigned" is presented
 
-Scenario: Choose a project leader, which is already a project leader
+Scenario: Choose a project leader which is already a project leader
 Given a project has been created
 And the development worker that created the project assigns a development worker to be project leader
 And the selected development worker already is a project leader for another project
