@@ -2,6 +2,7 @@ package dtu.projektstyring.app;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Project {
 	private String name; //Unique
@@ -38,6 +39,14 @@ public class Project {
 
 	public ArrayList<Activity> getActivities() {
 		return activities;
+	}
+	
+	public void addDeveloperToActivity(Developer developer, Activity activity) {
+		activity.addDeveloper(developer);
+	}
+	
+	public List<Developer> getActivityDevelopers(Activity activity){
+		return activity.getDevelopers();
 	}
 
 	public void addActivity(Activity activity) {

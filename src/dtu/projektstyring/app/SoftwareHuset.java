@@ -90,6 +90,18 @@ public class SoftwareHuset {
 		
 	}
 	
+	public Activity createAndAddActivityToProject(Project project, String activityName, Date activityStartTime, Date activityEndTime, double activityBudgetTime) {
+		return project.createAndAddActivity(activityName, activityStartTime, activityEndTime, activityBudgetTime);
+	}
+	
+	public void addDeveloperToProjectActivity(Developer developer, Project project, Activity activity) {
+		project.addDeveloperToActivity(developer, activity);
+	}
+	
+	public List<Developer> getProjectActivityDevelopers(Project project, Activity activity){
+		return project.getActivityDevelopers(activity);
+	}
+	
 	public List<String> getFullWork(){
 		return work;
 	}

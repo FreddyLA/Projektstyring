@@ -49,15 +49,16 @@ public class RegisterTimeSteps {
 		activityEndTime = new GregorianCalendar(2019, Calendar.JUNE, 11).getTime();
 		activityStartTime = new GregorianCalendar(2019, Calendar.NOVEMBER, 11).getTime();
 		double activityBudgetTime = 99999;
-		activity = project.createAndAddActivity("testActivity", activityStartTime, activityEndTime, activityBudgetTime);
+		activity = softwareHuset.createAndAddActivityToProject(project, "testActivity", activityStartTime, activityEndTime, activityBudgetTime);
 		assertTrue(!project.getActivity("testActivity").equals(null));
 	}
 
 	@Given("a development worker is assigned the activity")
 	public void aDevelopmentWorkerIsAssignedTheActivity() throws Exception {
-	    activity.addDeveloper(helper.getUser());
+		softwareHuset.addDeveloperToProjectActivity(helper.getUser(), project, activity);
+	    //activity.addDeveloper(helper.getUser());
 	    System.out.println(activity.getDevelopers().get(0).getInitials());
-	    assertTrue(!this.activity.getDevelopers().isEmpty());
+	    assertTrue(!softwareHuset.getProjectActivityDevelopers(project, activity).isEmpty());
 	}
 
 	@Given("the development worker inputs amount of hours worked for the day into the system")
