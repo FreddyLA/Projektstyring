@@ -17,10 +17,11 @@ public class Project {
 		this.projectNumber = projectCounter++;
 	}
 	
-	public void createAndAddActivity(String activityName, Date activityStartTime, Date activityEndTime,
+	public Activity createAndAddActivity(String activityName, Date activityStartTime, Date activityEndTime,
 			double activityBudgetTime) {
 		Activity newActivity = new Activity(this, activityName, activityStartTime, activityEndTime, activityBudgetTime);
 		activities.add(newActivity);
+		return newActivity;
 	}
 	
 	public String getName() {

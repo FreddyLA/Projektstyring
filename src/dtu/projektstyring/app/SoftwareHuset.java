@@ -9,15 +9,16 @@ import dtu.projektstyring.app.DateServer;
 
 public class SoftwareHuset {
 	
-	private static List<Developer> developers = new ArrayList<Developer>();
-	private static List<Project> projects = new ArrayList<Project>();
+	private List<Developer> developers = new ArrayList<Developer>();
+	private List<Project> projects = new ArrayList<Project>();
 	private DateServer dateServer = new DateServer();
-	private static List<Project> leaderProjects = new ArrayList<Project>();
-	private static List<String> work = new ArrayList<String>();
-	private static List<String> globalSchedules = new ArrayList<String>();
+	private List<Project> leaderProjects = new ArrayList<Project>();
+	private List<String> work = new ArrayList<String>();
+	private List<String> globalSchedules = new ArrayList<String>();
 	
 	//**********TIL TESTING**********//
-	SoftwareHuset() {
+	public SoftwareHuset() {
+		/*
 		Developer defDev = new Developer("John Doe", "JDO");
 		developers.add(defDev);
 		
@@ -31,6 +32,7 @@ public class SoftwareHuset {
 		Project defProj = new Project("Proj1", Calendar.getInstance().getTime());
 		defProj.setProjectLeader(defDev);
 		projects.add(defProj);
+		*/
 	}
 	//*******************************//
 	
@@ -67,22 +69,30 @@ public class SoftwareHuset {
 		
 	}
 	
+	public Developer getProjectProjectLeader(String name) throws Exception { 
+        Project tmp = getProject(name); 
+        return tmp.getProjectLeader(); 
+    }
+	
 	public void registerTime(Developer developer, int projectNumber, String activityName, int hours) throws Exception {
 		//Developer d = getDeveloper(developerInitials);
 		Date date = Calendar.getInstance().getTime();
 		Project p = getProject(projectNumber);
 		Activity a = p.getActivity(activityName);
+		if(developer == null) throw new Exception("Developer does not exist");
+		else if(p == null) throw new Exception("Specified project does not exist");
+		else if(a == null) throw new Exception("Specified activity of the project does not exist");
 		
-		if(developer != null && p != null && a != null) {
-			if(a.getDevelopers().contains(developer)) {
-				String tmp = developer.getInitials().concat(",").concat(Integer.toString(projectNumber)).concat(",").concat(activityName).concat(",").concat(date.toString()).concat(",").concat(Integer.toString(hours));
-				work.add(tmp);
-			}
-			throw new Exception("Developer is not attached to the activity");
+		if(a.getDevelopers().contains(developer)) {
+			String tmp = developer.getInitials().concat(",").concat(Integer.toString(projectNumber)).concat(",").concat(activityName).concat(",").concat(date.toString()).concat(",").concat(Integer.toString(hours));
+			work.add(tmp);
 		}
 		
-		throw new Exception("Specified project or activity of the project does not exist");
-	}	
+	}
+	
+	public List<String> getFullWork(){
+		return work;
+	}
 	
 	public void setDateServer(DateServer dateServer) {
 		this.dateServer = dateServer;
@@ -113,12 +123,12 @@ public class SoftwareHuset {
 	}
 
 	public void addProject(Project projects) {
-		SoftwareHuset.projects.add(projects);
+		this.projects.add(projects);
 	}
 
 	public boolean removeProject(Project project) {
 		project.removeAllActivities();
-		return SoftwareHuset.projects.remove(project);
+		return this.projects.remove(project);
 	}
 	
 	public List<Developer> getDevelopers() {
@@ -136,16 +146,16 @@ public class SoftwareHuset {
 	}
 	
 	public void addDeveloper(Developer developer) {
-		SoftwareHuset.developers.add(developer);
+		this.developers.add(developer);
 	}
 	
 	public boolean removeDeveloper(Developer developer) {
-		for(Project p: SoftwareHuset.projects) {
+		for(Project p: this.projects) {
 			for(Activity a: p.getActivities()) {
 				a.removeDeveloper(developer);
 			}
 		}
-		return SoftwareHuset.developers.remove(developer);
+		return this.developers.remove(developer);
 	}
 	
 	public void registerDeveloperSchedule(Developer developer, Date from, Date to, String description) {

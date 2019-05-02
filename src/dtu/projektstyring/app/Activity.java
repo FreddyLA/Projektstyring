@@ -60,8 +60,8 @@ public class Activity {
 		return developers;
 	}
 
-	public void addDeveloper(List<Developer> developers) {
-		this.developers = developers;
+	public void addDeveloper(Developer developer) {
+		this.developers.add(developer);
 	}
 	
 	public boolean removeDeveloper(Developer developer) {

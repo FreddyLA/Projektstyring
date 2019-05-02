@@ -17,8 +17,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\change_activity.feature:6)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "a project leader has been selected",
@@ -28,37 +27,31 @@ formatter.match({
   "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
 });
 formatter.result({
-  "status": "skipped"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project leader creates a new activity with the name \"Activity\"",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "the project leader edits activity",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ActivitySteps.theProjectLeaderEditsActivity()"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "the activity is changed",
   "keyword": "Then "
 });
-formatter.match({
-  "location": "ActivitySteps.theActivityIsChanged()"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.scenario({
   "name": "A development worker edits an activity",
@@ -73,8 +66,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\change_activity.feature:13)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "a project leader has been selected",
@@ -84,37 +76,31 @@ formatter.match({
   "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
 });
 formatter.result({
-  "status": "skipped"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project leader creates a new activity with the name \"Activity\"",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "a development worker attempts to edit an activity",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ActivitySteps.aDevelopmentWorkerAttemptsToEditAnActivity()"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
-  "name": "an error message \"Only project leader is allowed to edit activities\" is presented",
+  "name": "an error message \"Only project leader is allowed to edit activities\"",
   "keyword": "Then "
 });
-formatter.match({
-  "location": "ActivitySteps.anErrorMessageIsPresented(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.scenario({
   "name": "The project leader changes the deadline to be before the start time",
@@ -129,8 +115,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\change_activity.feature:20)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "a project leader has been selected",
@@ -140,17 +125,15 @@ formatter.match({
   "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
 });
 formatter.result({
-  "status": "skipped"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project leader creates a new activity with the name \"Activity\"",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.uri("use_cases\\create_activity.feature");
 formatter.feature({
@@ -171,8 +154,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\create_activity.feature:6)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "a project leader has been selected",
@@ -182,27 +164,23 @@ formatter.match({
   "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
 });
 formatter.result({
-  "status": "skipped"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project leader creates a new activity with the name \"Activity\"",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "a new activity with the name \"Activity\" is created",
   "keyword": "Then "
 });
-formatter.match({
-  "location": "ActivitySteps.aNewActivityWithTheNameIsCreated(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.scenario({
   "name": "Creating an activity without being project leader",
@@ -217,28 +195,23 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\create_activity.feature:12)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "a development worker creates an activity for the project",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ActivitySteps.aDevelopmentWorkerCreatesAnActivityForTheProject()"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "an error message \"Only project leaders can create activities\" is presented",
   "keyword": "Then "
 });
-formatter.match({
-  "location": "ActivitySteps.anErrorMessageIsPresented(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.scenario({
   "name": "Create an activity with deadline before start time",
@@ -253,8 +226,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\create_activity.feature:17)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "a project leader has been selected",
@@ -264,47 +236,39 @@ formatter.match({
   "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
 });
 formatter.result({
-  "status": "skipped"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project leader creates a new activity with the name \"Activity\"",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "the project leader assigns a start date to the activity",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ActivitySteps.theProjectLeaderAssignsAStartDateToTheActivity()"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "the project leader assigns a deadline to the activity that is before the assigned start date",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ActivitySteps.theProjectLeaderAssignsADeadlineToTheActivityThatIsBeforeTheAssignedStartDate()"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "an error message \"Deadline cannot be before the assigned start date\" is presented",
   "keyword": "Then "
 });
-formatter.match({
-  "location": "ActivitySteps.anErrorMessageIsPresented(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.uri("use_cases\\create_project.feature");
 formatter.feature({
@@ -321,42 +285,33 @@ formatter.step({
   "name": "a development worker is registered in the system",
   "keyword": "Given "
 });
-formatter.match({
-  "location": "ProjectSteps.aDevelopmentWorkerIsRegisteredInTheSystem()"
-});
+formatter.match({});
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aDevelopmentWorkerIsRegisteredInTheSystem(ProjectSteps.java:24)\r\n\tat ✽.a development worker is registered in the system(use_cases\\create_project.feature:6)\r\n",
-  "status": "pending"
+  "status": "undefined"
 });
 formatter.step({
   "name": "a development worker creates a new project with the name \"New Project\"",
   "keyword": "When "
 });
-formatter.match({
-  "location": "ProjectSteps.aDevelopmentWorkerCreatesANewProjectWithTheName(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "a new project is created with the name \"New Project\"",
   "keyword": "Then "
 });
-formatter.match({
-  "location": "ProjectSteps.aNewProjectIsCreatedWithTheName(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "the project is given a unique number for identification.",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ProjectSteps.theProjectIsGivenAUniqueNumberForIdentification()"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.scenario({
   "name": "Create a project with the same name as a another project",
@@ -367,32 +322,25 @@ formatter.step({
   "name": "a project with the name \"Project 1\" already exists",
   "keyword": "Given "
 });
-formatter.match({
-  "location": "ProjectSteps.aProjectWithTheNameAlreadyExists(String)"
-});
+formatter.match({});
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectWithTheNameAlreadyExists(ProjectSteps.java:48)\r\n\tat ✽.a project with the name \"Project 1\" already exists(use_cases\\create_project.feature:12)\r\n",
-  "status": "pending"
+  "status": "undefined"
 });
 formatter.step({
   "name": "a development worker tries to create a new project with the same name",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ProjectSteps.aDevelopmentWorkerTriesToCreateANewProjectWithTheSameName()"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "an error message \"Project with given name already exists\" is presented",
   "keyword": "Then "
 });
-formatter.match({
-  "location": "ActivitySteps.anErrorMessageIsPresented(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.scenario({
   "name": "Create a project with start time before project creation time",
@@ -403,12 +351,9 @@ formatter.step({
   "name": "a development worker creates a new project",
   "keyword": "Given "
 });
-formatter.match({
-  "location": "ProjectSteps.aDevelopmentWorkerCreatesANewProject()"
-});
+formatter.match({});
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aDevelopmentWorkerCreatesANewProject(ProjectSteps.java:60)\r\n\tat ✽.a development worker creates a new project(use_cases\\create_project.feature:17)\r\n",
-  "status": "pending"
+  "status": "undefined"
 });
 formatter.step({
   "name": "a project leader has been selected",
@@ -424,21 +369,17 @@ formatter.step({
   "name": "the project leader assigns a start date for the project that is before the project creation date",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ProjectSteps.theProjectLeaderAssignsAStartDateForTheProjectThatIsBeforeTheProjectCreationDate()"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "an error message \"Project start date cannot be before the project creation date\" is presented",
   "keyword": "Then "
 });
-formatter.match({
-  "location": "ActivitySteps.anErrorMessageIsPresented(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.uri("use_cases\\edit_registered_data.feature");
 formatter.feature({
@@ -459,32 +400,37 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\edit_registered_data.feature:6)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project has an activity",
   "keyword": "And "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.theProjectHasAnActivity()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.step({
   "name": "a development worker is assigned the activity",
   "keyword": "And "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.aDevelopmentWorkerIsAssignedTheActivity()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.step({
   "name": "the development worker inputs amount of hours worked for the day into the system",
   "keyword": "And "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.theDevelopmentWorkerInputsAmountOfHoursWorkedForTheDayIntoTheSystem()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.step({
   "name": "the development worker edits previously added amount of work hours",
@@ -513,8 +459,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\generate_rappport.feature:6)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project has been worked on",
@@ -553,8 +498,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\generate_rappport.feature:12)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project has been worked on",
@@ -593,8 +537,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\generate_rappport.feature:18)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project has been worked on",
@@ -639,8 +582,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\man_activity.feature:6)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "a project leader has been selected",
@@ -650,17 +592,15 @@ formatter.match({
   "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
 });
 formatter.result({
-  "status": "skipped"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project leader creates a new activity with the name \"Activity\"",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "the project leader adds a development worker to an activity",
@@ -691,8 +631,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\man_activity.feature:13)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "a project leader has been selected",
@@ -702,17 +641,15 @@ formatter.match({
   "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
 });
 formatter.result({
-  "status": "skipped"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project leader creates a new activity with the name \"Activity\"",
   "keyword": "And "
 });
-formatter.match({
-  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.step({
   "name": "the project leader adds a development worker to an activity which is already assigned 10 activities",
@@ -726,11 +663,9 @@ formatter.step({
   "name": "an error message \"Selected development worker already assigned to 10 activities\" is presented",
   "keyword": "Then "
 });
-formatter.match({
-  "location": "ActivitySteps.anErrorMessageIsPresented(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.scenario({
   "name": "A development worker attempts to add another developemnt worker to an activity",
@@ -745,24 +680,27 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\man_activity.feature:20)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project has an activity",
   "keyword": "And "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.theProjectHasAnActivity()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.step({
   "name": "a development worker is assigned the activity",
   "keyword": "And "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.aDevelopmentWorkerIsAssignedTheActivity()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.step({
   "name": "a development worker assigns a new development worker the the activity",
@@ -776,11 +714,9 @@ formatter.step({
   "name": "an error message \"Only project leader can add workers to activity\" is presented",
   "keyword": "Then "
 });
-formatter.match({
-  "location": "ActivitySteps.anErrorMessageIsPresented(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.uri("use_cases\\project_overview.feature");
 formatter.feature({
@@ -801,8 +737,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\project_overview.feature:6)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project has activities",
@@ -849,8 +784,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\project_overview.feature:13)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project has activities",
@@ -903,40 +837,47 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\register_time_on_activity.feature:6)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project has an activity",
   "keyword": "And "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.theProjectHasAnActivity()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.step({
   "name": "a development worker is assigned the activity",
   "keyword": "And "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.aDevelopmentWorkerIsAssignedTheActivity()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.step({
   "name": "the development worker inputs amount of hours worked for the day into the system",
   "keyword": "And "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.theDevelopmentWorkerInputsAmountOfHoursWorkedForTheDayIntoTheSystem()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.step({
   "name": "the system is updated with the given data",
   "keyword": "Then "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.theSystemIsUpdatedWithTheGivenData()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.scenario({
   "name": "Development worker registers time on an activity of which she is not part of or has helped with",
@@ -951,16 +892,17 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\register_time_on_activity.feature:13)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project has an activity",
   "keyword": "And "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.theProjectHasAnActivity()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.step({
   "name": "a development worker is not assigned the activity",
@@ -974,9 +916,11 @@ formatter.step({
   "name": "the development worker inputs amount of hours worked for the day into the system",
   "keyword": "And "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.theDevelopmentWorkerInputsAmountOfHoursWorkedForTheDayIntoTheSystem()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "skipped"
 });
 formatter.step({
   "name": "an error message \"Specified user is not assigned to the activity\"",
@@ -1005,16 +949,17 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\register_time_on_helped_activity.feature:6)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project has an activity",
   "keyword": "And "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.theProjectHasAnActivity()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.step({
   "name": "a development worker is not assigned the activity",
@@ -1044,9 +989,11 @@ formatter.step({
   "name": "the system is updated with the given data",
   "keyword": "Then "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.theSystemIsUpdatedWithTheGivenData()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "skipped"
 });
 formatter.scenario({
   "name": "Register time on an activity of which a development worker has helped another development worker, which is NOT part of the project",
@@ -1061,16 +1008,17 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\register_time_on_helped_activity.feature:14)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the project has an activity",
   "keyword": "And "
 });
-formatter.match({});
+formatter.match({
+  "location": "RegisterTimeSteps.theProjectHasAnActivity()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.step({
   "name": "a development worker is not assigned the activity",
@@ -1187,8 +1135,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\select_project_leader.feature:6)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the development worker that created the project assigns a development worker to be project leader",
@@ -1219,8 +1166,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\select_project_leader.feature:11)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "a project leader has been selected",
@@ -1230,7 +1176,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
 });
 formatter.result({
-  "status": "skipped"
+  "status": "passed"
 });
 formatter.step({
   "name": "the development worker that created the project assigns a development worker to be project leader",
@@ -1244,11 +1190,9 @@ formatter.step({
   "name": "an error message \"Project leader already assigned\" is presented",
   "keyword": "Then "
 });
-formatter.match({
-  "location": "ActivitySteps.anErrorMessageIsPresented(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.scenario({
   "name": "Choose a project leader which is already a project leader",
@@ -1263,8 +1207,7 @@ formatter.match({
   "location": "ProjectSteps.aProjectHasBeenCreated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectSteps.aProjectHasBeenCreated(ProjectSteps.java:12)\r\n\tat ✽.a project has been created(use_cases\\select_project_leader.feature:17)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the development worker that created the project assigns a development worker to be project leader",
@@ -1286,11 +1229,9 @@ formatter.step({
   "name": "an error message \"Selected person already project leader for another project\" is presented",
   "keyword": "Then "
 });
-formatter.match({
-  "location": "ActivitySteps.anErrorMessageIsPresented(String)"
-});
+formatter.match({});
 formatter.result({
-  "status": "skipped"
+  "status": "undefined"
 });
 formatter.uri("use_cases\\test.feature");
 formatter.feature({
