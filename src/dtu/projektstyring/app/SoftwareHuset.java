@@ -6,19 +6,22 @@ import java.util.Date;
 import java.util.List;
 
 import dtu.projektstyring.app.DateServer;
+import dtu.projektstyring.exceptions.DuplicateNameException;
+import dtu.projektstyring.exceptions.NotOnActivityException;
+import dtu.projektstyring.exceptions.NotProjectLeaderException;
 
 public class SoftwareHuset {
 	
-	private List<Developer> developers = new ArrayList<Developer>();
-	private List<Project> projects = new ArrayList<Project>();
+	private List<Developer> developers = new ArrayList<>();
+	private List<Project> projects = new ArrayList<>();
+	private List<Activity> privateActivities = new ArrayList<>();
 	private DateServer dateServer = new DateServer();
-	private List<Project> leaderProjects = new ArrayList<Project>();
-	private List<String> work = new ArrayList<String>();
-	private List<String> globalSchedules = new ArrayList<String>();
+	private List<String> work = new ArrayList<>();
+	private List<String> globalSchedules = new ArrayList<>();
 	
 	//**********TIL TESTING**********//
 	public SoftwareHuset() {
-		/*
+		
 		Developer defDev = new Developer("John Doe", "JDO");
 		developers.add(defDev);
 		
@@ -30,9 +33,18 @@ public class SoftwareHuset {
 		developers.add(newDev);
 		
 		Project defProj = new Project("Proj1", Calendar.getInstance().getTime());
-		defProj.setProjectLeader(defDev);
+		try {
+			defProj.setProjectLeader(defDev);
+		} catch (NotProjectLeaderException e) {
+			e.printStackTrace();
+		}
 		projects.add(defProj);
-		*/
+		
+		Activity vacation = new Activity("Vacation");
+		Activity sickness = new Activity("Sickness");
+		privateActivities.add(vacation);
+		privateActivities.add(sickness);
+		
 	}
 	//*******************************//
 	
@@ -40,7 +52,7 @@ public class SoftwareHuset {
 		if(!projects.isEmpty()) {
 			for(Project p : projects) {
 				if(p.getName().equals(name)) {
-					throw new Exception("Project with specified name already exists.");
+					throw new DuplicateNameException();
 					//return false;
 				}
 			}
@@ -49,6 +61,18 @@ public class SoftwareHuset {
 		newProject.setProjectLeader(dev);
 		projects.add(newProject);
 		return true;
+	}
+	
+	public List<Developer> findAvailableDevelopers(Developer projectLeader, int projectNumber, String activityName) throws Exception {
+		Project p = getProject(projectNumber);
+		Activity a = p.getActivity(activityName);
+		List<Developer> availableDevs = new ArrayList<>();
+		for(Developer d: developers) {
+			if(d.isAvailable(a.getStartTime(), a.getEndTime())) {
+				availableDevs.add(d);
+			}
+		}
+		return availableDevs;
 	}
 	
 	public void addActivityToProject(int projectNum, String activityName, Date activityStartTime, Date activityEndTime, double activityBudgetTime) throws Exception {
@@ -61,12 +85,12 @@ public class SoftwareHuset {
 		p.createAndAddActivity(activityName, activityStartTime, activityEndTime, activityBudgetTime);
 	}
 	
-	public void getRapport() {
-		
-	}
-	
-	public void setIsProjectLeader() {
-		
+	public Rapport getRapport(Developer dev, int projectNumber) throws Exception {
+		Project p = getProject(projectNumber);
+		if(!p.getProjectLeader().equals(dev)) {
+			throw new NotProjectLeaderException();
+		}
+		return new Rapport();
 	}
 	
 	public Developer getProjectProjectLeader(String name) throws Exception { 
@@ -74,7 +98,7 @@ public class SoftwareHuset {
         return tmp.getProjectLeader(); 
     }
 	
-	public void registerTime(Developer developer, int projectNumber, String activityName, int hours) throws Exception {
+	public void registerTime(Developer developer, int projectNumber, String activityName, double hours) throws Exception {
 		//Developer d = getDeveloper(developerInitials);
 		Date date = Calendar.getInstance().getTime();
 		Project p = getProject(projectNumber);
@@ -82,28 +106,60 @@ public class SoftwareHuset {
 		if(developer == null) throw new Exception("Developer does not exist");
 		else if(p == null) throw new Exception("Specified project does not exist");
 		else if(a == null) throw new Exception("Specified activity of the project does not exist");
+		else if(!a.getDevelopers().contains(developer)) throw new NotOnActivityException();
 		
 		if(a.getDevelopers().contains(developer)) {
-			String tmp = developer.getInitials().concat(",").concat(Integer.toString(projectNumber)).concat(",").concat(activityName).concat(",").concat(date.toString()).concat(",").concat(Integer.toString(hours));
-			work.add(tmp);
+			ActivityTime work = new ActivityTime(developer, a, hours);
+			a.registerTime(work);
 		}
-		
+	}
+	
+	public void registerHelpedTime(Developer activityDeveloper, Developer helper, int projectNumber, String activityName, int hours) throws Exception {
+		Project p = getProject(projectNumber);
+		Activity a = p.getActivity(activityName);
+		if(!a.getDevelopers().contains(activityDeveloper)) {
+			throw new NotOnActivityException();
+		}
+		ActivityTime work = new ActivityTime(activityDeveloper, helper, a, hours);
+		a.registerTime(work);
 	}
 	
 	public Activity createAndAddActivityToProject(Project project, String activityName, Date activityStartTime, Date activityEndTime, double activityBudgetTime) {
 		return project.createAndAddActivity(activityName, activityStartTime, activityEndTime, activityBudgetTime);
 	}
 	
-	public void addDeveloperToProjectActivity(Developer developer, Project project, Activity activity) {
-		project.addDeveloperToActivity(developer, activity);
+	public Activity createAndAddActivityToProject(Developer dev, Project project, String activityName) throws NotProjectLeaderException {
+		if(!project.getProjectLeader().equals(dev)) {
+			throw new NotProjectLeaderException();
+		}
+		return project.createAndAddActivity(activityName);
+	}
+	
+	public void addDeveloperToProjectActivity(Developer projectLeader, Developer developer, Project project, Activity activity) throws Exception {
+		project.addDeveloperToActivity(projectLeader,developer, activity);
 	}
 	
 	public List<Developer> getProjectActivityDevelopers(Project project, Activity activity){
 		return project.getActivityDevelopers(activity);
 	}
 	
+	public void registerPrivateTime(Developer dev, String activityName, double hours) {
+		Activity activity = null;
+		for(Activity a: privateActivities) {
+			if(a.getName().matches(activityName)) {
+				activity = a;
+			}
+		}
+		ActivityTime priv = new ActivityTime(dev, activity, hours);
+		activity.registerTime(priv);
+	}
+	
 	public List<String> getFullWork(){
 		return work;
+	}
+	
+	public DateServer getDateServer() {
+		return this.dateServer;
 	}
 	
 	public void setDateServer(DateServer dateServer) {
@@ -120,8 +176,7 @@ public class SoftwareHuset {
 				return p;
 			}
 		}
-		throw new Exception("Project not found");
-		//return null;
+		return null;
 	}
 	
 	public Project getProject(int projectNumber) throws Exception {
@@ -130,8 +185,7 @@ public class SoftwareHuset {
 				return p;
 			}
 		}
-		throw new Exception("Project not found");
-		//return null;
+		return null;
 	}
 
 	public void addProject(Project projects) {
@@ -188,13 +242,16 @@ public class SoftwareHuset {
 	public List<String> getFullPersonelSchedule(){
 		return globalSchedules;
 	}
-	
-	public List<Project> getLeaderProjects(Developer developer){
-		for(Project p : projects) {
-			if(p.getProjectLeader().equals(developer)) {
-				leaderProjects.add(p);
-			}
-		}
-		return leaderProjects;		
+
+	public void setProjectStartTime(Project project, Date time) throws Exception {
+		 project.setStartTime(time);
+	}
+
+	public void setProjectLeader(Project project, Developer developer) throws NotProjectLeaderException {
+		project.setProjectLeader(developer);
+	}
+
+	public void setProjectLeader(Project project, Developer leader, Developer newLeader) throws NotProjectLeaderException {
+		project.setProjectLeader(leader, newLeader);
 	}
 }

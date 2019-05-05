@@ -66,7 +66,7 @@ public class Main {
 		switch(choice) {
 		case "1":
 			System.out.println("ID  |Name\t|Start\t\t\t\t|Activities");
-			for(Project p : sh.getLeaderProjects(d)) {
+			for(Project p : d.getLeaderProjects()) {
 				System.out.print(p.getProjectNumber());
 				System.out.print("   |"+p.getName());
 				System.out.print("\t|"+p.getStartTime());

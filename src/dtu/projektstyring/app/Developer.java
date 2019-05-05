@@ -7,9 +7,10 @@ import java.util.Date;
 public class Developer {
 	private String name;
 	private String initials; //Unique
-	private boolean isProjectLeader;
-	private List<Activity> activities = new ArrayList<Activity>();
-	private List<String> schedule = new ArrayList<String>();
+	private boolean canWorkOn20Activities;
+	private List<Project> leaderOf = new ArrayList<>();
+	private List<Activity> activities = new ArrayList<>();
+	private List<String> schedule = new ArrayList<>();
 	
 	public Developer(String name, String initials){
 		this.name = name;
@@ -19,6 +20,19 @@ public class Developer {
 	public void registerSchedule(Date from, Date to, String description) {
 		String temp = from.toString().concat(",").concat(to.toString()).concat(",").concat(description);
 		schedule.add(temp);
+	}
+	
+	public boolean isAvailable(Date startTime, Date endTime) {
+		int activitiesInTimeFrame = 0;
+		for(Activity a: activities) {
+			if(a.inTimeFrame(startTime, endTime)) {
+				activitiesInTimeFrame++;
+			}
+		}
+		if(activitiesInTimeFrame == 10) {
+			return false;
+		}
+		return true;
 	}
 	
 	public void removeFromSchedule(int index) {
@@ -31,14 +45,6 @@ public class Developer {
 	
 	public String getSchedule(int index) {
 		return schedule.get(index);
-	}
-
-	public boolean isProjectLeader() {
-		return isProjectLeader;
-	}
-
-	public void setProjectLeader(boolean isProjectLeader) {
-		this.isProjectLeader = isProjectLeader;
 	}
 
 	public String getInitials() {
@@ -56,6 +62,10 @@ public class Developer {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public List<Project> getLeaderProjects() {
+		return leaderOf;
+	}
 
 	public List<Activity> getActivities() {
 		return activities;
@@ -63,6 +73,14 @@ public class Developer {
 
 	public void addActivities(Activity activity) {
 		this.activities.add(activity);
+	}
+	
+	public void addLeaderOfProject(Project project) {
+		leaderOf.add(project);
+	}
+	
+	public void removeLeaderOfProject(Project project) {
+		leaderOf.remove(project);
 	}
 	
 	public boolean removeActivity(Activity activity) {

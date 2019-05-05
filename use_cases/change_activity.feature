@@ -2,21 +2,24 @@ Feature: Change activity
 Description: A project leader edits activies
 Actor: Project leader
 
-Scenario: Project leader edits an activity
-Given a project has been created
+Background: A project and an activity exists
+Given a project with the name "Project 1" exists
 And a project leader has been selected
 And the project leader creates a new activity with the name "Activity"
-And the project leader edits activity
-Then the activity is changed
+
+Scenario: Project leader edits an activity's budgettet time
+When the project leader changes budgettet time to 10
+Then the activity's budgettet time is 10
+
+Scenario: Project leader edits an activity's start time
+When the project leader changes the activity's start time
+Then the activity's start time has been changed
 
 Scenario: A development worker edits an activity
-Given a project has been created
-And a project leader has been selected
-And the project leader creates a new activity with the name "Activity"
-And a development worker attempts to edit an activity
-Then an error message "Only project leader is allowed to edit activities"
+When a development worker attempts to edit an activity's budgettet time
+Then an error message "Action for project leader only" is presented
 
-Scenario: The project leader changes the deadline to be before the start time
-Given a project has been created
-And a project leader has been selected
-And the project leader creates a new activity with the name "Activity"
+Scenario: Create an activity with deadline before start time
+When the project leader changes the activity's start time
+And the project leader assigns a deadline to the activity that is before the assigned start date
+Then an error message "Deadline cannot be before the assigned start date" is presented

@@ -1,4 +1,4 @@
-package dtu.projektstyring.acceptance_tests;
+package test_helpers;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

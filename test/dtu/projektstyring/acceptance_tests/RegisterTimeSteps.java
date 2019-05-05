@@ -11,11 +11,13 @@ import java.util.Map;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-
-import dtu.projektstyring.acceptance_tests.ErrorMessageHolder;
-import dtu.projektstyring.acceptance_tests.MockDateHolder;
-import dtu.projektstyring.acceptance_tests.UserHelper;
+import cucumber.api.java.en.When;
 import dtu.projektstyring.app.SoftwareHuset;
+import test_helpers.ActivityHolder;
+import test_helpers.ErrorMessageHolder;
+import test_helpers.MockDateHolder;
+import test_helpers.ProjectHelper;
+import test_helpers.UserHelper;
 import dtu.projektstyring.app.Project;
 import dtu.projektstyring.app.Activity;
 import dtu.projektstyring.app.Developer;
@@ -26,7 +28,7 @@ public class RegisterTimeSteps {
 
 	private Project project;
 	private Activity activity;
-	private Developer developer;
+	private Developer developer, worker, worker2;
 	private ErrorMessageHolder errorMessage;
 	private Date activityEndTime;
 	private Date activityStartTime;
@@ -35,42 +37,50 @@ public class RegisterTimeSteps {
 	
 	private UserHelper helper;
 	private MockDateHolder dateHolder;
+	private ProjectHelper projectHelper;
+	private ActivityHolder activityHolder;
 	
-	public RegisterTimeSteps(SoftwareHuset softwareHuset, ErrorMessageHolder errorMessage, UserHelper helper, MockDateHolder dateHolder) {
+	public RegisterTimeSteps(SoftwareHuset softwareHuset, ErrorMessageHolder errorMessage, 
+			UserHelper helper, MockDateHolder dateHolder, ProjectHelper projectHelper, ActivityHolder activityHolder) {
 		this.softwareHuset = softwareHuset;
 		this.errorMessage = errorMessage;
 		this.helper = helper;
 		this.dateHolder = dateHolder;
+		this.projectHelper = projectHelper;
+		this.activityHolder = activityHolder;
+	}
+
+	@Given("the development worker inputs {int} hours worked on the activity into the system")
+	public void theDevelopmentWorkerInputsAmountOfHoursWorkedForTheDayIntoTheSystem(double hours){
+		activity = activityHolder.getActivity();
+		project = projectHelper.getProject();
+		try {
+			softwareHuset.registerTime(helper.getUser2(), project.getProjectNumber(), activity.getName(), hours);
+		} catch (Exception e) {
+			errorMessage.setErrorMessage(e.getMessage());
+		}
 	}
 	
-	@Given("the project has an activity")
-	public void theProjectHasAnActivity() throws Exception {
-		project = softwareHuset.getProject("test");
-		activityEndTime = new GregorianCalendar(2019, Calendar.JUNE, 11).getTime();
-		activityStartTime = new GregorianCalendar(2019, Calendar.NOVEMBER, 11).getTime();
-		double activityBudgetTime = 99999;
-		activity = softwareHuset.createAndAddActivityToProject(project, "testActivity", activityStartTime, activityEndTime, activityBudgetTime);
-		assertTrue(!project.getActivity("testActivity").equals(null));
-	}
-
-	@Given("a development worker is assigned the activity")
-	public void aDevelopmentWorkerIsAssignedTheActivity() throws Exception {
-		softwareHuset.addDeveloperToProjectActivity(helper.getUser(), project, activity);
-	    //activity.addDeveloper(helper.getUser());
-	    System.out.println(activity.getDevelopers().get(0).getInitials());
-	    assertTrue(!softwareHuset.getProjectActivityDevelopers(project, activity).isEmpty());
-	}
-
-	@Given("the development worker inputs amount of hours worked for the day into the system")
-	public void theDevelopmentWorkerInputsAmountOfHoursWorkedForTheDayIntoTheSystem() throws Exception {
-		int hours = 8;
-		softwareHuset.registerTime(helper.getUser(), project.getProjectNumber(), activity.getName(), hours);
+	@Then("the development worker has worked {int} hours on the activity")
+	public void theSystemIsUpdatedWithTheGivenData(double hours) {
+		assertTrue(activity.getDevWorkTime(helper.getUser2()) == hours);
 	}
 	
-	@Then("the system is updated with the given data")
-	public void theSystemIsUpdatedWithTheGivenData() {
-		System.out.println(softwareHuset.getFullWork().get(0));
-	    assertTrue(!softwareHuset.getFullWork().isEmpty());
+	@Then("the other worker has worked {int} hours on the activity")
+	public void theOtherWorkerHasWorked(double hours) {
+		assertTrue(activity.getDevWorkTime(helper.getUser3()) == hours);
 	}
-
+	
+	@When("the other worker inputs {int} hours to the activity together with the development workers initials")
+	public void theWorkerInputsHelpingWorkhoursToTheActivityTogetherWithTheHelpedWorkersInitials(int hours) {
+		activity = activityHolder.getActivity();
+		project = projectHelper.getProject();
+		worker = helper.getUser2();
+		worker2 = helper.getUser3();
+		try {
+			softwareHuset.registerHelpedTime(worker, worker2, project.getProjectNumber(), activity.getName(), hours);
+		} catch (Exception e) {
+			errorMessage.setErrorMessage(e.getMessage());
+		}
+	}
 }
