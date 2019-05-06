@@ -103,16 +103,6 @@ public class ProjectSteps {
     public void anErrorMessageIsPresented(String string) {
         assertTrue(errorMessage.getErrorMessage().matches(string));
     }
-
-    @When("a development worker generates a project development rapport of a project")
-    public void aDevelopmentWorkerGeneratesAProjectDevelopmentRapportOfAProject() {
-        worker2 = userHelper.getUser2();
-        try {
-			softwareHuset.getRapport(worker2, project.getProjectNumber());
-		} catch (Exception e) {
-			errorMessage.setErrorMessage(e.getMessage());
-		}
-    }
     
     @When("the development worker assigns a development worker to be project leader")
     public void theDevelopmentWorkerThatCreatedTheProjectAssignsADevelopmentWorkerToBeProjectLeader() {
