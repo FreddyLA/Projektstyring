@@ -56,7 +56,7 @@ public class SoftwareHuset {
 				}
 			}
 		}
-		Project newProject = new Project(projectName, dateServer.getDate(), this);
+		Project newProject = new Project(projectName, dateServer.getDate().get(Calendar.WEEK_OF_YEAR), this);
 		projects.add(newProject);
 	}
 	
@@ -75,17 +75,7 @@ public class SoftwareHuset {
 		}
 		return availableDevs;
 	}
-	
-//	public void addActivityToProject(int projectNum, String activityName, Calendar activityStartTime, Calendar activityEndTime, double activityBudgetTime) throws Exception {
-//		Project p = getProject(projectNum);
-//		p.createAndAddActivity(activityName, activityStartTime, activityEndTime, activityBudgetTime);
-//	}
-//	
-//	public void addActivityToProject(String projectName, String activityName, Calendar activityStartTime, Calendar activityEndTime, double activityBudgetTime) throws Exception {
-//		Project p = getProject(projectName);
-//		p.createAndAddActivity(activityName, activityStartTime, activityEndTime, activityBudgetTime);
-//	}
-	
+
 	public void getRapport(Developer developer, int projectNumber) throws Exception {
 		Project project = getProject(projectNumber);
 		if(!project.getProjectLeader().equals(developer)) {
@@ -100,7 +90,6 @@ public class SoftwareHuset {
     }
 	
 	public void registerTime(Developer developer, int projectNumber, String activityName, double hours) throws Exception {
-		//Developer d = getDeveloper(developerInitials);
 		Project project = getProject(projectNumber);
 		Activity activity = project.getActivity(activityName);
 		if(developer == null) throw new Exception("Developer does not exist");
@@ -126,10 +115,6 @@ public class SoftwareHuset {
 																activity, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
 		activity.registerTime(work);
 	}
-	
-//	public Activity createAndAddActivityToProject(Project project, String activityName, Calendar activityStartTime, Calendar activityEndTime, double activityBudgetTime) {
-//		return project.createAndAddActivity(activityName, activityStartTime, activityEndTime, activityBudgetTime);
-//	}
 	
 	public void createAndAddActivityToProject(Developer developer, String projectName, String activityName) throws Exception {
 		Project project = getProject(projectName);
@@ -233,7 +218,7 @@ public class SoftwareHuset {
 		return this.developers.remove(developer);
 	}
 
-	public void setProjectStartTime(Project project, Calendar time) throws Exception {
+	public void setProjectStartTime(Project project, int time) throws Exception {
 		 project.setStartTime(time);
 	}
 

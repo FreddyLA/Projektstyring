@@ -943,17 +943,22 @@ formatter.step({
   "name": "the project leader generates a project development rapport of the project of which the project leader is the project leader of",
   "keyword": "When "
 });
-formatter.match({});
+formatter.match({
+  "location": "GenerateRapportSteps.theProjectLeaderGeneratesAProjectDevelopmentRapportOfTheProjectOfWhichTheProjectLeaderIsTheProjectLeaderOf()"
+});
 formatter.result({
-  "status": "undefined"
+  "status": "passed"
 });
 formatter.step({
-  "name": "the generated development rapport is generated",
+  "name": "the development rapport is generated",
   "keyword": "Then "
 });
-formatter.match({});
+formatter.match({
+  "location": "GenerateRapportSteps.theGeneratedDevelopmentRapportIsGenerated()"
+});
 formatter.result({
-  "status": "undefined"
+  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.GenerateRapportSteps.theGeneratedDevelopmentRapportIsGenerated(GenerateRapportSteps.java:55)\r\n\tat ✽.the development rapport is generated(use_cases\\generate_rappport.feature:12)\r\n",
+  "status": "pending"
 });
 formatter.background({
   "name": "A project and an activity exists",

@@ -96,6 +96,14 @@ public class Activity {
 		developer.addActivity(this);
 	}
 	
+	public double getTotalWorkHours() {
+		double totalWorkHours = 0;
+		for(DeveloperActivityTime work: totalWork) {
+			totalWorkHours += work.getTimeSpent();
+		}
+		return totalWorkHours;
+	}
+	
 	public boolean removeDeveloper(Developer developer) {
 		developer.removeActivity(this);
 		return this.developers.remove(developer);
@@ -106,6 +114,10 @@ public class Activity {
 			d.removeActivity(this);
 		}
 		this.developers.clear();
+	}
+	
+	public String toString() {
+		return "Name: " + activityName + " Budgeted time: " + budgetedTime + " Time spent: " + getTotalWorkHours();
 	}
 	
 	//Developer registers an amount of work on an activity

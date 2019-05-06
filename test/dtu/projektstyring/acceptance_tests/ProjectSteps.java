@@ -49,7 +49,7 @@ public class ProjectSteps {
 		prevDate.add(Calendar.DAY_OF_YEAR, -8);
 		assertTrue(prevDate.get(Calendar.WEEK_OF_YEAR) < project.getCreationTime());
 		try {
-			softwareHuset.setProjectStartTime(project, prevDate);
+			softwareHuset.setProjectStartTime(project, prevDate.get(Calendar.WEEK_OF_YEAR));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -127,11 +127,6 @@ public class ProjectSteps {
     @Then("the selected development worker is made leader of the project")
     public void theSelectedDevelopmentWorkerIsMadeLeaderOfTheProject() {
         assertTrue(project.getProjectLeader().equals(worker2));
-    }
-    
-    @Given("a development worker is the leader of the project")
-    public void aDevelopmentWorkerIsTheLeaderOfTheProject() {
-        assertTrue(project.getProjectLeader().equals(worker));
     }
     
     @Given("a development worker is not the leader of the project")

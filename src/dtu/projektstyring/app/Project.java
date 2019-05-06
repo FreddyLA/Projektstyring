@@ -1,7 +1,6 @@
 package dtu.projektstyring.app;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import dtu.projektstyring.exceptions.CreationDateException;
@@ -13,10 +12,10 @@ public class Project {
 	private int projectNumber; //Unique
 	private ArrayList<Activity> activities = new ArrayList<>();
 	private Developer projectLeader;
-	private Calendar startTime, creationTime;
+	private int startTime, creationTime;
 	private SoftwareHuset softwareHuset;
 
-	public Project(String projectName, Calendar creationTime, SoftwareHuset softwareHuset){
+	public Project(String projectName, int creationTime, SoftwareHuset softwareHuset){
 		this.projectName = projectName;
 		this.creationTime = creationTime;
 		this.projectNumber = projectCounter++;
@@ -24,15 +23,15 @@ public class Project {
 	}
 	
 	public void getReport() {
-		System.out.println("Report for project "+ projectName);
+		System.out.println("Report for project: " + projectName);
 		
-		System.out.println("Projectnumber: "+projectNumber);
-		System.out.println("Projectleader: "+projectLeader.getInitials());
-		System.out.println("Starttime: "+startTime);
+		System.out.println("Projectnumber: " + projectNumber);
+		System.out.println("Projectleader: " + projectLeader.getInitials());
+		System.out.println("Starttime: " + startTime);
 		
 		System.out.println("Activities: ");
 		for(Activity activity : activities) {
-			System.out.println(activity.getName());
+			System.out.println("\t" + activity);
 		}
 	}
 	
@@ -115,18 +114,18 @@ public class Project {
 	}
 	
 	public int getStartTime() {
-		return startTime.get(Calendar.WEEK_OF_YEAR);
+		return startTime;
 	}
 	
-	public void setStartTime(Calendar startTime) throws Exception {
-		if(startTime.before(creationTime)) {
+	public void setStartTime(int startTime) throws Exception {
+		if(startTime < creationTime) {
 			throw new CreationDateException();
 		}
 		this.startTime = startTime;
 	}
 	
 	public int getCreationTime() {
-		return creationTime.get(Calendar.WEEK_OF_YEAR);
+		return creationTime;
 	}
 	
 	public int getProjectNumber() {
