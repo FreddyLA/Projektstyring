@@ -6,8 +6,10 @@ import java.util.List;
 
 import dtu.projektstyring.app.DateServer;
 import dtu.projektstyring.exceptions.DuplicateNameException;
+import dtu.projektstyring.exceptions.MissingDateException;
 import dtu.projektstyring.exceptions.NotOnActivityException;
 import dtu.projektstyring.exceptions.NotProjectLeaderException;
+import dtu.projektstyring.exceptions.StartDateException;
 
 public class SoftwareHuset {
 	
@@ -62,6 +64,9 @@ public class SoftwareHuset {
 	public List<Developer> findAvailableDevelopers(int projectNumber, String activityName) throws Exception {
 		Project project = getProject(projectNumber);
 		Activity activity = project.getActivity(activityName);
+		if(activity.getStartTime() == 0) {
+			throw new MissingDateException();
+		}
 		List<Developer> availableDevs = new ArrayList<>();
 		for(Developer developer: developers) {
 			if(developer.isAvailable(activity.getStartTime(), activity.getEndTime())) {
@@ -104,7 +109,7 @@ public class SoftwareHuset {
 		else if(!activity.getDevelopers().contains(developer)) throw new NotOnActivityException();
 		
 		if(activity.getDevelopers().contains(developer)) {
-			DeveloperActivityTime work = new DeveloperActivityTime(developer, activity, hours, dateServer.getDate());
+			DeveloperActivityTime work = new DeveloperActivityTime(developer, activity, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
 			activity.registerTime(work);
 			developer.registerWork(work);
 		}
@@ -118,7 +123,7 @@ public class SoftwareHuset {
 			throw new NotOnActivityException();
 		}
 		DeveloperActivityTime work = new DeveloperActivityTime(activityDeveloper, activityHelper, 
-																activity, hours, dateServer.getDate());
+																activity, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
 		activity.registerTime(work);
 	}
 	
@@ -154,7 +159,7 @@ public class SoftwareHuset {
 				privateActivity = activity;
 			}
 		}
-		DeveloperActivityTime priv = new DeveloperActivityTime(developer, privateActivity, hours, Calendar.getInstance());
+		DeveloperActivityTime priv = new DeveloperActivityTime(developer, privateActivity, hours, Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
 		privateActivity.registerTime(priv);
 	}
 	

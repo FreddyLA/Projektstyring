@@ -27,7 +27,7 @@ public class Developer {
 				activitiesInTimeFrame++;
 			}
 		}
-		if(activitiesInTimeFrame <= 10 && !canWorkOn20Activities) {
+		if(activitiesInTimeFrame >= 10 && !canWorkOn20Activities) {
 			return false;
 		} else if (activitiesInTimeFrame >= 20) {
 			return false;

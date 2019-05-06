@@ -1,33 +1,30 @@
 package dtu.projektstyring.app;
 
-import java.util.Calendar;
-import java.util.Date;
-
 public class DeveloperActivityTime {
 	private Activity attachedActivity;
 	private Developer developer, helperDeveloper; 
-	private Calendar timeStamp; //Day work was performed. Assume work is always registered the day it is performed
+	private int timeStampDay; //Day work was performed. Assume work is always registered the day it is performed
 	private double timeSpent;
 	
 	//Constructer for a developer doing work on an activity
-	public DeveloperActivityTime(Developer developer, Activity attachedActivity, double timeSpent, Calendar timeStamp) {
+	public DeveloperActivityTime(Developer developer, Activity attachedActivity, double timeSpent, int timeStampDay) {
 		this.developer = developer;
 		this.attachedActivity = attachedActivity;
 		this.timeSpent = timeSpent;
-		this.timeStamp = timeStamp;
+		this.timeStampDay = timeStampDay;
 	}
 	
 	//Constructer for a developer getting help on an activity
-	public DeveloperActivityTime(Developer developer, Developer helperDeveloper, Activity attachedActivity, double timeSpent, Calendar timeStamp) {
+	public DeveloperActivityTime(Developer developer, Developer helperDeveloper, Activity attachedActivity, double timeSpent, int timeStampDay) {
 		this.developer = developer;
 		this.helperDeveloper = helperDeveloper;
 		this.attachedActivity = attachedActivity;
 		this.timeSpent = timeSpent;
-		this.timeStamp = timeStamp;
+		this.timeStampDay = timeStampDay;
 	}
 	
 	public int getTimeStamp() {
-		return timeStamp.get(Calendar.DAY_OF_YEAR);
+		return timeStampDay;
 	}
 	
 	public double getTimeSpent() {

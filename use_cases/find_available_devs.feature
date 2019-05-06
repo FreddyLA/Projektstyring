@@ -10,7 +10,7 @@ And the project leader creates a new activity with the name "Activity"
 Scenario: Project leader gets a list of available developers 
 Given the activity has a start date and end date
 And a development worker is available in the given timeperiod
-And another developemnt worker is not available in the given timeperiod
+And a development worker is not available in the given timeperiod
 When the project leader wants a list of available developers
 Then the project leader gets a list of developers, which contains the available development worker
 And the list doesn't contain the unavailable developer
@@ -27,5 +27,6 @@ Then an error message "Activity doesn't have a start/enddate" is presented
 
 Scenario: Project leader wants avilable developers for an activity, but no developers are available
 Given the activity has a start date and end date
-And no developers are available in the given time period
+And a development worker is not available in the given timeperiod
+When the project leader wants a list of available developers
 Then the list doesn't contain any developers

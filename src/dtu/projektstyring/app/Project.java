@@ -43,10 +43,9 @@ public class Project {
 //		return newActivity;
 //	}
 	
-	public Activity createAndAddActivity(String activityName) {
+	public void createAndAddActivity(String activityName) {
 		Activity newActivity = new Activity(this, activityName);
 		activities.add(newActivity);
-		return newActivity;
 	}
 
 	public void addActivity(Activity activity) {

@@ -10,7 +10,7 @@ import dtu.projektstyring.exceptions.TooManyActivitesException;
 
 public class Activity {
 	private String activityName; //Unique for activities in project
-	private Calendar activityStartTime, activityEndTime, activityCreationTime;
+	private int activityStartTime, activityEndTime, activityCreationTime; //Week number breakdown
 	private double budgetedTime;
 	private List<Developer> developers = new ArrayList<>();
 	private List<DeveloperActivityTime> totalWork = new ArrayList<>();
@@ -31,7 +31,7 @@ public class Activity {
 	public Activity(Project attachedProject, String activityName) {
 		this.attachedProject = attachedProject;
 		this.activityName = activityName;
-		activityCreationTime = attachedProject.getSoftwareHuset().getDateServer().getDate();
+		activityCreationTime = attachedProject.getSoftwareHuset().getDateServer().getDate().get(Calendar.WEEK_OF_YEAR);
 	}
 	
 	//Constructer for private activities. Needs work
@@ -118,27 +118,27 @@ public class Activity {
 	}
 	
 	public int getStartTime() {
-		return activityStartTime.get(Calendar.WEEK_OF_YEAR);
+		return activityStartTime;
 	}
 	
 	//Set start time of activity. Can't be before creation time of activity
-	public void setStartTime(Developer developer, Calendar activityStartTime) throws Exception {
+	public void setStartTime(Developer developer, int activityStartTime) throws Exception {
 		if(!attachedProject.getProjectLeader().equals(developer)) {
 			throw new NotProjectLeaderException();
 		}
-		if(activityStartTime.before(activityCreationTime)) {
+		if(activityStartTime < activityCreationTime) {
 			throw new StartDateException();
 		}
 		this.activityStartTime = activityStartTime;
 	}
 	
 	public int getEndTime() {
-		return activityEndTime.get(Calendar.WEEK_OF_YEAR);
+		return activityEndTime;
 	}
 	
 	//Set end time for an activity. Can't be before start time or creation time
-	public void setEndTime(Developer developer, Calendar activityEndTime) throws Exception {
-		if(activityEndTime.before(activityStartTime) || activityEndTime.before(activityCreationTime)) {
+	public void setEndTime(Developer developer, int activityEndTime) throws Exception {
+		if(activityEndTime < activityStartTime || activityEndTime < activityCreationTime) {
 			throw new StartDateException();
 		}
 		if(!attachedProject.getProjectLeader().equals(developer)) {
@@ -157,6 +157,10 @@ public class Activity {
 			throw new NotProjectLeaderException();
 		}
 		this.budgetedTime = budgetedTime;
+	}
+	
+	public int getCreationTime() {
+		return activityCreationTime;
 	}
 
 	public Project getAttachedProject() {

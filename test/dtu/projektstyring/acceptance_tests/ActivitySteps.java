@@ -99,11 +99,11 @@ public class ActivitySteps {
 	@When("the project leader assigns a deadline to the activity that is before the assigned start date")
 	public void theProjectLeaderAssignsAStartDateToTheActivity() throws Exception {
 		Calendar startDate = Calendar.getInstance();
-	    activity.setStartTime(developer, startDate);
+	    activity.setStartTime(developer, startDate.get(Calendar.WEEK_OF_YEAR));
 	    Calendar prevDate = Calendar.getInstance();
 		prevDate.add(Calendar.DAY_OF_MONTH, -5);
 		try {
-			activity.setEndTime(developer, prevDate);
+			activity.setEndTime(developer, prevDate.get(Calendar.WEEK_OF_YEAR));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -112,7 +112,7 @@ public class ActivitySteps {
 	@When("the project leader changes the activity's start time")
 	public void theProjectLeaderChangesTheActivitySStartTime() throws Exception {
 		calendar = softwareHuset.getDateServer().getDate();
-	    activity.setStartTime(developer, calendar);
+	    activity.setStartTime(developer, calendar.get(Calendar.WEEK_OF_YEAR));
 	    assertTrue(activity.getStartTime() == calendar.get(Calendar.WEEK_OF_YEAR));
 	}
 
@@ -198,8 +198,9 @@ public class ActivitySteps {
 	}
 	
 	@Given("the activity has a start date and end date")
-	public void theActivityHasAStartDateAndEndDate() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+	public void theActivityHasAStartDateAndEndDate() throws Exception {
+		Calendar currTime = softwareHuset.getDateServer().getDate();
+	    activity.setStartTime(userHelper.getUser(), currTime.get(Calendar.WEEK_OF_YEAR)+1);
+	    activity.setEndTime(userHelper.getUser(), currTime.get(Calendar.WEEK_OF_YEAR)+3);
 	}
 }
