@@ -46,8 +46,8 @@ public class ProjectSteps {
 	@When("the project leader assigns a start date for the project that is before the project creation date")
 	public void theProjectLeaderAssignsAStartDateForTheProjectThatIsBeforeTheProjectCreationDate() {
 		Calendar prevDate = Calendar.getInstance();
-		prevDate.add(Calendar.DAY_OF_YEAR, -5);
-		assertTrue(prevDate.before(project.getCreationTime()));
+		prevDate.add(Calendar.DAY_OF_YEAR, -8);
+		assertTrue(prevDate.get(Calendar.WEEK_OF_YEAR) < project.getCreationTime());
 		try {
 			softwareHuset.setProjectStartTime(project, prevDate);
 		} catch (Exception e) {
@@ -80,7 +80,7 @@ public class ProjectSteps {
     @When("a development worker creates a project with the name {string}")
     public void aDevelopmentWorkerCreatesANewProjectWithTheName(String string){
     	try {
-            softwareHuset.makeProject(worker, string);
+            softwareHuset.makeProject(string);
             this.project = softwareHuset.getProject(string);
             assertTrue(project.getName().matches(string));
     	} catch (Exception e) {

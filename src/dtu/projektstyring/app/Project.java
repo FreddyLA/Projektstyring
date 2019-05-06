@@ -2,62 +2,63 @@ package dtu.projektstyring.app;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import dtu.projektstyring.exceptions.CreationDateException;
 import dtu.projektstyring.exceptions.NotProjectLeaderException;
 
 public class Project {
-	private String name; //Unique
+	private String projectName; //Unique
 	private static int projectCounter = 1;
 	private int projectNumber; //Unique
 	private ArrayList<Activity> activities = new ArrayList<>();
 	private Developer projectLeader;
 	private Calendar startTime, creationTime;
-	private SoftwareHuset sh;
+	private SoftwareHuset softwareHuset;
 
-	public Project(String name, Calendar calendar, SoftwareHuset sh){
-		this.name = name;
-		this.creationTime = calendar;
+	public Project(String projectName, Calendar creationTime, SoftwareHuset softwareHuset){
+		this.projectName = projectName;
+		this.creationTime = creationTime;
 		this.projectNumber = projectCounter++;
-		this.sh = sh;
+		this.softwareHuset = softwareHuset;
 	}
 	
 	public void getReport() {
-		System.out.println("Report for project "+ name);
+		System.out.println("Report for project "+ projectName);
 		
 		System.out.println("Projectnumber: "+projectNumber);
 		System.out.println("Projectleader: "+projectLeader.getInitials());
 		System.out.println("Starttime: "+startTime);
 		
 		System.out.println("Activities: ");
-		for(Activity a : activities)
-		{
-			System.out.println(a.getName());
+		for(Activity activity : activities) {
+			System.out.println(activity.getName());
 		}
-				
 	}
 	
-	public Activity createAndAddActivity(String activityName, Date activityStartTime, Date activityEndTime,
-			double activityBudgetTime) {
-		Activity newActivity = new Activity(this, activityName, activityStartTime, activityEndTime, activityBudgetTime);
-		activities.add(newActivity);
-		return newActivity;
-	}
+//	public Activity createAndAddActivity(String activityName, Calendar activityStartTime, Calendar activityEndTime,
+//			double activityBudgetTime) {
+//		Activity newActivity = new Activity(this, activityName, activityStartTime, activityEndTime, activityBudgetTime);
+//		activities.add(newActivity);
+//		return newActivity;
+//	}
 	
 	public Activity createAndAddActivity(String activityName) {
 		Activity newActivity = new Activity(this, activityName);
 		activities.add(newActivity);
 		return newActivity;
 	}
-	
-	public void addDeveloperToActivity(Developer projectLeader, Developer developer, Activity activity) throws Exception {
-		activity.addDeveloper(projectLeader, developer);
-	}
 
 	public void addActivity(Activity activity) {
 		this.activities.add(activity);
+	}
+	
+	public ArrayList<Activity> getActivities() {
+		ArrayList<Activity> rActivities = new ArrayList<>();;
+		for(Activity a: activities) {
+			rActivities.add(a);
+		}
+		return rActivities;
 	}
 	
 	public Activity getActivity(String activityName) {
@@ -82,9 +83,40 @@ public class Project {
 		}
 		return false;
 	}
+	
+	public List<Developer> getActivityDevelopers(Activity activity){
+		return activity.getDevelopers();
+	}
+	
+	public void addDeveloperToActivity(Developer projectLeader, Developer developer, Activity activity) throws Exception {
+		activity.addDeveloper(projectLeader, developer);
+	}
 
-	public Calendar getStartTime() {
-		return startTime;
+	public Developer getProjectLeader() {
+		return projectLeader;
+	}
+	
+	//Set an initial project leader for a project
+	public void setProjectLeader(Developer projectLeader) throws NotProjectLeaderException {
+		if(this.projectLeader != null) {
+			throw new NotProjectLeaderException();
+		}
+		projectLeader.addLeaderOfProject(this);
+		this.projectLeader = projectLeader;
+	}
+	
+	//Set a new project leader for a project. Can only be done by project leader
+	public void setProjectLeader(Developer projectLeader, Developer newProjectLeader) throws NotProjectLeaderException {
+		if(!projectLeader.equals(this.projectLeader)) {
+			throw new NotProjectLeaderException();
+		}
+		newProjectLeader.addLeaderOfProject(this);
+		projectLeader.removeLeaderOfProject(this);
+		this.projectLeader = newProjectLeader;
+	}
+	
+	public int getStartTime() {
+		return startTime.get(Calendar.WEEK_OF_YEAR);
 	}
 	
 	public void setStartTime(Calendar startTime) throws Exception {
@@ -94,49 +126,8 @@ public class Project {
 		this.startTime = startTime;
 	}
 	
-	public List<Developer> getActivityDevelopers(Activity activity){
-		return activity.getDevelopers();
-	}
-	
-	public ArrayList<Activity> getActivities() {
-		ArrayList<Activity> rActivities = new ArrayList<>();;
-		for(Activity a: activities) {
-			rActivities.add(a);
-		}
-		return rActivities;
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Developer getProjectLeader() {
-		return projectLeader;
-	}
-	
-	public void setProjectLeader(Developer projectLeader) throws NotProjectLeaderException {
-		if(this.projectLeader != null) {
-			throw new NotProjectLeaderException();
-		}
-		projectLeader.addLeaderOfProject(this);
-		this.projectLeader = projectLeader;
-	}
-
-	public void setProjectLeader(Developer leader, Developer newLeader) throws NotProjectLeaderException {
-		if(!projectLeader.equals(leader)) {
-			throw new NotProjectLeaderException();
-		}
-		newLeader.addLeaderOfProject(this);
-		projectLeader.removeLeaderOfProject(this);
-		projectLeader = newLeader;
-	}
-	
-	public Calendar getCreationTime() {
-		return creationTime;
+	public int getCreationTime() {
+		return creationTime.get(Calendar.WEEK_OF_YEAR);
 	}
 	
 	public int getProjectNumber() {
@@ -144,6 +135,14 @@ public class Project {
 	}
 	
 	public SoftwareHuset getSoftwareHuset() {
-		return sh;
+		return softwareHuset;
+	}
+	
+	public String getName() {
+		return projectName;
+	}
+
+	public void setName(String projectName) {
+		this.projectName = projectName;
 	}
 }

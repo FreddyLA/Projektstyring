@@ -578,6 +578,315 @@ formatter.background({
   "description": "",
   "keyword": "Background"
 });
+formatter.step({
+  "name": "a project with the name \"Project 1\" exists",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectWithTheNameAlreadyExists(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a project leader has been selected",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader creates a new activity with the name \"Activity\"",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.scenario({
+  "name": "Project leader gets a list of available developers",
+  "description": "",
+  "keyword": "Scenario"
+});
+formatter.step({
+  "name": "the activity has a start date and end date",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ActivitySteps.theActivityHasAStartDateAndEndDate()"
+});
+formatter.result({
+  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ActivitySteps.theActivityHasAStartDateAndEndDate(ActivitySteps.java:203)\r\n\tat ✽.the activity has a start date and end date(use_cases\\find_available_devs.feature:11)\r\n",
+  "status": "pending"
+});
+formatter.step({
+  "name": "a development worker is available in the given timeperiod",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.aDevelopmentWorkerIsAvailableInTheGivenTimeperiod()"
+});
+formatter.result({
+  "status": "skipped"
+});
+formatter.step({
+  "name": "another developemnt worker is not available in the given timeperiod",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.anotherDevelopemntWorkerIsNotAvailableInTheGivenTimeperiod()"
+});
+formatter.result({
+  "status": "skipped"
+});
+formatter.step({
+  "name": "the project leader wants a list of available developers",
+  "keyword": "When "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theProjectLeaderWantsAListOfAvailableDevelopers()"
+});
+formatter.result({
+  "status": "skipped"
+});
+formatter.step({
+  "name": "the project leader gets a list of developers, which contains the available development worker",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theProjectLeaderGetsAListOfDevelopersWhichContainsTheAvailableDevelopmentWorker()"
+});
+formatter.result({
+  "status": "skipped"
+});
+formatter.step({
+  "name": "the list doesn\u0027t contain the unavailable developer",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theListDoesnTContainTheUnavailableDeveloper()"
+});
+formatter.result({
+  "status": "skipped"
+});
+formatter.background({
+  "name": "A project and an activity exists",
+  "description": "",
+  "keyword": "Background"
+});
+formatter.step({
+  "name": "a project with the name \"Project 1\" exists",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectWithTheNameAlreadyExists(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a project leader has been selected",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader creates a new activity with the name \"Activity\"",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.scenario({
+  "name": "Project leader want available developers for an activity that doesnt\u0027t have a start date",
+  "description": "",
+  "keyword": "Scenario"
+});
+formatter.step({
+  "name": "the activity doesn\u0027t has a start date",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theActivityDoesnTHasAStartDate()"
+});
+formatter.result({
+  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectOverviewSteps.theActivityDoesnTHasAStartDate(ProjectOverviewSteps.java:76)\r\n\tat ✽.the activity doesn\u0027t has a start date(use_cases\\find_available_devs.feature:19)\r\n",
+  "status": "pending"
+});
+formatter.step({
+  "name": "the project leader wants a list of available developers",
+  "keyword": "When "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theProjectLeaderWantsAListOfAvailableDevelopers()"
+});
+formatter.result({
+  "status": "skipped"
+});
+formatter.step({
+  "name": "an error message \"Activity doesn\u0027t have a start/enddate\" is presented",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "ProjectSteps.anErrorMessageIsPresented(String)"
+});
+formatter.result({
+  "status": "skipped"
+});
+formatter.background({
+  "name": "A project and an activity exists",
+  "description": "",
+  "keyword": "Background"
+});
+formatter.step({
+  "name": "a project with the name \"Project 1\" exists",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectWithTheNameAlreadyExists(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a project leader has been selected",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader creates a new activity with the name \"Activity\"",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.scenario({
+  "name": "Project leader wants available developers for an activity that doesnt\u0027t have a start date",
+  "description": "",
+  "keyword": "Scenario"
+});
+formatter.step({
+  "name": "the activity doesn\u0027t has a end date",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theActivityDoesnTHasAEndDate()"
+});
+formatter.result({
+  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ProjectOverviewSteps.theActivityDoesnTHasAEndDate(ProjectOverviewSteps.java:82)\r\n\tat ✽.the activity doesn\u0027t has a end date(use_cases\\find_available_devs.feature:24)\r\n",
+  "status": "pending"
+});
+formatter.step({
+  "name": "the project leader wants a list of available developers",
+  "keyword": "When "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theProjectLeaderWantsAListOfAvailableDevelopers()"
+});
+formatter.result({
+  "status": "skipped"
+});
+formatter.step({
+  "name": "an error message \"Activity doesn\u0027t have a start/enddate\" is presented",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "ProjectSteps.anErrorMessageIsPresented(String)"
+});
+formatter.result({
+  "status": "skipped"
+});
+formatter.background({
+  "name": "A project and an activity exists",
+  "description": "",
+  "keyword": "Background"
+});
+formatter.step({
+  "name": "a project with the name \"Project 1\" exists",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectWithTheNameAlreadyExists(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a project leader has been selected",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader creates a new activity with the name \"Activity\"",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.scenario({
+  "name": "Project leader wants avilable developers for an activity, but no developers are available",
+  "description": "",
+  "keyword": "Scenario"
+});
+formatter.step({
+  "name": "the activity has a start date and end date",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ActivitySteps.theActivityHasAStartDateAndEndDate()"
+});
+formatter.result({
+  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ActivitySteps.theActivityHasAStartDateAndEndDate(ActivitySteps.java:203)\r\n\tat ✽.the activity has a start date and end date(use_cases\\find_available_devs.feature:29)\r\n",
+  "status": "pending"
+});
+formatter.step({
+  "name": "no developers are available in the given time period",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.noDevelopersAreAvailableInTheGivenTimePeriod()"
+});
+formatter.result({
+  "status": "skipped"
+});
+formatter.step({
+  "name": "the list doesn\u0027t contain any developers",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theListDoesnTContainAnyDevelopers()"
+});
+formatter.result({
+  "status": "skipped"
+});
 formatter.uri("use_cases\\generate_rappport.feature");
 formatter.feature({
   "name": "Generate a rapport of a project",

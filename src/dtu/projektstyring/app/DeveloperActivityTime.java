@@ -4,41 +4,46 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DeveloperActivityTime {
-	private Activity activity;
-	private Developer dev, helperDev; 
-	private Calendar timeStamp;
+	private Activity attachedActivity;
+	private Developer developer, helperDeveloper; 
+	private Calendar timeStamp; //Day work was performed. Assume work is always registered the day it is performed
 	private double timeSpent;
 	
-	public DeveloperActivityTime(Developer dev, Activity activity, double timeSpent, Calendar timeStamp) {
-		this.dev = dev;
-		this.activity = activity;
+	//Constructer for a developer doing work on an activity
+	public DeveloperActivityTime(Developer developer, Activity attachedActivity, double timeSpent, Calendar timeStamp) {
+		this.developer = developer;
+		this.attachedActivity = attachedActivity;
 		this.timeSpent = timeSpent;
 		this.timeStamp = timeStamp;
 	}
 	
-	public DeveloperActivityTime(Developer dev, Developer helperDev, Activity activity, double timeSpent) {
-		this.dev = dev;
-		this.helperDev = helperDev;
-		this.activity = activity;
+	//Constructer for a developer getting help on an activity
+	public DeveloperActivityTime(Developer developer, Developer helperDeveloper, Activity attachedActivity, double timeSpent, Calendar timeStamp) {
+		this.developer = developer;
+		this.helperDeveloper = helperDeveloper;
+		this.attachedActivity = attachedActivity;
 		this.timeSpent = timeSpent;
+		this.timeStamp = timeStamp;
 	}
 	
-	public Calendar getTimeStamp() {
-		return timeStamp;
+	public int getTimeStamp() {
+		return timeStamp.get(Calendar.DAY_OF_YEAR);
 	}
 	
-	public double getTime() {
+	public double getTimeSpent() {
 		return timeSpent;
 	}
 	
-	public void setTime(double newTime) {
-		this.timeSpent = newTime;
+	//For editing time spent on an amount of work
+	public void setTimeSpent(double timeSpent) {
+		this.timeSpent = timeSpent;
 	}
 	
-	public Developer getDev() {
-		if(helperDev != null) {
-			return helperDev;
+	//Returns developer responsible for work. helperDeveloper is returned if developer got help else developer is returned
+	public Developer getDeveloper() {
+		if(helperDeveloper != null) {
+			return helperDeveloper;
 		}
-		return dev;
+		return developer;
 	}
 }
