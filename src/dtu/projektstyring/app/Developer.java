@@ -33,8 +33,8 @@ public class Developer {
 		return true;
 	}
 	
-	public int workDoneToday() {
-		int workDoneToday = 0;
+	public double workDoneToday() {
+		double workDoneToday = 0;
 		for(int i = workDone.size() - 1; i >= 0; i--) {
 			if(workDone.get(i).getTimeStamp().get(Calendar.DAY_OF_YEAR) == sh.getDateServer().getDate().get(Calendar.DAY_OF_YEAR)) {
 				workDoneToday += workDone.get(i).getTime();

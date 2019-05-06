@@ -15,11 +15,13 @@ public class Project {
 	private ArrayList<Activity> activities = new ArrayList<>();
 	private Developer projectLeader;
 	private Calendar startTime, creationTime;
+	private SoftwareHuset sh;
 
-	public Project(String name, Calendar calendar){
+	public Project(String name, Calendar calendar, SoftwareHuset sh){
 		this.name = name;
 		this.creationTime = calendar;
 		this.projectNumber = projectCounter++;
+		this.sh = sh;
 	}
 	
 	public void getReport() {
@@ -139,5 +141,9 @@ public class Project {
 	
 	public int getProjectNumber() {
 		return projectNumber;
+	}
+	
+	public SoftwareHuset getSoftwareHuset() {
+		return sh;
 	}
 }

@@ -555,8 +555,7 @@ formatter.match({
   "location": "ActivitySteps.theDevelopmentWorkerChangesTheHoursWorkedOnTheActivityFromTo(Integer,Integer)"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.ActivitySteps.theDevelopmentWorkerChangesTheHoursWorkedOnTheActivityFromTo(ActivitySteps.java:192)\r\n\tat ✽.the development worker changes the hours worked on the activity from 8 to 5(use_cases\\edit_registered_data.feature:13)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.step({
   "name": "the development worker\u0027s hours on the activity is 5",
@@ -566,7 +565,18 @@ formatter.match({
   "location": "ActivitySteps.theDevelopmentWorkerSHoursOnTheActivityIs(Integer)"
 });
 formatter.result({
-  "status": "skipped"
+  "status": "passed"
+});
+formatter.uri("use_cases\\find_available_devs.feature");
+formatter.feature({
+  "name": "Project leader finds available developers for an activity",
+  "description": "Description: Project leader gets a list of developers available for an activity\nActors: Project leader",
+  "keyword": "Feature"
+});
+formatter.background({
+  "name": "A project and an activity exists",
+  "description": "",
+  "keyword": "Background"
 });
 formatter.uri("use_cases\\generate_rappport.feature");
 formatter.feature({
@@ -1418,6 +1428,102 @@ formatter.step({
 });
 formatter.match({
   "location": "ProjectSteps.anErrorMessageIsPresented(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.uri("use_cases\\worker_work_overview.feature");
+formatter.feature({
+  "name": "Development worker gets hours worked on the day",
+  "description": "Description: Worker gets total amount of hours worked on the day\nActors: Development worker",
+  "keyword": "Feature"
+});
+formatter.background({
+  "name": "A project and an activity exists",
+  "description": "",
+  "keyword": "Background"
+});
+formatter.step({
+  "name": "a project with the name \"Project 1\" exists",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectWithTheNameAlreadyExists(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a project leader has been selected",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader creates a new activity with the name \"Activity\"",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a development worker is assigned the activity",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.aDevelopmentWorkerIsAssignedTheActivity()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.scenario({
+  "name": "Worker gets the amount of hours he has worked on the day",
+  "description": "",
+  "keyword": "Scenario"
+});
+formatter.step({
+  "name": "the development worker inputs 8 hours worked on the activity into the system",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "RegisterTimeSteps.theDevelopmentWorkerInputsAmountOfHoursWorkedForTheDayIntoTheSystem(double)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the development worker the next day inputs 5 hours worked on the activity into the system",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "RegisterTimeSteps.theDevelopmentWorkerTheNextDayInputsHoursWorkedOnTheActivityIntoTheSystem(Integer)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the development worker wants to know how many hours he has worked on the day",
+  "keyword": "When "
+});
+formatter.match({
+  "location": "RegisterTimeSteps.theDevelopmentWorkerWantsToKnowHowManyHoursHeHasWorkedOnTheDay()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the development worker is told that he has worked 5 hours on the day",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "RegisterTimeSteps.theDevelopmentWorkerIsToldThatHeHasWorkedHoursOnTheDay(Integer)"
 });
 formatter.result({
   "status": "passed"

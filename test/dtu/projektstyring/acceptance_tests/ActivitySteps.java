@@ -44,6 +44,7 @@ public class ActivitySteps {
 		userHelper.setSoftwareHuset(softwareHuset);
 		this.dateHolder = dateHolder;
 		this.projectHelper = projectHelper;
+		projectHelper.setSoftwareHuset(softwareHuset);
 		this.dateHelper = dateHelper;
 		this.activityHolder = activityHolder;
 	}
@@ -127,7 +128,6 @@ public class ActivitySteps {
 		developer = userHelper.getUser();
 		worker = userHelper.getUser2();
 		softwareHuset.addDeveloperToProjectActivity(developer, worker, project, activity);
-	    //activity.addDeveloper(helper.getUser());
 	    assertTrue(softwareHuset.getProjectActivityDevelopers(project, activity).contains(worker));
 	}
 	
@@ -189,13 +189,12 @@ public class ActivitySteps {
 	
 	@When("the development worker changes the hours worked on the activity from {int} to {int}")
 	public void theDevelopmentWorkerChangesTheHoursWorkedOnTheActivityFromTo(Integer int1, Integer int2) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		assertTrue(activity.getDevWorkTimeToday(worker) == int1);
+	    activity.editDeveloperActivityTime(worker, int2);
 	}
 
 	@Then("the development worker's hours on the activity is {int}")
 	public void theDevelopmentWorkerSHoursOnTheActivityIs(Integer int1) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+		assertTrue(activity.getDevWorkTimeToday(worker) == int1);
 	}
 }

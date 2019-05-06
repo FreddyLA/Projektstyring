@@ -1,6 +1,7 @@
 package dtu.projektstyring.app;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -77,6 +78,17 @@ public class Activity {
 		}
 		return devWorkTime;
 	}
+	
+	public double getDevWorkTimeToday(Developer dev) {
+		double devWorkTime = 0;
+		for(DeveloperActivityTime t: totalWork) {
+			if(t.getDev().equals(dev) && t.getTimeStamp().get(Calendar.DAY_OF_YEAR)
+					== attachedProject.getSoftwareHuset().getDateServer().getDate().get(Calendar.DAY_OF_YEAR)) {
+				devWorkTime += t.getTime();
+			}
+		}
+		return devWorkTime;
+	}
 
 	public void setEndTime(Developer dev, Date endTime) throws Exception {
 		if(endTime.before(startTime)) {
@@ -117,6 +129,17 @@ public class Activity {
 	public boolean removeDeveloper(Developer developer) {
 		developer.removeActivity(this);
 		return this.developers.remove(developer);
+	}
+	
+	public void editDeveloperActivityTime(Developer dev, double newHours) {
+		for(DeveloperActivityTime w: totalWork) {
+			if(w.getDev().equals(dev) && 
+					w.getTimeStamp().get(Calendar.DAY_OF_YEAR)
+						== attachedProject.getSoftwareHuset().getDateServer().getDate().get(Calendar.DAY_OF_YEAR)) {
+				w.setTime(newHours);
+				return;
+			}
+		}
 	}
 	
 	public void removeActivityFromAllDevelopers() {

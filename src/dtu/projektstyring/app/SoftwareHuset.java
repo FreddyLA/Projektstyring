@@ -32,7 +32,7 @@ public class SoftwareHuset {
 		newDev = new Developer("Melissa Kullins", "MKU", this);
 		developers.add(newDev);
 		
-		Project defProj = new Project("Proj1", dateServer.getDate());
+		Project defProj = new Project("Proj1", dateServer.getDate(), this);
 		try {
 			defProj.setProjectLeader(defDev);
 		} catch (NotProjectLeaderException e) {
@@ -57,7 +57,7 @@ public class SoftwareHuset {
 				}
 			}
 		}
-		Project newProject = new Project(name, dateServer.getDate());
+		Project newProject = new Project(name, dateServer.getDate(), this);
 		projects.add(newProject);
 		return true;
 	}

@@ -30,10 +30,8 @@ public class RegisterTimeSteps {
 	private Activity activity;
 	private Developer developer, worker, worker2;
 	private ErrorMessageHolder errorMessage;
-	private Date activityEndTime;
-	private Date activityStartTime;
-	private List<Developer> developers;
 	private Map<String, Developer> developerByInitials = new HashMap<>();
+	private double workDone;
 	
 	private UserHelper userHelper;
 	private MockDateHolder dateHolder;
@@ -48,6 +46,7 @@ public class RegisterTimeSteps {
 		userHelper.setSoftwareHuset(softwareHuset);
 		this.dateHolder = dateHolder;
 		this.projectHelper = projectHelper;
+		projectHelper.setSoftwareHuset(softwareHuset);
 		this.activityHolder = activityHolder;
 	}
 
@@ -83,5 +82,27 @@ public class RegisterTimeSteps {
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
+	}
+	
+	@Given("the development worker the next day inputs {int} hours worked on the activity into the system")
+	public void theDevelopmentWorkerTheNextDayInputsHoursWorkedOnTheActivityIntoTheSystem(Integer int1) {
+	    dateHolder.advanceDateByDays(1);
+	    activity = activityHolder.getActivity();
+		project = projectHelper.getProject();
+		try {
+			softwareHuset.registerTime(userHelper.getUser2(), project.getProjectNumber(), activity.getName(), int1);
+		} catch (Exception e) {
+			errorMessage.setErrorMessage(e.getMessage());
+		}
+	}
+	
+	@When("the development worker wants to know how many hours he has worked on the day")
+	public void theDevelopmentWorkerWantsToKnowHowManyHoursHeHasWorkedOnTheDay() {
+	    workDone = userHelper.getUser2().workDoneToday();
+	}
+
+	@Then("the development worker is told that he has worked {int} hours on the day")
+	public void theDevelopmentWorkerIsToldThatHeHasWorkedHoursOnTheDay(Integer int1) {
+	    assertTrue(int1 == workDone);
 	}
 }

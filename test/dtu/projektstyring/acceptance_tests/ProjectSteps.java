@@ -24,8 +24,6 @@ public class ProjectSteps {
 
 	private SoftwareHuset softwareHuset;
 	private Project project;
-	private Activity activity;
-	private Rapport rapport;
 	private Developer worker, worker2;
 	private ErrorMessageHolder errorMessage;
 	
@@ -42,6 +40,7 @@ public class ProjectSteps {
 		userHelper.setSoftwareHuset(softwareHuset);
 		this.dateHolder = dateHolder;
 		this.projectHelper = projectHelper;
+		projectHelper.setSoftwareHuset(softwareHuset);
 	}
 
 	@When("the project leader assigns a start date for the project that is before the project creation date")
