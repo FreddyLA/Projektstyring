@@ -22,17 +22,17 @@ public class SoftwareHuset {
 	//**********TIL TESTING**********//
 	public SoftwareHuset() {
 		
-		Developer defDev = new Developer("John Doe", "JDO");
+		Developer defDev = new Developer("John Doe", "JDO", this);
 		developers.add(defDev);
 		
-		Developer newDev = new Developer("Mike Johnson", "MJO");
+		Developer newDev = new Developer("Mike Johnson", "MJO", this);
 		developers.add(newDev);
-		newDev = new Developer("Elias Sandder", "ESA");
+		newDev = new Developer("Elias Sandder", "ESA", this);
 		developers.add(newDev);
-		newDev = new Developer("Melissa Kullins", "MKU");
+		newDev = new Developer("Melissa Kullins", "MKU", this);
 		developers.add(newDev);
 		
-		Project defProj = new Project("Proj1", Calendar.getInstance().getTime());
+		Project defProj = new Project("Proj1", dateServer.getDate());
 		try {
 			defProj.setProjectLeader(defDev);
 		} catch (NotProjectLeaderException e) {
@@ -48,7 +48,7 @@ public class SoftwareHuset {
 	}
 	//*******************************//
 	
-	public boolean makeProject(Developer dev, String name, Date date) throws Exception {
+	public boolean makeProject(Developer dev, String name) throws Exception {
 		if(!projects.isEmpty()) {
 			for(Project p : projects) {
 				if(p.getName().equals(name)) {
@@ -57,8 +57,7 @@ public class SoftwareHuset {
 				}
 			}
 		}
-		Project newProject = new Project(name, date);
-		newProject.setProjectLeader(dev);
+		Project newProject = new Project(name, dateServer.getDate());
 		projects.add(newProject);
 		return true;
 	}
@@ -109,8 +108,9 @@ public class SoftwareHuset {
 		else if(!a.getDevelopers().contains(developer)) throw new NotOnActivityException();
 		
 		if(a.getDevelopers().contains(developer)) {
-			ActivityTime work = new ActivityTime(developer, a, hours);
+			DeveloperActivityTime work = new DeveloperActivityTime(developer, a, hours, dateServer.getDate());
 			a.registerTime(work);
+			developer.registerWork(work);
 		}
 	}
 	
@@ -120,7 +120,7 @@ public class SoftwareHuset {
 		if(!a.getDevelopers().contains(activityDeveloper)) {
 			throw new NotOnActivityException();
 		}
-		ActivityTime work = new ActivityTime(activityDeveloper, helper, a, hours);
+		DeveloperActivityTime work = new DeveloperActivityTime(activityDeveloper, helper, a, hours);
 		a.registerTime(work);
 	}
 	
@@ -150,7 +150,7 @@ public class SoftwareHuset {
 				activity = a;
 			}
 		}
-		ActivityTime priv = new ActivityTime(dev, activity, hours);
+		DeveloperActivityTime priv = new DeveloperActivityTime(dev, activity, hours, Calendar.getInstance());
 		activity.registerTime(priv);
 	}
 	
@@ -224,26 +224,11 @@ public class SoftwareHuset {
 		return this.developers.remove(developer);
 	}
 	
-	public void registerDeveloperSchedule(Developer developer, Date from, Date to, String description) {
-		globalSchedules.add(from.toString().concat(",").concat(to.toString()).concat(",").concat(description));
-		developer.registerSchedule(from, to, description);
-	}
-	
-	public List<String> getDeveloperSchedule(Developer developer){
-		return developer.getFullSchedule();
-	}
-	
-	public void removeDeveloperSchedule(Developer developer, int index) {
-		String tmp = developer.getSchedule(index);
-		globalSchedules.remove(tmp);
-		developer.removeFromSchedule(index);
-	}
-	
 	public List<String> getFullPersonelSchedule(){
 		return globalSchedules;
 	}
 
-	public void setProjectStartTime(Project project, Date time) throws Exception {
+	public void setProjectStartTime(Project project, Calendar time) throws Exception {
 		 project.setStartTime(time);
 	}
 

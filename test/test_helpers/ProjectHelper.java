@@ -16,7 +16,7 @@ public class ProjectHelper {
 	}
 	
 	private Project exampleProject() {
-		Project project = new Project("Project 1",Calendar.getInstance().getTime());
+		Project project = new Project("Project 1",Calendar.getInstance());
 		return project;
 	}
 }

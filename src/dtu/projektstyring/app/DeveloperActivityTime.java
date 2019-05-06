@@ -1,21 +1,30 @@
 package dtu.projektstyring.app;
 
-public class ActivityTime {
+import java.util.Calendar;
+import java.util.Date;
+
+public class DeveloperActivityTime {
 	private Activity activity;
 	private Developer dev, helperDev; 
+	private Calendar timeStamp;
 	private double timeSpent;
 	
-	public ActivityTime(Developer dev, Activity activity, double timeSpent) {
+	public DeveloperActivityTime(Developer dev, Activity activity, double timeSpent, Calendar timeStamp) {
 		this.dev = dev;
 		this.activity = activity;
 		this.timeSpent = timeSpent;
+		this.timeStamp = timeStamp;
 	}
 	
-	public ActivityTime(Developer dev, Developer helperDev, Activity activity, double timeSpent) {
+	public DeveloperActivityTime(Developer dev, Developer helperDev, Activity activity, double timeSpent) {
 		this.dev = dev;
 		this.helperDev = helperDev;
 		this.activity = activity;
 		this.timeSpent = timeSpent;
+	}
+	
+	public Calendar getTimeStamp() {
+		return timeStamp;
 	}
 	
 	public double getTime() {

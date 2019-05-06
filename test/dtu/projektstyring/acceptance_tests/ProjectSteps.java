@@ -39,6 +39,7 @@ public class ProjectSteps {
 		this.softwareHuset = softwareHuset;
 		this.errorMessage = errorMessage;
 		this.userHelper = userHelper;
+		userHelper.setSoftwareHuset(softwareHuset);
 		this.dateHolder = dateHolder;
 		this.projectHelper = projectHelper;
 	}
@@ -47,9 +48,9 @@ public class ProjectSteps {
 	public void theProjectLeaderAssignsAStartDateForTheProjectThatIsBeforeTheProjectCreationDate() {
 		Calendar prevDate = Calendar.getInstance();
 		prevDate.add(Calendar.DAY_OF_YEAR, -5);
-		assertTrue(prevDate.getTime().before(project.getCreationTime()));
+		assertTrue(prevDate.before(project.getCreationTime()));
 		try {
-			softwareHuset.setProjectStartTime(project, prevDate.getTime());
+			softwareHuset.setProjectStartTime(project, prevDate);
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -80,10 +81,9 @@ public class ProjectSteps {
     @When("a development worker creates a project with the name {string}")
     public void aDevelopmentWorkerCreatesANewProjectWithTheName(String string){
     	try {
-            softwareHuset.makeProject(worker, string, Calendar.getInstance().getTime());
+            softwareHuset.makeProject(worker, string);
             this.project = softwareHuset.getProject(string);
             assertTrue(project.getName().matches(string));
-            assertTrue(project.getProjectLeader().equals(worker));
     	} catch (Exception e) {
     		errorMessage.setErrorMessage(e.getMessage());
     	}

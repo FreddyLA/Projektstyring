@@ -41,6 +41,7 @@ public class ActivitySteps {
 		this.softwareHuset = softwareHuset;
 		this.errorMessage = errorMessage;
 		this.userHelper = userHelper;
+		userHelper.setSoftwareHuset(softwareHuset);
 		this.dateHolder = dateHolder;
 		this.projectHelper = projectHelper;
 		this.dateHelper = dateHelper;
@@ -161,6 +162,7 @@ public class ActivitySteps {
 	@Given("a development worker exists")
 	public void aDevelopmentWorkerExists() {
 	    worker = userHelper.getUser2();
+	    softwareHuset.addDeveloper(worker);
 	}
 
 	@Given("the development worker has {int} activities")

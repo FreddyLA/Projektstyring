@@ -14,7 +14,7 @@ public class Activity {
 	private Date endTime;
 	private double budgetetTime;
 	private List<Developer> developers = new ArrayList<>();
-	private List<ActivityTime> totalWork = new ArrayList<>();
+	private List<DeveloperActivityTime> totalWork = new ArrayList<>();
 	private Project attachedProject;
 	
 	Activity(Project project, String name, Date startTime, Date endTime, double budgetTime){
@@ -34,7 +34,7 @@ public class Activity {
 		this.name = activityName;
 	}
 
-	public void registerTime(ActivityTime work){
+	public void registerTime(DeveloperActivityTime work){
 		totalWork.add(work);
 	}
 
@@ -70,7 +70,7 @@ public class Activity {
 	
 	public double getDevWorkTime(Developer dev) {
 		double devWorkTime = 0;
-		for(ActivityTime t: totalWork) {
+		for(DeveloperActivityTime t: totalWork) {
 			if(t.getDev().equals(dev)) {
 				devWorkTime += t.getTime();
 			}

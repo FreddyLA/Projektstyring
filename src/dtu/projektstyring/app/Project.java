@@ -1,6 +1,7 @@
 package dtu.projektstyring.app;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,16 +14,27 @@ public class Project {
 	private int projectNumber; //Unique
 	private ArrayList<Activity> activities = new ArrayList<>();
 	private Developer projectLeader;
-	private Date startTime, creationTime;
+	private Calendar startTime, creationTime;
 
-	public Project(String name, Date date){
+	public Project(String name, Calendar calendar){
 		this.name = name;
-		this.creationTime = date;
+		this.creationTime = calendar;
 		this.projectNumber = projectCounter++;
 	}
 	
-	public void getRapport() {
+	public void getReport() {
+		System.out.println("Report for project "+ name);
 		
+		System.out.println("Projectnumber: "+projectNumber);
+		System.out.println("Projectleader: "+projectLeader.getInitials());
+		System.out.println("Starttime: "+startTime);
+		
+		System.out.println("Activities: ");
+		for(Activity a : activities)
+		{
+			System.out.println(a.getName());
+		}
+				
 	}
 	
 	public Activity createAndAddActivity(String activityName, Date activityStartTime, Date activityEndTime,
@@ -69,11 +81,11 @@ public class Project {
 		return false;
 	}
 
-	public Date getStartTime() {
+	public Calendar getStartTime() {
 		return startTime;
 	}
 	
-	public void setStartTime(Date startTime) throws Exception {
+	public void setStartTime(Calendar startTime) throws Exception {
 		if(startTime.before(creationTime)) {
 			throw new CreationDateException();
 		}
@@ -121,7 +133,7 @@ public class Project {
 		projectLeader = newLeader;
 	}
 	
-	public Date getCreationTime() {
+	public Calendar getCreationTime() {
 		return creationTime;
 	}
 	

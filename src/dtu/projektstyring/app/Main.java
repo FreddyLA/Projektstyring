@@ -2,6 +2,7 @@ package dtu.projektstyring.app;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -101,8 +102,15 @@ public class Main {
 			projectName = input.nextLine();
 			System.out.println("Enter start date for project (dd-MM-yyyy):");
 			sdate = input.nextLine();
-			Date date = new SimpleDateFormat("dd-MM-yyyy").parse(sdate); 
-			sh.makeProject(d, projectName, date);
+			if(sdate.isEmpty()) {
+				sh.makeProject(d, projectName);
+			} else {
+				Date date = new SimpleDateFormat("dd-MM-yyyy").parse(sdate); 
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(date);
+				sh.makeProject(d, projectName);
+				sh.setProjectStartTime(sh.getProject(projectName), calendar);
+			}
 			break;
 		case "5":
 			// TODO: remove a specific project from the list of projects

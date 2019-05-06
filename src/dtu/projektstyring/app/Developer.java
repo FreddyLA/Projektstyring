@@ -1,6 +1,7 @@
 package dtu.projektstyring.app;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Date;
 
@@ -10,16 +11,13 @@ public class Developer {
 	private boolean canWorkOn20Activities;
 	private List<Project> leaderOf = new ArrayList<>();
 	private List<Activity> activities = new ArrayList<>();
-	private List<String> schedule = new ArrayList<>();
+	private List<DeveloperActivityTime> workDone = new ArrayList<>();
+	private SoftwareHuset sh;
 	
-	public Developer(String name, String initials){
+	public Developer(String name, String initials, SoftwareHuset sh){
 		this.name = name;
 		this.initials = initials;
-	}
-	
-	public void registerSchedule(Date from, Date to, String description) {
-		String temp = from.toString().concat(",").concat(to.toString()).concat(",").concat(description);
-		schedule.add(temp);
+		this.sh = sh;
 	}
 	
 	public boolean isAvailable(Date startTime, Date endTime) {
@@ -35,16 +33,18 @@ public class Developer {
 		return true;
 	}
 	
-	public void removeFromSchedule(int index) {
-		schedule.remove(index);
+	public int workDoneToday() {
+		int workDoneToday = 0;
+		for(int i = workDone.size() - 1; i >= 0; i--) {
+			if(workDone.get(i).getTimeStamp().get(Calendar.DAY_OF_YEAR) == sh.getDateServer().getDate().get(Calendar.DAY_OF_YEAR)) {
+				workDoneToday += workDone.get(i).getTime();
+			}
+		}
+		return workDoneToday;
 	}
 	
-	public List<String> getFullSchedule(){
-		return schedule;
-	}
-	
-	public String getSchedule(int index) {
-		return schedule.get(index);
+	public void registerWork(DeveloperActivityTime work) {
+		workDone.add(work);
 	}
 
 	public String getInitials() {
@@ -85,5 +85,13 @@ public class Developer {
 	
 	public boolean removeActivity(Activity activity) {
 		return this.activities.remove(activity);
+	}
+	
+	public boolean getCanWorkOn20Activities() {
+		return canWorkOn20Activities;
+	}
+	
+	public void setCanWorkOn20Activities(boolean b) {
+		canWorkOn20Activities = b;
 	}
 }
