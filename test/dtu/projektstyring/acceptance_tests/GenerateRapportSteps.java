@@ -1,10 +1,13 @@
 package dtu.projektstyring.acceptance_tests;
 
+import static org.junit.Assert.assertTrue;
+
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import dtu.projektstyring.app.Activity;
 import dtu.projektstyring.app.Developer;
 import dtu.projektstyring.app.Project;
+import dtu.projektstyring.app.Report;
 import dtu.projektstyring.app.SoftwareHuset;
 import test_helpers.ActivityHolder;
 import test_helpers.ErrorMessageHolder;
@@ -19,6 +22,7 @@ public class GenerateRapportSteps {
 	private Activity activity;
 	private Developer developer, worker, worker2;
 	private ErrorMessageHolder errorMessage;
+	private Report projectReport;
 	
 	private UserHelper userHelper;
 	private MockDateHolder dateHolder;
@@ -40,6 +44,7 @@ public class GenerateRapportSteps {
 	
     @When("a development worker generates a project development rapport of a project")
     public void aDevelopmentWorkerGeneratesAProjectDevelopmentRapportOfAProject() {
+    	project = projectHelper.getProject();
         worker2 = userHelper.getUser2();
         try {
 			softwareHuset.getRapport(worker2, project.getProjectNumber());
@@ -53,7 +58,7 @@ public class GenerateRapportSteps {
 	    project = projectHelper.getProject();
 	    worker = userHelper.getUser();
         try {
-			softwareHuset.getRapport(worker, project.getProjectNumber());
+			projectReport = softwareHuset.getRapport(worker, project.getProjectNumber());
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -61,7 +66,8 @@ public class GenerateRapportSteps {
 
 	@Then("the development rapport is generated")
 	public void theGeneratedDevelopmentRapportIsGenerated() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+	    assertTrue(projectReport.getProjectLeader().matches(project.getProjectLeader().getInitials()));
+	    assertTrue(projectReport.getProjectNumber() == project.getProjectNumber());
+	    assertTrue(projectReport.getProjectName().matches(project.getName()));
 	}
 }

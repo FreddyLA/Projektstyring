@@ -12,7 +12,7 @@ import cucumber.api.java.en.When;
 import dtu.projektstyring.app.Activity;
 import dtu.projektstyring.app.Developer;
 import dtu.projektstyring.app.Project;
-import dtu.projektstyring.app.Rapport;
+import dtu.projektstyring.app.Report;
 import dtu.projektstyring.app.SoftwareHuset;
 import dtu.projektstyring.exceptions.NotProjectLeaderException;
 import test_helpers.ErrorMessageHolder;

@@ -22,17 +22,9 @@ public class Project {
 		this.softwareHuset = softwareHuset;
 	}
 	
-	public void getReport() {
-		System.out.println("Report for project: " + projectName);
-		
-		System.out.println("Projectnumber: " + projectNumber);
-		System.out.println("Projectleader: " + projectLeader.getInitials());
-		System.out.println("Starttime: " + startTime);
-		
-		System.out.println("Activities: ");
-		for(Activity activity : activities) {
-			System.out.println("\t" + activity);
-		}
+	public Report getReport() {
+		Report projectReport = new Report(this);
+		return projectReport;
 	}
 	
 //	public Activity createAndAddActivity(String activityName, Calendar activityStartTime, Calendar activityEndTime,

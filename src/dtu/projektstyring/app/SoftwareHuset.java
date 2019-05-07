@@ -39,11 +39,6 @@ public class SoftwareHuset {
 			e.printStackTrace();
 		}
 		projects.add(defProj);
-		
-		Activity vacation = new Activity("Vacation");
-		Activity sickness = new Activity("Sickness");
-		privateActivities.add(vacation);
-		privateActivities.add(sickness);
 		**/
 	}
 	//*******************************//
@@ -76,12 +71,12 @@ public class SoftwareHuset {
 		return availableDevs;
 	}
 
-	public void getRapport(Developer developer, int projectNumber) throws Exception {
+	public Report getRapport(Developer developer, int projectNumber) throws Exception {
 		Project project = getProject(projectNumber);
 		if(!project.getProjectLeader().equals(developer)) {
 			throw new NotProjectLeaderException();
 		}
-		project.getReport();
+		return project.getReport();
 	}
 	
 	public Developer getProjectLeader(String projectName) throws Exception { 
@@ -114,6 +109,10 @@ public class SoftwareHuset {
 		DeveloperActivityTime work = new DeveloperActivityTime(activityDeveloper, activityHelper, 
 																activity, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
 		activity.registerTime(work);
+	}
+	
+	public void registerPrivateActivity(Developer developer, int startTime, int endTime, String activityName) {
+		
 	}
 	
 	public void createAndAddActivityToProject(Developer developer, String projectName, String activityName) throws Exception {
@@ -202,7 +201,6 @@ public class SoftwareHuset {
 			}
 		}
 		throw new Exception("Developer with specified initials does not exist.");
-		//return null;
 	}
 	
 	public void addDeveloper(Developer developer) {

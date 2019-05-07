@@ -957,8 +957,7 @@ formatter.match({
   "location": "GenerateRapportSteps.theGeneratedDevelopmentRapportIsGenerated()"
 });
 formatter.result({
-  "error_message": "cucumber.api.PendingException: TODO: implement me\r\n\tat dtu.projektstyring.acceptance_tests.GenerateRapportSteps.theGeneratedDevelopmentRapportIsGenerated(GenerateRapportSteps.java:55)\r\n\tat ✽.the development rapport is generated(use_cases\\generate_rappport.feature:12)\r\n",
-  "status": "pending"
+  "status": "passed"
 });
 formatter.background({
   "name": "A project and an activity exists",
@@ -1005,7 +1004,7 @@ formatter.step({
   "keyword": "When "
 });
 formatter.match({
-  "location": "ProjectSteps.aDevelopmentWorkerGeneratesAProjectDevelopmentRapportOfAProject()"
+  "location": "GenerateRapportSteps.aDevelopmentWorkerGeneratesAProjectDevelopmentRapportOfAProject()"
 });
 formatter.result({
   "status": "passed"
