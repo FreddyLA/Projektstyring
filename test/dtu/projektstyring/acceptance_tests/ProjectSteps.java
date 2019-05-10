@@ -9,7 +9,7 @@ import java.util.Date;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import dtu.projektstyring.app.Activity;
+import dtu.projektstyring.app.WorkActivity;
 import dtu.projektstyring.app.Developer;
 import dtu.projektstyring.app.Project;
 import dtu.projektstyring.app.Report;
@@ -77,7 +77,7 @@ public class ProjectSteps {
         assertTrue(softwareHuset.getDevelopers().contains(worker));
     }
 
-    @When("a development worker creates a project with the name {string}")
+    @When("the development worker creates a project with the name {string}")
     public void aDevelopmentWorkerCreatesANewProjectWithTheName(String string){
     	try {
             softwareHuset.makeProject(string);

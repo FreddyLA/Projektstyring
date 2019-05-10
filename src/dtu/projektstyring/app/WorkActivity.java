@@ -8,7 +8,7 @@ import dtu.projektstyring.exceptions.NotProjectLeaderException;
 import dtu.projektstyring.exceptions.StartDateException;
 import dtu.projektstyring.exceptions.TooManyActivitesException;
 
-public class Activity {
+public class WorkActivity {
 	private String activityName; //Unique for activities in project
 	private int activityStartTime, activityEndTime, activityCreationTime; //Week number breakdown
 	private double budgetedTime;
@@ -17,7 +17,7 @@ public class Activity {
 	private Project attachedProject;
 	
 //	//Constructer for an activity with a know start and endtime and budgettet time
-//	public Activity(Project attachedProject, String activityName, Calendar activityStartTime, Calendar activityEndTime, double budgetedTime){
+//	public WorkActivity(Project attachedProject, String activityName, Calendar activityStartTime, Calendar activityEndTime, double budgetedTime){
 //		this.attachedProject = attachedProject;
 //		this.activityName = activityName;
 //		this.activityStartTime = activityStartTime;
@@ -28,14 +28,14 @@ public class Activity {
 	
 	//Constructer for an activity with only project and name known. Might be better to only have this
 	//and set the remaining fields with setters
-	public Activity(Project attachedProject, String activityName) {
+	public WorkActivity(Project attachedProject, String activityName) {
 		this.attachedProject = attachedProject;
 		this.activityName = activityName;
 		activityCreationTime = attachedProject.getSoftwareHuset().getDateServer().getDate().get(Calendar.WEEK_OF_YEAR);
 	}
 	
 	//Constructer for private activities. Needs work
-	public Activity(String activityName) {
+	public WorkActivity(String activityName) {
 		this.activityName = activityName;
 	}
 	
@@ -78,8 +78,8 @@ public class Activity {
 	
 	//Check if an activity overlaps with a given timeframe
 	public boolean inTimeFrame(int startTime, int endTime) {
-		if((startTime < getStartTime() && endTime < getStartTime()) || 
-				startTime > getEndTime() && endTime > getEndTime()) {
+		if((startTime < this.activityStartTime && endTime < this.activityStartTime) || 
+				startTime > this.activityEndTime && endTime > this.activityEndTime) {
 			return false;
 		}
 		return true;
@@ -89,11 +89,11 @@ public class Activity {
 		if(!attachedProject.getProjectLeader().equals(projectLeader)) {
 			throw new NotProjectLeaderException();
 		}
-		if(developer.getActivities().size() == 10) {
+		if(developer.getWorkActivities().size() == 10) {
 			throw new TooManyActivitesException();
 		}
 		this.developers.add(developer);
-		developer.addActivity(this);
+		developer.addWorkActivity(this);
 	}
 	
 	public double getTotalWorkHours() {
@@ -105,13 +105,13 @@ public class Activity {
 	}
 	
 	public boolean removeDeveloper(Developer developer) {
-		developer.removeActivity(this);
+		developer.removeWorkActivity(this);
 		return this.developers.remove(developer);
 	}
 	
 	public void removeActivityFromAllDevelopers() {
 		for(Developer d : this.developers) {
-			d.removeActivity(this);
+			d.removeWorkActivity(this);
 		}
 		this.developers.clear();
 	}

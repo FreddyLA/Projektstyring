@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import dtu.projektstyring.app.Activity;
+import dtu.projektstyring.app.WorkActivity;
 import dtu.projektstyring.app.Developer;
 import dtu.projektstyring.app.Project;
 import dtu.projektstyring.app.Report;
@@ -19,7 +19,7 @@ public class GenerateRapportSteps {
 	
 	private SoftwareHuset softwareHuset;
 	private Project project;
-	private Activity activity;
+	private WorkActivity workActivity;
 	private Developer developer, worker, worker2;
 	private ErrorMessageHolder errorMessage;
 	private Report projectReport;

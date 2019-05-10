@@ -1,13 +1,13 @@
 package dtu.projektstyring.app;
 
 public class DeveloperActivityTime {
-	private Activity attachedActivity;
+	private WorkActivity attachedActivity;
 	private Developer developer, helperDeveloper; 
 	private int timeStampDay; //Day work was performed. Assume work is always registered the day it is performed
 	private double timeSpent;
 	
 	//Constructer for a developer doing work on an activity
-	public DeveloperActivityTime(Developer developer, Activity attachedActivity, double timeSpent, int timeStampDay) {
+	public DeveloperActivityTime(Developer developer, WorkActivity attachedActivity, double timeSpent, int timeStampDay) {
 		this.developer = developer;
 		this.attachedActivity = attachedActivity;
 		this.timeSpent = timeSpent;
@@ -15,7 +15,7 @@ public class DeveloperActivityTime {
 	}
 	
 	//Constructer for a developer getting help on an activity
-	public DeveloperActivityTime(Developer developer, Developer helperDeveloper, Activity attachedActivity, double timeSpent, int timeStampDay) {
+	public DeveloperActivityTime(Developer developer, Developer helperDeveloper, WorkActivity attachedActivity, double timeSpent, int timeStampDay) {
 		this.developer = developer;
 		this.helperDeveloper = helperDeveloper;
 		this.attachedActivity = attachedActivity;

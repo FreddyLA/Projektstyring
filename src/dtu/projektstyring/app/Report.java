@@ -7,14 +7,14 @@ public class Report {
 	
 	private String projectName;
 	private int projectNumber;
-	private List<Activity> activities = new ArrayList<>();
+	private List<WorkActivity> workActivities = new ArrayList<>();
 	private String projectLeader;
 	private int startTime;
 	
 	public Report(Project project) {
 		this.projectName = project.getName();
 		this.projectNumber = project.getProjectNumber();
-		this.activities = project.getActivities();
+		this.workActivities = project.getActivities();
 		this.projectLeader = project.getProjectLeader().getInitials();
 		this.startTime = project.getStartTime();
 	}
@@ -26,8 +26,8 @@ public class Report {
 								  + "Start time: %d \n"
 								  , projectName, projectNumber, projectLeader, startTime);
 		String activityInfo = "";
-		for(Activity activity : activities) {
-			activityInfo +=  "\t" + activity + "\n";
+		for(WorkActivity workActivity : workActivities) {
+			activityInfo +=  "\t" + workActivity + "\n";
 		}
 		
 		projectInfo += activityInfo;
@@ -43,8 +43,8 @@ public class Report {
 		return projectNumber;
 	}
 	
-	public List<Activity> getActivities() {
-		return activities;
+	public List<WorkActivity> getActivities() {
+		return workActivities;
 	}
 	
 	public String getProjectLeader() {

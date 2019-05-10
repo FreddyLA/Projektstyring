@@ -1,15 +1,15 @@
 package test_helpers;
 
-import dtu.projektstyring.app.Activity;
+import dtu.projektstyring.app.WorkActivity;
 
 public class ActivityHolder {
-	private Activity activity;
+	private WorkActivity workActivity;
 	
-	public Activity getActivity() {
-		return activity;
+	public WorkActivity getActivity() {
+		return workActivity;
 	}
 	
-	public void setActivity(Activity activity) {
-		this.activity = activity;
+	public void setActivity(WorkActivity workActivity) {
+		this.workActivity = workActivity;
 	}
 }

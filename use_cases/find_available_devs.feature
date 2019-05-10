@@ -20,7 +20,7 @@ Given the activity doesn't has a start date
 When the project leader wants a list of available developers
 Then an error message "Activity doesn't have a start/enddate" is presented
 
-Scenario: Project leader wants available developers for an activity that doesnt't have a start date
+Scenario: Project leader wants available developers for an activity that doesnt't have an end date
 Given the activity doesn't has a end date
 When the project leader wants a list of available developers
 Then an error message "Activity doesn't have a start/enddate" is presented

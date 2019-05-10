@@ -9,8 +9,9 @@ public class Developer {
 	private String developerInitials; //Unique
 	private boolean canWorkOn20Activities;
 	private List<Project> leaderOf = new ArrayList<>();
-	private List<Activity> activities = new ArrayList<>();
+	private List<WorkActivity> workActivities = new ArrayList<>();
 	private List<DeveloperActivityTime> workDone = new ArrayList<>();
+	private List<PrivateActivity> privateActivities = new ArrayList<>();
 	private SoftwareHuset softwareHuset;
 	
 	public Developer(String developerName, String developerInitials, SoftwareHuset softwareHuset){
@@ -22,8 +23,9 @@ public class Developer {
 	//Returns true if a developer is free in a given time frame
 	public boolean isAvailable(int startTime, int endTime) {
 		int activitiesInTimeFrame = 0;
-		for(Activity activity: activities) {
-			if(activity.inTimeFrame(startTime, endTime)) {
+		
+		for(WorkActivity workActivity: workActivities) {
+			if(workActivity.inTimeFrame(startTime, endTime)) {
 				activitiesInTimeFrame++;
 			}
 		}
@@ -61,16 +63,37 @@ public class Developer {
 		leaderOf.remove(project);
 	}
 	
-	public List<Activity> getActivities() {
-		return activities;
-	}
-
-	public void addActivity(Activity activity) {
-		activities.add(activity);
+	public List<PrivateActivity> getPrivateActivities() {
+		return privateActivities;
 	}
 	
-	public boolean removeActivity(Activity activity) {
-		return activities.remove(activity);
+	public PrivateActivity getPrivateActivity(String activityName) {
+		for(PrivateActivity privateActivity: privateActivities) {
+			if(privateActivity.getName().matches(activityName)) {
+				return privateActivity;
+			}
+		}
+		return null;
+	}
+
+	public void addPrivateActivity(PrivateActivity privateActivity) {
+		privateActivities.add(privateActivity);
+	}
+	
+	public boolean removePrivateActivity(PrivateActivity privateActivity) {
+		return privateActivities.remove(privateActivity);
+	}
+	
+	public List<WorkActivity> getWorkActivities() {
+		return workActivities;
+	}
+
+	public void addWorkActivity(WorkActivity workActivity) {
+		workActivities.add(workActivity);
+	}
+	
+	public boolean removeWorkActivity(WorkActivity workActivity) {
+		return workActivities.remove(workActivity);
 	}
 	
 	public String getInitials() {

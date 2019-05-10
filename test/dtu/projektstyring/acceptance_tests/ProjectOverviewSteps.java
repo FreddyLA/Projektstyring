@@ -9,7 +9,7 @@ import java.util.List;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import dtu.projektstyring.app.Activity;
+import dtu.projektstyring.app.WorkActivity;
 import dtu.projektstyring.app.Developer;
 import dtu.projektstyring.app.Project;
 import dtu.projektstyring.app.SoftwareHuset;
@@ -22,7 +22,7 @@ import test_helpers.UserHelper;
 public class ProjectOverviewSteps {
 	private SoftwareHuset softwareHuset;
 	private Project project;
-	private Activity activity;
+	private WorkActivity workActivity;
 	private Developer developer, worker, worker2;
 	private ErrorMessageHolder errorMessage;
 	private List<Developer> availableDevelopers = new ArrayList<>();
@@ -49,33 +49,33 @@ public class ProjectOverviewSteps {
 	public void aDevelopmentWorkerIsAvailableInTheGivenTimeperiod() {
 	    worker = userHelper.getUser2();
 	    softwareHuset.addDeveloper(worker);
-	    activity = activityHolder.getActivity();
-	    assertTrue(worker.isAvailable(activity.getStartTime(), activity.getEndTime()));
+	    workActivity = activityHolder.getActivity();
+	    assertTrue(worker.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()));
 	}
 	
 	@Given("a development worker is not available in the given timeperiod")
 	public void anotherDevelopemntWorkerIsNotAvailableInTheGivenTimeperiod() throws Exception {
 		developer = userHelper.getUser();
 		project = projectHelper.getProject();
-		activity = activityHolder.getActivity();
+		workActivity = activityHolder.getActivity();
 	    worker2 = userHelper.getUser3();
 	    softwareHuset.addDeveloper(worker2);
-	    Activity trashActivity = null;
+	    WorkActivity trashActivity = null;
 	    for(int i = 0; i < 10; i++) {
 			softwareHuset.createAndAddActivityToProject(developer, project.getName(), "n"+i);
 			trashActivity = project.getActivity("n"+i);
-			trashActivity.setStartTime(developer, activity.getStartTime());
-			trashActivity.setEndTime(developer, activity.getEndTime());
+			trashActivity.setStartTime(developer, workActivity.getStartTime());
+			trashActivity.setEndTime(developer, workActivity.getEndTime());
 			trashActivity.addDeveloper(developer, worker2);
 		}
-	    assertFalse(worker2.isAvailable(activity.getStartTime(), activity.getEndTime()));
+	    assertFalse(worker2.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()));
 	}
 	
 	@When("the project leader wants a list of available developers")
 	public void theProjectLeaderWantsAListOfAvailableDevelopers(){
 		project = projectHelper.getProject();
 	    try {
-			availableDevelopers = softwareHuset.findAvailableDevelopers(project.getProjectNumber(), activity.getName());
+			availableDevelopers = softwareHuset.findAvailableDevelopers(project.getProjectNumber(), workActivity.getName());
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -93,14 +93,14 @@ public class ProjectOverviewSteps {
 	
 	@Given("the activity doesn't has a start date")
 	public void theActivityDoesnTHasAStartDate() {
-		activity = activityHolder.getActivity();
-	    assertTrue(activity.getStartTime() == 0);
+		workActivity = activityHolder.getActivity();
+	    assertTrue(workActivity.getStartTime() == 0);
 	}
 
 	@Given("the activity doesn't has a end date")
 	public void theActivityDoesnTHasAEndDate() {
-		activity = activityHolder.getActivity();
-	    assertTrue(activity.getEndTime() == 0);
+		workActivity = activityHolder.getActivity();
+	    assertTrue(workActivity.getEndTime() == 0);
 	}
 	
 	@Then("the list doesn't contain any developers")

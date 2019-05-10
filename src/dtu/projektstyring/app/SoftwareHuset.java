@@ -1,6 +1,7 @@
 package dtu.projektstyring.app;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -9,15 +10,14 @@ import dtu.projektstyring.exceptions.DuplicateNameException;
 import dtu.projektstyring.exceptions.MissingDateException;
 import dtu.projektstyring.exceptions.NotOnActivityException;
 import dtu.projektstyring.exceptions.NotProjectLeaderException;
-import dtu.projektstyring.exceptions.StartDateException;
 
 public class SoftwareHuset {
 	
 	private List<Developer> developers = new ArrayList<>();
 	private List<Project> projects = new ArrayList<>();
-	private List<Activity> privateActivities = new ArrayList<>();
+	private List<String> privateActivities = new ArrayList<String>(
+										Arrays.asList("Vacation", "Sick", "Course"));
 	private DateServer dateServer = new DateServer();
-	private List<String> work = new ArrayList<>();
 	
 	//**********TIL TESTING**********//
 	public SoftwareHuset() {
@@ -58,13 +58,13 @@ public class SoftwareHuset {
 	//Finds developers available in the time frame of the activity
 	public List<Developer> findAvailableDevelopers(int projectNumber, String activityName) throws Exception {
 		Project project = getProject(projectNumber);
-		Activity activity = project.getActivity(activityName);
-		if(activity.getStartTime() == 0) {
+		WorkActivity workActivity = project.getActivity(activityName);
+		if(workActivity.getStartTime() == 0) {
 			throw new MissingDateException();
 		}
 		List<Developer> availableDevs = new ArrayList<>();
 		for(Developer developer: developers) {
-			if(developer.isAvailable(activity.getStartTime(), activity.getEndTime())) {
+			if(developer.isAvailable(workActivity.getStartTime(), workActivity.getEndTime())) {
 				availableDevs.add(developer);
 			}
 		}
@@ -86,15 +86,15 @@ public class SoftwareHuset {
 	
 	public void registerTime(Developer developer, int projectNumber, String activityName, double hours) throws Exception {
 		Project project = getProject(projectNumber);
-		Activity activity = project.getActivity(activityName);
+		WorkActivity workActivity = project.getActivity(activityName);
 		if(developer == null) throw new Exception("Developer does not exist");
 		else if(project == null) throw new Exception("Specified project does not exist");
-		else if(activity == null) throw new Exception("Specified activity of the project does not exist");
-		else if(!activity.getDevelopers().contains(developer)) throw new NotOnActivityException();
+		else if(workActivity == null) throw new Exception("Specified activity of the project does not exist");
+		else if(!workActivity.getDevelopers().contains(developer)) throw new NotOnActivityException();
 		
-		if(activity.getDevelopers().contains(developer)) {
-			DeveloperActivityTime work = new DeveloperActivityTime(developer, activity, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
-			activity.registerTime(work);
+		if(workActivity.getDevelopers().contains(developer)) {
+			DeveloperActivityTime work = new DeveloperActivityTime(developer, workActivity, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
+			workActivity.registerTime(work);
 			developer.registerWork(work);
 		}
 	}
@@ -102,17 +102,21 @@ public class SoftwareHuset {
 	public void registerHelpedTime(Developer activityDeveloper, Developer activityHelper, 
 									int projectNumber, String activityName, int hours) throws Exception {
 		Project project = getProject(projectNumber);
-		Activity activity = project.getActivity(activityName);
-		if(!activity.getDevelopers().contains(activityDeveloper)) {
+		WorkActivity workActivity = project.getActivity(activityName);
+		if(!workActivity.getDevelopers().contains(activityDeveloper)) {
 			throw new NotOnActivityException();
 		}
 		DeveloperActivityTime work = new DeveloperActivityTime(activityDeveloper, activityHelper, 
-																activity, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
-		activity.registerTime(work);
+																workActivity, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
+		workActivity.registerTime(work);
 	}
 	
-	public void registerPrivateActivity(Developer developer, int startTime, int endTime, String activityName) {
-		
+	public void registerPrivateActivity(Developer developer, int startTime, int endTime, String activityName) throws Exception {
+		if(!privateActivities.contains(activityName)) {
+			throw new Exception();
+		}
+		PrivateActivity privateActivity = new PrivateActivity(activityName, startTime, endTime);
+		developer.addPrivateActivity(privateActivity);
 	}
 	
 	public void createAndAddActivityToProject(Developer developer, String projectName, String activityName) throws Exception {
@@ -126,29 +130,14 @@ public class SoftwareHuset {
 	public void addDeveloperToProjectActivity(Developer projectLeader, Developer developer, 
 												String projectName, String activityName) throws Exception {
 		Project project = getProject(projectName);
-		Activity activity = project.getActivity(activityName);
-		project.addDeveloperToActivity(projectLeader,developer, activity);
+		WorkActivity workActivity = project.getActivity(activityName);
+		project.addDeveloperToActivity(projectLeader,developer, workActivity);
 	}
 	
 	public List<Developer> getProjectActivityDevelopers(String projectName, String activityName) throws Exception{
 		Project project = getProject(projectName);
-		Activity activity = project.getActivity(activityName);
-		return project.getActivityDevelopers(activity);
-	}
-	
-	public void registerPrivateTime(Developer developer, String activityName, double hours) {
-		Activity privateActivity = null;
-		for(Activity activity: privateActivities) {
-			if(activity.getName().matches(activityName)) {
-				privateActivity = activity;
-			}
-		}
-		DeveloperActivityTime priv = new DeveloperActivityTime(developer, privateActivity, hours, Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
-		privateActivity.registerTime(priv);
-	}
-	
-	public List<String> getFullWork(){
-		return work;
+		WorkActivity workActivity = project.getActivity(activityName);
+		return project.getActivityDevelopers(workActivity);
 	}
 	
 	public DateServer getDateServer() {
@@ -209,7 +198,7 @@ public class SoftwareHuset {
 	
 	public boolean removeDeveloper(Developer developer) {
 		for(Project p: this.projects) {
-			for(Activity a: p.getActivities()) {
+			for(WorkActivity a: p.getActivities()) {
 				a.removeDeveloper(developer);
 			}
 		}

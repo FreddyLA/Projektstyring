@@ -10,7 +10,7 @@ public class Project {
 	private String projectName; //Unique
 	private static int projectCounter = 1;
 	private int projectNumber; //Unique
-	private ArrayList<Activity> activities = new ArrayList<>();
+	private ArrayList<WorkActivity> workActivities = new ArrayList<>();
 	private Developer projectLeader;
 	private int startTime, creationTime;
 	private SoftwareHuset softwareHuset;
@@ -27,32 +27,32 @@ public class Project {
 		return projectReport;
 	}
 	
-//	public Activity createAndAddActivity(String activityName, Calendar activityStartTime, Calendar activityEndTime,
+//	public WorkActivity createAndAddActivity(String activityName, Calendar activityStartTime, Calendar activityEndTime,
 //			double activityBudgetTime) {
-//		Activity newActivity = new Activity(this, activityName, activityStartTime, activityEndTime, activityBudgetTime);
-//		activities.add(newActivity);
+//		WorkActivity newActivity = new WorkActivity(this, activityName, activityStartTime, activityEndTime, activityBudgetTime);
+//		workActivities.add(newActivity);
 //		return newActivity;
 //	}
 	
 	public void createAndAddActivity(String activityName) {
-		Activity newActivity = new Activity(this, activityName);
-		activities.add(newActivity);
+		WorkActivity newActivity = new WorkActivity(this, activityName);
+		workActivities.add(newActivity);
 	}
 
-	public void addActivity(Activity activity) {
-		this.activities.add(activity);
+	public void addActivity(WorkActivity workActivity) {
+		this.workActivities.add(workActivity);
 	}
 	
-	public ArrayList<Activity> getActivities() {
-		ArrayList<Activity> rActivities = new ArrayList<>();;
-		for(Activity a: activities) {
+	public ArrayList<WorkActivity> getActivities() {
+		ArrayList<WorkActivity> rActivities = new ArrayList<>();;
+		for(WorkActivity a: workActivities) {
 			rActivities.add(a);
 		}
 		return rActivities;
 	}
 	
-	public Activity getActivity(String activityName) {
-		for(Activity a : activities) {
+	public WorkActivity getActivity(String activityName) {
+		for(WorkActivity a : workActivities) {
 			if(a.getName().equals(activityName)) {
 				return a;
 			}
@@ -60,26 +60,26 @@ public class Project {
 		return null;
 	}
 	
-	public boolean removeActivity(Activity activity) {
-		activity.removeActivityFromAllDevelopers();
-		return this.activities.remove(activity);
+	public boolean removeActivity(WorkActivity workActivity) {
+		workActivity.removeActivityFromAllDevelopers();
+		return this.workActivities.remove(workActivity);
 	}
 	
 	public boolean removeAllActivities() {
-		for(Activity a : this.activities) {
+		for(WorkActivity a : this.workActivities) {
 			a.removeActivityFromAllDevelopers();
-			this.activities.remove(a);
+			this.workActivities.remove(a);
 			return true;
 		}
 		return false;
 	}
 	
-	public List<Developer> getActivityDevelopers(Activity activity){
-		return activity.getDevelopers();
+	public List<Developer> getActivityDevelopers(WorkActivity workActivity){
+		return workActivity.getDevelopers();
 	}
 	
-	public void addDeveloperToActivity(Developer projectLeader, Developer developer, Activity activity) throws Exception {
-		activity.addDeveloper(projectLeader, developer);
+	public void addDeveloperToActivity(Developer projectLeader, Developer developer, WorkActivity workActivity) throws Exception {
+		workActivity.addDeveloper(projectLeader, developer);
 	}
 
 	public Developer getProjectLeader() {
