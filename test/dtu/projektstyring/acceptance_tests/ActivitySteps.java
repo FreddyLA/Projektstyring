@@ -237,15 +237,9 @@ public class ActivitySteps {
 		softwareHuset.setDeveloperCanWorkOn20Activities(worker.getInitials(), true);
 	}
 	
-	@When("a development worker registers time on activity that doesn't excist")
-	public void aDevelopmentWorkerRegistersTimeOnActivityThatDoesnTExcist() {
-		worker = userHelper.getUser();
-		worker2 = userHelper.getUser2();
-		softwareHuset.addDeveloper(worker2);
-		try {
-	    	softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker2.getInitials(), project.getProjectNumber(), "pølse");
-		} catch (Exception e) {
-			errorMessage.setErrorMessage(e.getMessage());
-		}
+	@Given("a development worker inputs {int} hours worked on the activity with the name {string}")
+	public void aDevelopmentWorkerInputsHoursWorkedOnTheActivityWithTheName(Integer hours, String string) throws Exception {
+		softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker.getInitials(), project.getProjectNumber(), workActivity.getName());
+		softwareHuset.registerTime(worker.getInitials(), project.getProjectNumber(), string, hours);
 	}
 }

@@ -1260,6 +1260,292 @@ formatter.match({
 formatter.result({
   "status": "passed"
 });
+formatter.uri("use_cases\\project_overview.feature");
+formatter.feature({
+  "name": "Project leader can get overview of time usage on project",
+  "description": "\tDescription: A project leader creates a new project\n\tActor: Project leader",
+  "keyword": "Feature"
+});
+formatter.background({
+  "name": "A project and an activity exists",
+  "description": "",
+  "keyword": "Background"
+});
+formatter.step({
+  "name": "a project with the name \"Project 1\" exists",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectWithTheNameAlreadyExists(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a project leader has been selected",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader creates a new activity with the name \"Activity\"",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a development worker is assigned the activity",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.aDevelopmentWorkerIsAssignedTheActivity()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the development worker inputs 8 hours worked on the activity into the system",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "RegisterTimeSteps.theDevelopmentWorkerInputsAmountOfHoursWorkedForTheDayIntoTheSystem(double)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.scenario({
+  "name": "Project leader gets time spent on an activity",
+  "description": "",
+  "keyword": "Scenario"
+});
+formatter.step({
+  "name": "the project leader creates a new activity with the name \"Activity2\"",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a development worker inputs 4 hours worked on the activity with the name \"Activity2\"",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.aDevelopmentWorkerInputsHoursWorkedOnTheActivityWithTheName(Integer,String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader asks for time spent on the activity with the name \"Activity\"",
+  "keyword": "When "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theProjectLeaderAsksForTimeSpentOnTheActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader is told that 8 hours has been spent on the activity",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theProjectLeaderIsToldThatHoursHasBeenSpentOnTheActivity(Integer)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.background({
+  "name": "A project and an activity exists",
+  "description": "",
+  "keyword": "Background"
+});
+formatter.step({
+  "name": "a project with the name \"Project 1\" exists",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectWithTheNameAlreadyExists(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a project leader has been selected",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader creates a new activity with the name \"Activity\"",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a development worker is assigned the activity",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.aDevelopmentWorkerIsAssignedTheActivity()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the development worker inputs 8 hours worked on the activity into the system",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "RegisterTimeSteps.theDevelopmentWorkerInputsAmountOfHoursWorkedForTheDayIntoTheSystem(double)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.scenario({
+  "name": "Project leader gets time spent on a project",
+  "description": "",
+  "keyword": "Scenario"
+});
+formatter.step({
+  "name": "the development worker inputs 4 hours worked on the activity into the system",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "RegisterTimeSteps.theDevelopmentWorkerInputsAmountOfHoursWorkedForTheDayIntoTheSystem(double)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader asks for time spent on the project",
+  "keyword": "When "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theProjectLeaderAsksForTimeSpentOnTheProject()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader is told that 12 hours has been spent on the project",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theProjectLeaderIsToldThatHoursHasBeenSpentOnTheProject(Integer)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.background({
+  "name": "A project and an activity exists",
+  "description": "",
+  "keyword": "Background"
+});
+formatter.step({
+  "name": "a project with the name \"Project 1\" exists",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectWithTheNameAlreadyExists(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a project leader has been selected",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader creates a new activity with the name \"Activity\"",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a development worker is assigned the activity",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.aDevelopmentWorkerIsAssignedTheActivity()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the development worker inputs 8 hours worked on the activity into the system",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "RegisterTimeSteps.theDevelopmentWorkerInputsAmountOfHoursWorkedForTheDayIntoTheSystem(double)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.scenario({
+  "name": "Project leader gets expected time left on a project",
+  "description": "",
+  "keyword": "Scenario"
+});
+formatter.step({
+  "name": "the bugettet time on the project is 12 hours",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.theBugettetTimeOnTheProjectIsHours(Integer)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader asks work remains on the project",
+  "keyword": "When "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theProjectLeaderAsksWorkRemainsOnTheProject()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader is told that 4 hours remain on the project",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theProjectLeaderIsToldThatHoursRemainOnTheProject(Integer)"
+});
+formatter.result({
+  "status": "passed"
+});
 formatter.uri("use_cases\\put_developer_on_activity.feature");
 formatter.feature({
   "name": "Manning of activities",
@@ -1807,7 +2093,7 @@ formatter.step({
   "keyword": "When "
 });
 formatter.match({
-  "location": "ActivitySteps.aDevelopmentWorkerRegistersTimeOnActivityThatDoesnTExcist()"
+  "location": "RegisterTimeSteps.aDevelopmentWorkerRegistersTimeOnActivityThatDoesnTExcist()"
 });
 formatter.result({
   "status": "passed"

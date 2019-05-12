@@ -64,7 +64,11 @@ public class Developer {
 	}
 	
 	public List<PrivateActivity> getPrivateActivities() {
-		return privateActivities;
+		List<PrivateActivity> privateActivitiesCopy = new ArrayList<>();
+		for(PrivateActivity privateActivity: privateActivities) {
+			privateActivitiesCopy.add(privateActivity);
+		}
+		return privateActivitiesCopy;
 	}
 	
 	public PrivateActivity getPrivateActivity(String activityName) {
@@ -81,7 +85,11 @@ public class Developer {
 	}
 	
 	public List<WorkActivity> getWorkActivities() {
-		return workActivities;
+		List<WorkActivity> workActivitiesCopy = new ArrayList<>();
+		for(WorkActivity workActivity: workActivities) {
+			workActivitiesCopy.add(workActivity);
+		}
+		return workActivitiesCopy;
 	}
 
 	public void addWorkActivity(WorkActivity workActivity) {

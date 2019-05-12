@@ -26,6 +26,7 @@ public class ProjectOverviewSteps {
 	private Developer developer, worker, worker2;
 	private ErrorMessageHolder errorMessage;
 	private List<Developer> availableDevelopers = new ArrayList<>();
+	private double timeSpentActivity, timeSpentProject, timeRemainingProject;
 	
 	private UserHelper userHelper;
 	private MockDateHolder dateHolder;
@@ -101,5 +102,41 @@ public class ProjectOverviewSteps {
 	public void theActivityDoesnTHasAEndDate() {
 		workActivity = activityHolder.getActivity();
 	    assertTrue(workActivity.getEndTime() == 0);
+	}
+	
+	@When("the project leader asks for time spent on the activity with the name {string}")
+	public void theProjectLeaderAsksForTimeSpentOnTheActivityWithTheName(String string) throws Exception {
+		developer = userHelper.getUser();
+		project = projectHelper.getProject();
+		timeSpentActivity = softwareHuset.getTimeSpentActivity(developer.getInitials(), project.getProjectNumber(), string);
+	}
+	
+	@Then("the project leader is told that {int} hours has been spent on the activity")
+	public void theProjectLeaderIsToldThatHoursHasBeenSpentOnTheActivity(Integer int1) {
+	    assertTrue(timeSpentActivity == int1);
+	}
+	
+	@When("the project leader asks for time spent on the project")
+	public void theProjectLeaderAsksForTimeSpentOnTheProject() throws Exception {
+		developer = userHelper.getUser();
+		project = projectHelper.getProject();
+		timeSpentProject = softwareHuset.getTimeSpentProject(developer.getInitials(), project.getProjectNumber());
+	}
+	
+	@Then("the project leader is told that {int} hours has been spent on the project")
+	public void theProjectLeaderIsToldThatHoursHasBeenSpentOnTheProject(Integer int1) {
+		assertTrue(timeSpentProject == int1);
+	}
+	
+	@When("the project leader asks work remains on the project")
+	public void theProjectLeaderAsksWorkRemainsOnTheProject() throws Exception {
+		developer = userHelper.getUser();
+		project = projectHelper.getProject();
+		timeRemainingProject = softwareHuset.getProjectWorkRemaining(developer.getInitials(), project.getProjectNumber());
+	}
+	
+	@Then("the project leader is told that {int} hours remain on the project")
+	public void theProjectLeaderIsToldThatHoursRemainOnTheProject(Integer int1) {
+	    assertTrue(timeRemainingProject == int1);
 	}
 }

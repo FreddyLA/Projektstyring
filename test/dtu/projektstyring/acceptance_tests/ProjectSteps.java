@@ -211,4 +211,9 @@ public class ProjectSteps {
     public void theProjectEndDateHasBeenChanged() {
     	assertTrue(project.getEndTime() == calendar.get(Calendar.WEEK_OF_YEAR)+5);
     }
+    
+    @Given("the bugettet time on the project is {int} hours")
+    public void theBugettetTimeOnTheProjectIsHours(Integer time) throws Exception {
+        softwareHuset.setProjectBudgettetTime(project.getProjectNumber(), worker.getInitials(), time);
+    }
 }

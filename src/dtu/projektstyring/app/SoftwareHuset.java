@@ -24,7 +24,6 @@ public class SoftwareHuset {
 	
 	//**********TIL TESTING**********//
 	public SoftwareHuset() {
-		/**
 		Developer defDev = new Developer("John Doe", "JDO", this);
 		developers.add(defDev);
 		
@@ -35,14 +34,13 @@ public class SoftwareHuset {
 		newDev = new Developer("Melissa Kullins", "MKU", this);
 		developers.add(newDev);
 		
-		Project defProj = new Project("Proj1", dateServer.getDate(), this);
+		Project defProj = new Project("Proj1", dateServer.getDate().get(Calendar.WEEK_OF_YEAR), this);
 		try {
 			defProj.setProjectLeader(defDev);
 		} catch (NotProjectLeaderException e) {
 			e.printStackTrace();
 		}
 		projects.add(defProj);
-		**/
 	}
 	//*******************************//
 	
@@ -402,5 +400,57 @@ public class SoftwareHuset {
 			throw new ActivityDoesNotExistException();
 		}
 		return workActivity.getDevWorkTimeToday(developer);
+	}
+
+	public double getTimeSpentActivity(String developerInitials, int projectID, String activityName) throws Exception {
+		Developer developer = getDeveloper(developerInitials);
+		if(developer == null) {
+			throw new DeveloperDoesNotExistException();
+		}
+		Project project = getProject(projectID);
+		if(project == null) {
+			throw new ProjectDoesNotExistException();
+		}
+		WorkActivity workActivity = project.getActivity(activityName);
+		if(workActivity == null) {
+			throw new ActivityDoesNotExistException();
+		}
+		return workActivity.getTotalWorkHours();
+	}
+
+	public double getTimeSpentProject(String developerInitials, int projectID) throws Exception {
+		Developer developer = getDeveloper(developerInitials);
+		if(developer == null) {
+			throw new DeveloperDoesNotExistException();
+		}
+		Project project = getProject(projectID);
+		if(project == null) {
+			throw new ProjectDoesNotExistException();
+		}
+		return project.getTotalWorkHours();
+	}
+
+	public void setProjectBudgettetTime(int projectID, String developerInitials, double time) throws Exception {
+		Developer developer = getDeveloper(developerInitials);
+		if(developer == null) {
+			throw new DeveloperDoesNotExistException();
+		}
+		Project project = getProject(projectID);
+		if(project == null) {
+			throw new ProjectDoesNotExistException();
+		}
+		project.setBudgetetTime(developer, time);
+	}
+
+	public double getProjectWorkRemaining(String developerInitials, int projectID) throws Exception {
+		Developer developer = getDeveloper(developerInitials);
+		if(developer == null) {
+			throw new DeveloperDoesNotExistException();
+		}
+		Project project = getProject(projectID);
+		if(project == null) {
+			throw new ProjectDoesNotExistException();
+		}
+		return project.getWorkRemaining();
 	}
 }

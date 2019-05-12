@@ -104,4 +104,16 @@ public class RegisterTimeSteps {
 	public void theDevelopmentWorkerIsToldThatHeHasWorkedHoursOnTheDay(Integer int1) {
 	    assertTrue(int1 == workDone);
 	}
+	
+	@When("a development worker registers time on activity that doesn't excist")
+	public void aDevelopmentWorkerRegistersTimeOnActivityThatDoesnTExcist() {
+		project = projectHelper.getProject();
+		worker = userHelper.getUser2();
+		softwareHuset.addDeveloper(worker);
+		try {
+			softwareHuset.registerTime(worker.getInitials(), project.getProjectNumber(), "pølse", 5);
+		} catch (Exception e) {
+			errorMessage.setErrorMessage(e.getMessage());
+		}
+	}
 }

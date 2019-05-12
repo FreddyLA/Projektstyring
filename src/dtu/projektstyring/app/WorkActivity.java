@@ -46,6 +46,14 @@ public class WorkActivity {
 		return developerWorkTime;
 	}
 	
+	public double getTotalWorkHours() {
+		double totalWorkHours = 0;
+		for(DeveloperActivityTime work: totalWork) {
+			totalWorkHours += work.getTimeSpent();
+		}
+		return totalWorkHours;
+	}
+	
 	//Returns the amount of work a developer has done on an activity on the current day
 	public double getDevWorkTimeToday(Developer developer) {
 		double developerWorkTime = 0;
@@ -103,7 +111,11 @@ public class WorkActivity {
 	}
 	
 	public List<Developer> getDevelopers() {
-		return developers;
+		List<Developer> developersCopy = new ArrayList<>();
+		for(Developer developer: developers) {
+			developersCopy.add(developer);
+		}
+		return developersCopy;
 	}
 	
 	public int getStartTime() {

@@ -1,6 +1,7 @@
 package dtu.projektstyring.app;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import dtu.projektstyring.exceptions.ActivityDoesNotExistException;
@@ -14,12 +15,14 @@ public class Project {
 	private ArrayList<WorkActivity> workActivities = new ArrayList<>();
 	private Developer projectLeader;
 	private int startTime, endTime, creationTime;
+	private double budgetetTime;
 	private SoftwareHuset softwareHuset;
 
 	public Project(String projectName, int creationTime, SoftwareHuset softwareHuset){
 		this.projectName = projectName;
 		this.creationTime = creationTime;
-		this.projectNumber = projectCounter++;
+		this.projectNumber = Integer.parseInt((projectCounter + "" + Calendar.getInstance().get(Calendar.YEAR)));
+		projectCounter++;	
 		this.softwareHuset = softwareHuset;
 	}
 	
@@ -34,11 +37,11 @@ public class Project {
 	}
 	
 	public ArrayList<WorkActivity> getActivities() {
-		ArrayList<WorkActivity> rActivities = new ArrayList<>();;
+		ArrayList<WorkActivity> activitiesCopy = new ArrayList<>();;
 		for(WorkActivity a: workActivities) {
-			rActivities.add(a);
+			activitiesCopy.add(a);
 		}
-		return rActivities;
+		return activitiesCopy;
 	}
 	
 	public WorkActivity getActivity(String activityName) throws ActivityDoesNotExistException {
@@ -95,6 +98,17 @@ public class Project {
 		this.startTime = startTime;
 	}
 	
+	public double getBudgetetTime() {
+		return budgetetTime;
+	}
+	
+	public void setBudgetetTime(Developer developer,double budgetetTime) throws Exception {
+		if(!projectLeader.equals(developer)) {
+			throw new NotProjectLeaderException();
+		}
+		this.budgetetTime = budgetetTime;
+	}
+	
 	public int getEndTime() {
 		return endTime;
 	}
@@ -123,5 +137,17 @@ public class Project {
 	
 	public String getName() {
 		return projectName;
+	}
+
+	public double getTotalWorkHours() {
+		double totalWorkHours = 0;
+		for(WorkActivity workActivity: workActivities) {
+			totalWorkHours += workActivity.getTotalWorkHours();
+		}
+		return totalWorkHours;
+	}
+
+	public double getWorkRemaining() {
+		return budgetetTime - getTotalWorkHours();
 	}
 }
