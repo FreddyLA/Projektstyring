@@ -10,6 +10,7 @@ import dtu.projektstyring.exceptions.DuplicateNameException;
 import dtu.projektstyring.exceptions.MissingDateException;
 import dtu.projektstyring.exceptions.NotOnActivityException;
 import dtu.projektstyring.exceptions.NotProjectLeaderException;
+import dtu.projektstyring.exceptions.PrivateActivityDuringWorkActivityException;
 
 public class SoftwareHuset {
 	
@@ -64,7 +65,7 @@ public class SoftwareHuset {
 		}
 		List<Developer> availableDevs = new ArrayList<>();
 		for(Developer developer: developers) {
-			if(developer.isAvailable(workActivity.getStartTime(), workActivity.getEndTime())) {
+			if(developer.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()) < 10) {
 				availableDevs.add(developer);
 			}
 		}
@@ -115,6 +116,9 @@ public class SoftwareHuset {
 		if(!privateActivities.contains(activityName)) {
 			throw new Exception();
 		}
+		if(developer.isAvailable(startTime, endTime) > 0) {
+			throw new PrivateActivityDuringWorkActivityException();
+		}
 		PrivateActivity privateActivity = new PrivateActivity(activityName, startTime, endTime);
 		developer.addPrivateActivity(privateActivity);
 	}
@@ -125,6 +129,18 @@ public class SoftwareHuset {
 			throw new NotProjectLeaderException();
 		}
 		project.createAndAddActivity(activityName);
+	}
+	
+	public void setActivityStartTime(Developer developer, WorkActivity workActivity, int time) throws Exception {
+		workActivity.setStartTime(developer, time);
+	}
+	
+	public void setActivityBudgettetTime(Developer developer, WorkActivity workActivity, int time) throws NotProjectLeaderException {
+		workActivity.setBudgetetTime(developer, time);
+	}
+	
+	public void setActivityEndTime(Developer developer, WorkActivity workActivity, int time) throws Exception {
+		workActivity.setEndTime(developer, time);
 	}
 	
 	public void addDeveloperToProjectActivity(Developer projectLeader, Developer developer, 
@@ -152,7 +168,7 @@ public class SoftwareHuset {
 		return projects;
 	}
 	
-	public Project getProject(String projectName) throws Exception {
+	public Project getProject(String projectName){
 		for(Project project : projects) {
 			if(project.getName().equals(projectName)) {
 				return project;
@@ -173,11 +189,6 @@ public class SoftwareHuset {
 	public void addProject(Project project) {
 		this.projects.add(project);
 	}
-
-	public boolean removeProject(Project project) {
-		project.removeAllActivities();
-		return this.projects.remove(project);
-	}
 	
 	public List<Developer> getDevelopers() {
 		return developers;
@@ -195,15 +206,6 @@ public class SoftwareHuset {
 	public void addDeveloper(Developer developer) {
 		this.developers.add(developer);
 	}
-	
-	public boolean removeDeveloper(Developer developer) {
-		for(Project p: this.projects) {
-			for(WorkActivity a: p.getActivities()) {
-				a.removeDeveloper(developer);
-			}
-		}
-		return this.developers.remove(developer);
-	}
 
 	public void setProjectStartTime(Project project, int time) throws Exception {
 		 project.setStartTime(time);
@@ -215,5 +217,17 @@ public class SoftwareHuset {
 
 	public void setProjectLeader(Project project, Developer leader, Developer newLeader) throws NotProjectLeaderException {
 		project.setProjectLeader(leader, newLeader);
+	}
+
+	public void setProjectEndTime(Project project, int time) throws Exception {
+		 project.setEndTime(time);
+	}
+
+	public void editDeveloperActivityTime(Developer worker, WorkActivity workActivity, int int2) {
+		workActivity.editDeveloperActivityTime(worker, int2);
+	}
+	
+	public void setDeveloperCanWorkOn20Activities(Developer developer, boolean b) {
+		developer.setCanWorkOn20Activities(b);
 	}
 }

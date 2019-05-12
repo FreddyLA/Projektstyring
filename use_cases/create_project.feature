@@ -12,9 +12,3 @@ Scenario: Create a project with the same name as a another project
 Given a project with the name "Project 1" exists
 When a development worker creates a project with the name "Project 1"
 Then an error message "Project with specified name already exists" is presented
-
-Scenario: Create a project with start time before project creation time
-Given a project with the name "Project 1" exists
-And a project leader has been selected
-When the project leader assigns a start date for the project that is before the project creation date
-Then an error message "Project start date cannot be before the project creation date" is presented

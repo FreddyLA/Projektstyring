@@ -42,6 +42,24 @@ public class ProjectSteps {
 		this.projectHelper = projectHelper;
 		projectHelper.setSoftwareHuset(softwareHuset);
 	}
+	
+	@Given("the project doesn't have a project leader")
+	public void theProjectDoesnTHaveAProjectLeader() throws Exception {
+	    assertTrue(softwareHuset.getProjectLeader(project.getName()) == null);
+	}
+
+	@When("a developement worker is assigned to be the project leader")
+	public void aDevelopementWorkerIsAssignedToBeTheProjectLeader() throws Exception {
+	    worker = userHelper.getUser();
+	    softwareHuset.addDeveloper(worker);
+	    project.setProjectLeader(worker);
+	    assertTrue(softwareHuset.getDevelopers().contains(worker));
+	}
+
+	@Then("the project leader of the project is the development worker")
+	public void theProjectLeaderOfTheProjectIsTheDevelopmentWorker() throws Exception {
+	    assertTrue(softwareHuset.getProjectLeader(project.getName()).equals(worker));
+	}
 
 	@When("the project leader assigns a start date for the project that is before the project creation date")
 	public void theProjectLeaderAssignsAStartDateForTheProjectThatIsBeforeTheProjectCreationDate() {
@@ -50,6 +68,18 @@ public class ProjectSteps {
 		assertTrue(prevDate.get(Calendar.WEEK_OF_YEAR) < project.getCreationTime());
 		try {
 			softwareHuset.setProjectStartTime(project, prevDate.get(Calendar.WEEK_OF_YEAR));
+		} catch (Exception e) {
+			errorMessage.setErrorMessage(e.getMessage());
+		}
+	}
+	
+	@When("the project leader assigns a end date for the project that is before the project creation date")
+	public void theProjectLeaderAssignsAEndDateForTheProjectThatIsBeforeTheProjectCreationDate() {
+		Calendar prevDate = Calendar.getInstance();
+		prevDate.add(Calendar.DAY_OF_YEAR, -8);
+		assertTrue(prevDate.get(Calendar.WEEK_OF_YEAR) < project.getCreationTime());
+		try {
+			softwareHuset.setProjectEndTime(project, prevDate.get(Calendar.WEEK_OF_YEAR));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -77,7 +107,7 @@ public class ProjectSteps {
         assertTrue(softwareHuset.getDevelopers().contains(worker));
     }
 
-    @When("the development worker creates a project with the name {string}")
+    @When("a development worker creates a project with the name {string}")
     public void aDevelopmentWorkerCreatesANewProjectWithTheName(String string){
     	try {
             softwareHuset.makeProject(string);

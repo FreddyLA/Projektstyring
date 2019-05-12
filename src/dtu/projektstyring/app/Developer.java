@@ -21,7 +21,7 @@ public class Developer {
 	}
 	
 	//Returns true if a developer is free in a given time frame
-	public boolean isAvailable(int startTime, int endTime) {
+	public int isAvailable(int startTime, int endTime) {
 		int activitiesInTimeFrame = 0;
 		
 		for(WorkActivity workActivity: workActivities) {
@@ -29,12 +29,8 @@ public class Developer {
 				activitiesInTimeFrame++;
 			}
 		}
-		if(activitiesInTimeFrame >= 10 && !canWorkOn20Activities) {
-			return false;
-		} else if (activitiesInTimeFrame >= 20) {
-			return false;
-		}
-		return true;
+		
+		return activitiesInTimeFrame;
 	}
 	
 	public double workDoneToday() {

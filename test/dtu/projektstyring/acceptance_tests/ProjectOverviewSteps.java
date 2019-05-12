@@ -50,7 +50,7 @@ public class ProjectOverviewSteps {
 	    worker = userHelper.getUser2();
 	    softwareHuset.addDeveloper(worker);
 	    workActivity = activityHolder.getActivity();
-	    assertTrue(worker.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()));
+	    assertTrue(worker.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()) < 10);
 	}
 	
 	@Given("a development worker is not available in the given timeperiod")
@@ -68,7 +68,7 @@ public class ProjectOverviewSteps {
 			trashActivity.setEndTime(developer, workActivity.getEndTime());
 			trashActivity.addDeveloper(developer, worker2);
 		}
-	    assertFalse(worker2.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()));
+	    assertFalse(worker2.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()) < 10);
 	}
 	
 	@When("the project leader wants a list of available developers")

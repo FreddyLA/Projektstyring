@@ -12,7 +12,7 @@ public class Project {
 	private int projectNumber; //Unique
 	private ArrayList<WorkActivity> workActivities = new ArrayList<>();
 	private Developer projectLeader;
-	private int startTime, creationTime;
+	private int startTime, endTime, creationTime;
 	private SoftwareHuset softwareHuset;
 
 	public Project(String projectName, int creationTime, SoftwareHuset softwareHuset){
@@ -60,20 +60,6 @@ public class Project {
 		return null;
 	}
 	
-	public boolean removeActivity(WorkActivity workActivity) {
-		workActivity.removeActivityFromAllDevelopers();
-		return this.workActivities.remove(workActivity);
-	}
-	
-	public boolean removeAllActivities() {
-		for(WorkActivity a : this.workActivities) {
-			a.removeActivityFromAllDevelopers();
-			this.workActivities.remove(a);
-			return true;
-		}
-		return false;
-	}
-	
 	public List<Developer> getActivityDevelopers(WorkActivity workActivity){
 		return workActivity.getDevelopers();
 	}
@@ -114,6 +100,17 @@ public class Project {
 			throw new CreationDateException();
 		}
 		this.startTime = startTime;
+	}
+	
+	public int getEndTime() {
+		return endTime;
+	}
+	
+	public void setEndTime(int endTime) throws CreationDateException {
+		if(endTime < creationTime) {
+			throw new CreationDateException();
+		}
+		this.endTime = endTime;
 	}
 	
 	public int getCreationTime() {

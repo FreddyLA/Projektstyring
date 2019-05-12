@@ -54,17 +54,17 @@ public class ActivitySteps {
 	    this.developer = userHelper.getUser();
 	    this.project = projectHelper.getProject();
 	    softwareHuset.createAndAddActivityToProject(developer, project.getName(), string);
-	    workActivity = project.getActivity(string);
+	    workActivity = softwareHuset.getProject(project.getName()).getActivity(string);
 	    activityHolder.setActivity(workActivity);
 	    assertTrue(workActivity.getName().matches(string));
 	    assertTrue(workActivity.getAttachedProject().equals(project));
 	}
 	
 	@When("the project leader changes budgettet time to {int}")
-	public void theProjectLeaderEditsActivity(int number) throws NotProjectLeaderException {
+	public void theProjectLeaderEditsActivity(int time) throws Exception {
 		developer = userHelper.getUser();
-	    workActivity.setBudgetetTime(developer, number);
-	    assertTrue(workActivity.getBudgetedTime() == number);
+		softwareHuset.setActivityBudgettetTime(developer, workActivity, time);
+	    assertTrue(workActivity.getBudgetedTime() == time);
 	}
 
 	@Then("the activity's budgettet time is {int}")
@@ -76,7 +76,7 @@ public class ActivitySteps {
 	public void aDevelopmentWorkerAttemptsToEditAnActivity() {
 	    worker = userHelper.getUser2();
 	    try {
-		    workActivity.setBudgetetTime(worker, 10);
+		    softwareHuset.setActivityBudgettetTime(worker, workActivity, 10);
 	    } catch (Exception e) {
 	    	errorMessage.setErrorMessage(e.getMessage());
 	    }
@@ -101,11 +101,11 @@ public class ActivitySteps {
 	@When("the project leader assigns a deadline to the activity that is before the assigned start date")
 	public void theProjectLeaderAssignsAStartDateToTheActivity() throws Exception {
 		Calendar startDate = Calendar.getInstance();
-	    workActivity.setStartTime(developer, startDate.get(Calendar.WEEK_OF_YEAR));
+		softwareHuset.setActivityEndTime(developer, workActivity, startDate.get(Calendar.WEEK_OF_YEAR));
 	    Calendar prevDate = Calendar.getInstance();
 		prevDate.add(Calendar.DAY_OF_MONTH, -10);
 		try {
-			workActivity.setEndTime(developer, prevDate.get(Calendar.WEEK_OF_YEAR));
+			softwareHuset.setActivityEndTime(developer, workActivity, prevDate.get(Calendar.WEEK_OF_YEAR));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -114,7 +114,7 @@ public class ActivitySteps {
 	@When("the project leader changes the activity's start time")
 	public void theProjectLeaderChangesTheActivitySStartTime() throws Exception {
 		calendar = softwareHuset.getDateServer().getDate();
-	    workActivity.setStartTime(developer, calendar.get(Calendar.WEEK_OF_YEAR));
+		softwareHuset.setActivityStartTime(developer, workActivity, calendar.get(Calendar.WEEK_OF_YEAR));
 	    assertTrue(workActivity.getStartTime() == calendar.get(Calendar.WEEK_OF_YEAR));
 	}
 
@@ -127,6 +127,7 @@ public class ActivitySteps {
 	public void aDevelopmentWorkerIsAssignedTheActivity() throws Exception {
 		developer = userHelper.getUser();
 		worker = userHelper.getUser2();
+		workActivity = activityHolder.getActivity();
 		softwareHuset.addDeveloperToProjectActivity(developer, worker, project.getName(), workActivity.getName());
 	    assertTrue(softwareHuset.getProjectActivityDevelopers(project.getName(), workActivity.getName()).contains(worker));
 	}
@@ -143,11 +144,12 @@ public class ActivitySteps {
 	    assertFalse(workActivity.getDevelopers().contains(worker2));
 	}
 	
-	@When("the project leader adds the development worker to the activity")
+	@When("the project leader adds a development worker to the activity")
 	public void theProjectLeaderAddsADevelopmentWorkerToAnActivity() {
+		worker = userHelper.getUser2();
 	    developer = userHelper.getUser();
 	    try {
-			workActivity.addDeveloper(developer, worker);
+	    	softwareHuset.addDeveloperToProjectActivity(developer, worker, project.getName(), workActivity.getName());
 			assertTrue(workActivity.getDevelopers().contains(worker));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
@@ -157,12 +159,6 @@ public class ActivitySteps {
 	@Then("the development worker has been added to the activity")
 	public void theDevelopmentWorkerHasBeenAddedToTheActivity() {
 		assertTrue(workActivity.getDevelopers().contains(worker));
-	}
-	
-	@Given("a development worker exists")
-	public void aDevelopmentWorkerExists() {
-	    worker = userHelper.getUser2();
-	    softwareHuset.addDeveloper(worker);
 	}
 
 	@Given("a development worker has {int} activities")
@@ -174,7 +170,7 @@ public class ActivitySteps {
 		for(int i = 0; i < int1; i++) {
 			softwareHuset.createAndAddActivityToProject(developer, project.getName(), "n"+i);
 			workActivity = project.getActivity("n"+i);
-			workActivity.addDeveloper(developer, worker);
+			softwareHuset.addDeveloperToProjectActivity(developer, worker, project.getName(), workActivity.getName());
 		}
 		assertTrue(worker.getWorkActivities().size() == int1);
 	}
@@ -183,7 +179,7 @@ public class ActivitySteps {
 	public void aDevelopmentWorkerAssignsANewDevelopmentWorkerTheTheActivity() {
 	    worker2 = userHelper.getUser3();
 	    try {
-			workActivity.addDeveloper(worker, worker2);
+	    	softwareHuset.addDeveloperToProjectActivity(worker, worker2, project.getName(), workActivity.getName());
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -192,7 +188,7 @@ public class ActivitySteps {
 	@When("the development worker changes the hours worked on the activity from {int} to {int}")
 	public void theDevelopmentWorkerChangesTheHoursWorkedOnTheActivityFromTo(Integer int1, Integer int2) {
 		assertTrue(workActivity.getDevWorkTimeToday(worker) == int1);
-	    workActivity.editDeveloperActivityTime(worker, int2);
+		softwareHuset.editDeveloperActivityTime(worker, workActivity, int2);
 	}
 
 	@Then("the development worker's hours on the activity is {int}")
@@ -203,19 +199,19 @@ public class ActivitySteps {
 	@Given("the activity has a start date and end date")
 	public void theActivityHasAStartDateAndEndDate() throws Exception {
 		Calendar currTime = softwareHuset.getDateServer().getDate();
-	    workActivity.setStartTime(userHelper.getUser(), currTime.get(Calendar.WEEK_OF_YEAR)+1);
-	    workActivity.setEndTime(userHelper.getUser(), currTime.get(Calendar.WEEK_OF_YEAR)+3);
+		softwareHuset.setActivityStartTime(userHelper.getUser(), workActivity, currTime.get(Calendar.WEEK_OF_YEAR)+1);
+		softwareHuset.setActivityEndTime(userHelper.getUser(), workActivity, currTime.get(Calendar.WEEK_OF_YEAR)+3);
 	}
 	
 	@When("a development worker registers the private activity {string}")
-	public void theDevelopmentWorkerRegistersThePrivateActivity(String string) throws Exception {
-	    this.worker = userHelper.getUser();
-	    Calendar startTime = Calendar.getInstance();
-	    startTime.add(Calendar.WEEK_OF_YEAR, 1);
-	    Calendar endTime = Calendar.getInstance();
-	    startTime.add(Calendar.WEEK_OF_YEAR, 3);
-	    softwareHuset.registerPrivateActivity(worker, startTime.get(Calendar.WEEK_OF_YEAR), endTime.get(Calendar.WEEK_OF_YEAR), string);
-	    this.privateActivity = worker.getPrivateActivity(string);
+	public void theDevelopmentWorkerRegistersThePrivateActivity(String string){
+		worker = userHelper.getUser2();
+	    try {
+			softwareHuset.registerPrivateActivity(worker, workActivity.getStartTime(), workActivity.getEndTime(), string);
+		} catch (Exception e) {
+			errorMessage.setErrorMessage(e.getMessage());
+		}
+	    privateActivity = worker.getPrivateActivity(string);
 	}
 
 	@Then("the delopment worker has a private activity {string}")
@@ -224,9 +220,8 @@ public class ActivitySteps {
 	    assertTrue(worker.getPrivateActivities().contains(privateActivity));
 	}
 	
-	@When("the project leader assigns the development worker to an activity during the private activity")
-	public void aProjectLeaderAssignsTheDevelopmentWorkerToAnActivityDuringThePrivateActivity() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new cucumber.api.PendingException();
+	@Given("the development worker can work on {int} activities")
+	public void theDevelopmentWorkerCanWorkOnActivities(Integer int1) {
+		softwareHuset.setDeveloperCanWorkOn20Activities(worker, true);
 	}
 }

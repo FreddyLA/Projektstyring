@@ -34,11 +34,6 @@ public class WorkActivity {
 		activityCreationTime = attachedProject.getSoftwareHuset().getDateServer().getDate().get(Calendar.WEEK_OF_YEAR);
 	}
 	
-	//Constructer for private activities. Needs work
-	public WorkActivity(String activityName) {
-		this.activityName = activityName;
-	}
-	
 	//Returns amount of work a developer has done on an activity
 	public double getDevWorkTime(Developer developer) {
 		double developerWorkTime = 0;
@@ -89,7 +84,9 @@ public class WorkActivity {
 		if(!attachedProject.getProjectLeader().equals(projectLeader)) {
 			throw new NotProjectLeaderException();
 		}
-		if(developer.getWorkActivities().size() == 10) {
+		if(developer.isAvailable(activityStartTime, activityEndTime) >= 20) {
+			throw new TooManyActivitesException();
+		} else if (developer.isAvailable(activityStartTime, activityEndTime) >= 10 && !developer.getCanWorkOn20Activities()) {
 			throw new TooManyActivitesException();
 		}
 		this.developers.add(developer);
@@ -102,22 +99,6 @@ public class WorkActivity {
 			totalWorkHours += work.getTimeSpent();
 		}
 		return totalWorkHours;
-	}
-	
-	public boolean removeDeveloper(Developer developer) {
-		developer.removeWorkActivity(this);
-		return this.developers.remove(developer);
-	}
-	
-	public void removeActivityFromAllDevelopers() {
-		for(Developer d : this.developers) {
-			d.removeWorkActivity(this);
-		}
-		this.developers.clear();
-	}
-	
-	public String toString() {
-		return "Name: " + activityName + " Budgeted time: " + budgetedTime + " Time spent: " + getTotalWorkHours();
 	}
 	
 	//Developer registers an amount of work on an activity
