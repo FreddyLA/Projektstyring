@@ -388,7 +388,7 @@ public class SoftwareHuset {
 		developer.setCanWorkOn20Activities(b);
 	}
 
-	public double getDevWorkTime(int projectID, String developerInitials, String activityName) throws Exception {
+	public double getDevWorkTimeToday(int projectID, String developerInitials, String activityName) throws Exception {
 		Developer developer = getDeveloper(developerInitials);
 		if(developer == null) {
 			throw new DeveloperDoesNotExistException();
@@ -401,6 +401,6 @@ public class SoftwareHuset {
 		if(workActivity == null) {
 			throw new ActivityDoesNotExistException();
 		}
-		return workActivity.getDevWorkTime(developer);
+		return workActivity.getDevWorkTimeToday(developer);
 	}
 }

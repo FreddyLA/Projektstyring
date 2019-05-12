@@ -62,12 +62,12 @@ public class RegisterTimeSteps {
 	
 	@Then("the development worker has worked {int} hours on the activity")
 	public void theSystemIsUpdatedWithTheGivenData(double hours) throws Exception {
-		assertTrue(softwareHuset.getDevWorkTime(project.getProjectNumber(),userHelper.getUser2().getInitials(), workActivity.getName()) == hours);
+		assertTrue(softwareHuset.getDevWorkTimeToday(project.getProjectNumber(),userHelper.getUser2().getInitials(), workActivity.getName()) == hours);
 	}
 	
 	@Then("the other worker has worked {int} hours on the activity")
 	public void theOtherWorkerHasWorked(double hours) throws Exception {
-		assertTrue(softwareHuset.getDevWorkTime(project.getProjectNumber(), userHelper.getUser3().getInitials(), workActivity.getName()) == hours);
+		assertTrue(softwareHuset.getDevWorkTimeToday(project.getProjectNumber(), userHelper.getUser3().getInitials(), workActivity.getName()) == hours);
 	}
 	
 	@When("the other worker inputs {int} hours to the activity together with the development workers initials")
