@@ -26,6 +26,7 @@ public class ProjectSteps {
 	private Project project;
 	private Developer worker, worker2, worker3;
 	private ErrorMessageHolder errorMessage;
+	private Calendar calendar;
 	
 	private UserHelper userHelper;
 	private MockDateHolder dateHolder;
@@ -45,7 +46,7 @@ public class ProjectSteps {
 	
 	@Given("the project doesn't have a project leader")
 	public void theProjectDoesnTHaveAProjectLeader() throws Exception {
-	    assertTrue(softwareHuset.getProjectLeader(project.getName()) == null);
+	    assertTrue(softwareHuset.getProjectLeader(project.getProjectNumber()) == null);
 	}
 
 	@When("a developement worker is assigned to be the project leader")
@@ -58,7 +59,7 @@ public class ProjectSteps {
 
 	@Then("the project leader of the project is the development worker")
 	public void theProjectLeaderOfTheProjectIsTheDevelopmentWorker() throws Exception {
-	    assertTrue(softwareHuset.getProjectLeader(project.getName()).equals(worker));
+	    assertTrue(softwareHuset.getProjectLeader(project.getProjectNumber()).equals(worker));
 	}
 
 	@When("the project leader assigns a start date for the project that is before the project creation date")
@@ -67,7 +68,7 @@ public class ProjectSteps {
 		prevDate.add(Calendar.DAY_OF_YEAR, -8);
 		assertTrue(prevDate.get(Calendar.WEEK_OF_YEAR) < project.getCreationTime());
 		try {
-			softwareHuset.setProjectStartTime(project.getProjectNumber(), prevDate.get(Calendar.WEEK_OF_YEAR));
+			softwareHuset.setProjectStartTime(worker.getInitials(), project.getProjectNumber(), prevDate.get(Calendar.WEEK_OF_YEAR));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -79,7 +80,7 @@ public class ProjectSteps {
 		prevDate.add(Calendar.DAY_OF_YEAR, -8);
 		assertTrue(prevDate.get(Calendar.WEEK_OF_YEAR) < project.getCreationTime());
 		try {
-			softwareHuset.setProjectEndTime(project.getProjectNumber(), prevDate.get(Calendar.WEEK_OF_YEAR));
+			softwareHuset.setProjectEndTime(worker.getInitials(), project.getProjectNumber(), prevDate.get(Calendar.WEEK_OF_YEAR));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -169,4 +170,45 @@ public class ProjectSteps {
     	assertFalse(project.getProjectLeader().equals(worker2));
     }
     
+    @When("a development worker tries to edit a project that does not exist")
+    public void aDevelopmentWorkerTriesToEditAProjectThatDoesNotExist() {
+        worker2 = userHelper.getUser2();
+        try {
+			softwareHuset.setProjectEndTime(worker2.getInitials(),10, 5);
+		} catch (Exception e) {
+			errorMessage.setErrorMessage(e.getMessage());
+		}
+    }
+    
+    @When("a development worker that does not exist tries to edit a project")
+    public void aDevelopmentWorkerThatDoesNotExistTriesToEditAProject() {
+    	 worker2 = userHelper.getUser2();
+         try {
+ 			softwareHuset.setProjectEndTime("WUT", project.getProjectNumber(), 5);
+ 		} catch (Exception e) {
+ 			errorMessage.setErrorMessage(e.getMessage());
+ 		}
+    }
+    
+    @When("the project leader changes the project start date")
+    public void theProjectLeaderChangesTheProjectStartDate() throws Exception {
+    	calendar = softwareHuset.getDateServer().getDate();
+        softwareHuset.setProjectStartTime(worker.getInitials(), project.getProjectNumber(), calendar.get(Calendar.WEEK_OF_YEAR)+5);
+    }
+
+    @Then("the project start date has been changed")
+    public void theProjectStartDateHasBeenChanged() {
+        assertTrue(project.getStartTime() == calendar.get(Calendar.WEEK_OF_YEAR)+5);
+    }
+
+    @When("the project leader changes the project end date")
+    public void theProjectLeaderChangesTheProjectEndDate() throws Exception {
+    	calendar = softwareHuset.getDateServer().getDate();
+    	softwareHuset.setProjectEndTime(worker.getInitials(), project.getProjectNumber(), calendar.get(Calendar.WEEK_OF_YEAR)+5);
+    }
+
+    @Then("the project end date has been changed")
+    public void theProjectEndDateHasBeenChanged() {
+    	assertTrue(project.getEndTime() == calendar.get(Calendar.WEEK_OF_YEAR)+5);
+    }
 }

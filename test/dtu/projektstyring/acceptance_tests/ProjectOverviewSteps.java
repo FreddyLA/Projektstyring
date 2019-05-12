@@ -62,11 +62,11 @@ public class ProjectOverviewSteps {
 	    softwareHuset.addDeveloper(worker2);
 	    WorkActivity trashActivity = null;
 	    for(int i = 0; i < 10; i++) {
-			softwareHuset.createAndAddActivityToProject(developer.getInitials(), project.getName(), "n"+i);
+			softwareHuset.createAndAddActivityToProject(developer.getInitials(), project.getProjectNumber(), "n"+i);
 			trashActivity = project.getActivity("n"+i);
 			softwareHuset.setActivityStartTime(project.getProjectNumber(), developer.getInitials(), trashActivity.getName(), workActivity.getStartTime());
 			softwareHuset.setActivityEndTime(project.getProjectNumber(), developer.getInitials(), trashActivity.getName(), workActivity.getEndTime());
-			softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker2.getInitials(), project.getName(), trashActivity.getName());
+			softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker2.getInitials(), project.getProjectNumber(), trashActivity.getName());
 		}
 	    assertFalse(worker2.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()) < 10);
 	}

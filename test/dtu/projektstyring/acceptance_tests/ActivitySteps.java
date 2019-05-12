@@ -13,6 +13,7 @@ import dtu.projektstyring.app.Developer;
 import dtu.projektstyring.app.PrivateActivity;
 import dtu.projektstyring.app.Project;
 import dtu.projektstyring.app.SoftwareHuset;
+import dtu.projektstyring.exceptions.ActivityDoesNotExistException;
 import dtu.projektstyring.exceptions.NotProjectLeaderException;
 import test_helpers.ActivityHolder;
 import test_helpers.ErrorMessageHolder;
@@ -53,7 +54,7 @@ public class ActivitySteps {
 	public void theProjectLeaderCreatesANewActivityWithTheName(String string) throws Exception {
 	    this.developer = userHelper.getUser();
 	    this.project = projectHelper.getProject();
-	    softwareHuset.createAndAddActivityToProject(developer.getInitials(), project.getName(), string);
+	    softwareHuset.createAndAddActivityToProject(developer.getInitials(), project.getProjectNumber(), string);
 	    workActivity = softwareHuset.getProject(project.getName()).getActivity(string);
 	    activityHolder.setActivity(workActivity);
 	    assertTrue(workActivity.getName().matches(string));
@@ -84,7 +85,7 @@ public class ActivitySteps {
 	}
 
 	@Then("a new activity with the name {string} is created")
-	public void aNewActivityWithTheNameIsCreated(String string) {
+	public void aNewActivityWithTheNameIsCreated(String string) throws ActivityDoesNotExistException {
 	    assertTrue(project.getActivity(string).equals(workActivity));
 	}
 
@@ -94,7 +95,7 @@ public class ActivitySteps {
 	    softwareHuset.addDeveloper(worker);
 	    project = projectHelper.getProject();
 	    try {
-	    	softwareHuset.createAndAddActivityToProject(worker.getInitials(), project.getName(), "test");
+	    	softwareHuset.createAndAddActivityToProject(worker.getInitials(), project.getProjectNumber(), "test");
 	    } catch (Exception e) {
 	    	errorMessage.setErrorMessage(e.getMessage());
 	    }
@@ -131,8 +132,8 @@ public class ActivitySteps {
 		worker = userHelper.getUser2();
 		softwareHuset.addDeveloper(worker);
 		workActivity = activityHolder.getActivity();
-		softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker.getInitials(), project.getName(), workActivity.getName());
-	    assertTrue(softwareHuset.getProjectActivityDevelopers(project.getName(), workActivity.getName()).contains(worker));
+		softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker.getInitials(), project.getProjectNumber(), workActivity.getName());
+	    assertTrue(softwareHuset.getProjectActivityDevelopers(project.getProjectNumber(), workActivity.getName()).contains(worker));
 	}
 	
 	@Given("a development worker is not assigned the activity")
@@ -155,7 +156,7 @@ public class ActivitySteps {
 		softwareHuset.addDeveloper(worker);
 	    developer = userHelper.getUser();
 	    try {
-	    	softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker.getInitials(), project.getName(), workActivity.getName());
+	    	softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker.getInitials(), project.getProjectNumber(), workActivity.getName());
 			assertTrue(workActivity.getDevelopers().contains(worker));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
@@ -175,9 +176,9 @@ public class ActivitySteps {
 		softwareHuset.addDeveloper(worker);
 		WorkActivity workActivity = null;
 		for(int i = 0; i < int1; i++) {
-			softwareHuset.createAndAddActivityToProject(developer.getInitials(), project.getName(), "n"+i);
+			softwareHuset.createAndAddActivityToProject(developer.getInitials(), project.getProjectNumber(), "n"+i);
 			workActivity = project.getActivity("n"+i);
-			softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker.getInitials(), project.getName(), workActivity.getName());
+			softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker.getInitials(), project.getProjectNumber(), workActivity.getName());
 		}
 		assertTrue(worker.getWorkActivities().size() == int1);
 	}
@@ -189,7 +190,7 @@ public class ActivitySteps {
 	    softwareHuset.addDeveloper(worker);
 	    softwareHuset.addDeveloper(worker2);
 	    try {
-	    	softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker2.getInitials(), project.getName(), workActivity.getName());
+	    	softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker2.getInitials(), project.getProjectNumber(), workActivity.getName());
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -234,5 +235,17 @@ public class ActivitySteps {
 	@Given("the development worker can work on {int} activities")
 	public void theDevelopmentWorkerCanWorkOnActivities(int number) throws Exception {
 		softwareHuset.setDeveloperCanWorkOn20Activities(worker.getInitials(), true);
+	}
+	
+	@When("a development worker registers time on activity that doesn't excist")
+	public void aDevelopmentWorkerRegistersTimeOnActivityThatDoesnTExcist() {
+		worker = userHelper.getUser();
+		worker2 = userHelper.getUser2();
+		softwareHuset.addDeveloper(worker2);
+		try {
+	    	softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker2.getInitials(), project.getProjectNumber(), "pølse");
+		} catch (Exception e) {
+			errorMessage.setErrorMessage(e.getMessage());
+		}
 	}
 }

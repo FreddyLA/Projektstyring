@@ -16,3 +16,7 @@ Scenario: Development worker registers time on an activity of which she is not p
 Given a development worker is not assigned the activity
 When the development worker inputs 8 hours worked on the activity into the system
 Then an error message "Specified user is not assigned to the activity" is presented
+
+Scenario: Development worker registers time on an activity that doesn't excist
+When a development worker registers time on activity that doesn't excist
+Then an error message "Activity with specified name does not exist" is presented

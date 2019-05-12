@@ -54,10 +54,6 @@ public class Developer {
 	public void registerWork(DeveloperActivityTime work) {
 		workDone.add(work);
 	}
-	
-	public List<Project> getLeaderProjects() {
-		return leaderOf;
-	}
 
 	public void addLeaderOfProject(Project project) {
 		leaderOf.add(project);
@@ -84,10 +80,6 @@ public class Developer {
 		privateActivities.add(privateActivity);
 	}
 	
-	public boolean removePrivateActivity(PrivateActivity privateActivity) {
-		return privateActivities.remove(privateActivity);
-	}
-	
 	public List<WorkActivity> getWorkActivities() {
 		return workActivities;
 	}
@@ -95,27 +87,11 @@ public class Developer {
 	public void addWorkActivity(WorkActivity workActivity) {
 		workActivities.add(workActivity);
 	}
-	
-	public boolean removeWorkActivity(WorkActivity workActivity) {
-		return workActivities.remove(workActivity);
-	}
-	
+
 	public String getInitials() {
 		return developerInitials;
 	}
 
-	public void setInitials(String developerInitials) {
-		this.developerInitials = developerInitials;
-	}
-	
-	public String getName() {
-		return developerName;
-	}
-
-	public void setName(String developerName) {
-		this.developerName = developerName;
-	}
-	
 	public boolean getCanWorkOn20Activities() {
 		return canWorkOn20Activities;
 	}

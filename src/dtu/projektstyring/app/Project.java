@@ -3,6 +3,7 @@ package dtu.projektstyring.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import dtu.projektstyring.exceptions.ActivityDoesNotExistException;
 import dtu.projektstyring.exceptions.CreationDateException;
 import dtu.projektstyring.exceptions.NotProjectLeaderException;
 
@@ -27,13 +28,6 @@ public class Project {
 		return projectReport;
 	}
 	
-//	public WorkActivity createAndAddActivity(String activityName, Calendar activityStartTime, Calendar activityEndTime,
-//			double activityBudgetTime) {
-//		WorkActivity newActivity = new WorkActivity(this, activityName, activityStartTime, activityEndTime, activityBudgetTime);
-//		workActivities.add(newActivity);
-//		return newActivity;
-//	}
-	
 	public void createAndAddActivity(String activityName) {
 		WorkActivity newActivity = new WorkActivity(this, activityName);
 		workActivities.add(newActivity);
@@ -47,7 +41,7 @@ public class Project {
 		return rActivities;
 	}
 	
-	public WorkActivity getActivity(String activityName) {
+	public WorkActivity getActivity(String activityName) throws ActivityDoesNotExistException {
 		for(WorkActivity a : workActivities) {
 			if(a.getName().equals(activityName)) {
 				return a;
@@ -91,9 +85,12 @@ public class Project {
 		return startTime;
 	}
 	
-	public void setStartTime(int startTime) throws Exception {
+	public void setStartTime(Developer developer, int startTime) throws Exception {
 		if(startTime < creationTime) {
 			throw new CreationDateException();
+		}
+		if(!projectLeader.equals(developer)) {
+			throw new NotProjectLeaderException();
 		}
 		this.startTime = startTime;
 	}
@@ -102,9 +99,12 @@ public class Project {
 		return endTime;
 	}
 	
-	public void setEndTime(int endTime) throws CreationDateException {
+	public void setEndTime(Developer developer, int endTime) throws CreationDateException, NotProjectLeaderException {
 		if(endTime < creationTime) {
 			throw new CreationDateException();
+		}
+		if(!projectLeader.equals(developer)) {
+			throw new NotProjectLeaderException();
 		}
 		this.endTime = endTime;
 	}
