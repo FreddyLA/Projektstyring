@@ -46,8 +46,9 @@ public class GenerateRapportSteps {
     public void aDevelopmentWorkerGeneratesAProjectDevelopmentRapportOfAProject() {
     	project = projectHelper.getProject();
         worker2 = userHelper.getUser2();
+        softwareHuset.addDeveloper(worker2);
         try {
-			softwareHuset.getRapport(worker2, project.getProjectNumber());
+			softwareHuset.getRapport(worker2.getInitials(), project.getProjectNumber());
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -58,7 +59,7 @@ public class GenerateRapportSteps {
 	    project = projectHelper.getProject();
 	    worker = userHelper.getUser();
         try {
-			projectReport = softwareHuset.getRapport(worker, project.getProjectNumber());
+			projectReport = softwareHuset.getRapport(worker.getInitials(), project.getProjectNumber());
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}

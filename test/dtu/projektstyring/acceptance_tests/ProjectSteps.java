@@ -24,7 +24,7 @@ public class ProjectSteps {
 
 	private SoftwareHuset softwareHuset;
 	private Project project;
-	private Developer worker, worker2;
+	private Developer worker, worker2, worker3;
 	private ErrorMessageHolder errorMessage;
 	
 	private UserHelper userHelper;
@@ -67,7 +67,7 @@ public class ProjectSteps {
 		prevDate.add(Calendar.DAY_OF_YEAR, -8);
 		assertTrue(prevDate.get(Calendar.WEEK_OF_YEAR) < project.getCreationTime());
 		try {
-			softwareHuset.setProjectStartTime(project, prevDate.get(Calendar.WEEK_OF_YEAR));
+			softwareHuset.setProjectStartTime(project.getProjectNumber(), prevDate.get(Calendar.WEEK_OF_YEAR));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -79,7 +79,7 @@ public class ProjectSteps {
 		prevDate.add(Calendar.DAY_OF_YEAR, -8);
 		assertTrue(prevDate.get(Calendar.WEEK_OF_YEAR) < project.getCreationTime());
 		try {
-			softwareHuset.setProjectEndTime(project, prevDate.get(Calendar.WEEK_OF_YEAR));
+			softwareHuset.setProjectEndTime(project.getProjectNumber(), prevDate.get(Calendar.WEEK_OF_YEAR));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -95,8 +95,9 @@ public class ProjectSteps {
     
     @Given("a project leader has been selected")
     public void aProjectLeaderHasBeenSelected() throws Exception {
-    	this.worker = userHelper.getUser();
-    	softwareHuset.setProjectLeader(project, worker);
+    	worker = userHelper.getUser();
+    	softwareHuset.addDeveloper(worker);
+    	softwareHuset.setProjectLeader(project.getProjectNumber(), worker.getInitials());
         assertTrue(project.getProjectLeader().equals(worker));
     }
     
@@ -136,10 +137,22 @@ public class ProjectSteps {
     
     @When("the development worker assigns a development worker to be project leader")
     public void theDevelopmentWorkerThatCreatedTheProjectAssignsADevelopmentWorkerToBeProjectLeader() {
-        worker2 = userHelper.getUser2();
+        worker3 = userHelper.getUser3();
+        softwareHuset.addDeveloper(worker3);
         try {
-			softwareHuset.setProjectLeader(project, worker, worker2);
-		} catch (NotProjectLeaderException e) {
+			softwareHuset.setProjectLeader(project.getProjectNumber(), worker2.getInitials(), worker3.getInitials());
+		} catch (Exception e) {
+			errorMessage.setErrorMessage(e.getMessage());
+		}
+    }
+    
+    @When("the project leader assigns a development worker to be project leader")
+    public void theProjectLeaderThatCreatedTheProjectAssignsADevelopmentWorkerToBeProjectLeader() {
+        worker2 = userHelper.getUser2();
+        softwareHuset.addDeveloper(worker2);
+        try {
+			softwareHuset.setProjectLeader(project.getProjectNumber(), worker.getInitials(), worker2.getInitials());
+		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
     }
@@ -151,8 +164,9 @@ public class ProjectSteps {
     
     @Given("a development worker is not the leader of the project")
     public void aDevelopmentWorkerIsNotTheLeaderOfTheProject() {
-    	worker = userHelper.getUser2();
-    	assertFalse(project.getProjectLeader().equals(worker));
+    	worker2 = userHelper.getUser2();
+    	softwareHuset.addDeveloper(worker2);
+    	assertFalse(project.getProjectLeader().equals(worker2));
     }
     
 }

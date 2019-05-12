@@ -29,8 +29,16 @@ public class Developer {
 				activitiesInTimeFrame++;
 			}
 		}
-		
 		return activitiesInTimeFrame;
+	}
+	
+	public boolean hasPrivateActivity(int activityStartTime, int activityEndTime) {
+		for(PrivateActivity privateActivity: privateActivities) {
+			if(privateActivity.inTimeFrame(activityStartTime, activityEndTime)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public double workDoneToday() {

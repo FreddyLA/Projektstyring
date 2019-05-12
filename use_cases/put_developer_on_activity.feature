@@ -25,3 +25,9 @@ Then an error message "Selected development worker already assigned to 10 activi
 Scenario: A development worker attempts to add another developemnt worker to an activity
 When a development worker assigns a new development worker to the activity
 Then an error message "Action for project leader only" is presented
+
+Scenario: Project leader adds development worker to the activity, when the development worker has a private activity during the activity
+Given the activity has a start date and end date
+And a development worker registers the private activity "Vacation"
+When the project leader adds a development worker to the activity
+Then an error message "Private activity not allowed during work activity" is presented

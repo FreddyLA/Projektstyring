@@ -11,7 +11,7 @@ Then the project leader of the project is the development worker
 Scenario: Assign new project leader
 Given a project with the name "Project 1" exists
 And a project leader has been selected
-When the development worker assigns a development worker to be project leader
+When the project leader assigns a development worker to be project leader
 Then the selected development worker is made leader of the project
 
 Scenario: Development worker assigns project leader for a project they are not the leader of

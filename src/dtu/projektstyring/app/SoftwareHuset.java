@@ -45,11 +45,9 @@ public class SoftwareHuset {
 	//*******************************//
 	
 	public void makeProject(String projectName) throws Exception {
-		if(!projects.isEmpty()) {
-			for(Project p : projects) {
-				if(p.getName().equals(projectName)) {
-					throw new DuplicateNameException();
-				}
+		for(Project project: projects) {
+			if(project.getName().equals(projectName)) {
+				throw new DuplicateNameException();
 			}
 		}
 		Project newProject = new Project(projectName, dateServer.getDate().get(Calendar.WEEK_OF_YEAR), this);
@@ -72,7 +70,8 @@ public class SoftwareHuset {
 		return availableDevs;
 	}
 
-	public Report getRapport(Developer developer, int projectNumber) throws Exception {
+	public Report getRapport(String developerInitials, int projectNumber) throws Exception {
+		Developer developer = getDeveloper(developerInitials);
 		Project project = getProject(projectNumber);
 		if(!project.getProjectLeader().equals(developer)) {
 			throw new NotProjectLeaderException();
@@ -85,7 +84,8 @@ public class SoftwareHuset {
         return project.getProjectLeader(); 
     }
 	
-	public void registerTime(Developer developer, int projectNumber, String activityName, double hours) throws Exception {
+	public void registerTime(String developerInitials, int projectNumber, String activityName, double hours) throws Exception {
+		Developer developer = getDeveloper(developerInitials);
 		Project project = getProject(projectNumber);
 		WorkActivity workActivity = project.getActivity(activityName);
 		if(developer == null) throw new Exception("Developer does not exist");
@@ -100,22 +100,22 @@ public class SoftwareHuset {
 		}
 	}
 	
-	public void registerHelpedTime(Developer activityDeveloper, Developer activityHelper, 
+	public void registerHelpedTime(String developerInitials, String helperInitialsr, 
 									int projectNumber, String activityName, int hours) throws Exception {
+		Developer activityDeveloper = getDeveloper(developerInitials);
+		Developer helperDeveloper = getDeveloper(helperInitialsr);
 		Project project = getProject(projectNumber);
 		WorkActivity workActivity = project.getActivity(activityName);
 		if(!workActivity.getDevelopers().contains(activityDeveloper)) {
 			throw new NotOnActivityException();
 		}
-		DeveloperActivityTime work = new DeveloperActivityTime(activityDeveloper, activityHelper, 
+		DeveloperActivityTime work = new DeveloperActivityTime(activityDeveloper, helperDeveloper, 
 																workActivity, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
 		workActivity.registerTime(work);
 	}
 	
-	public void registerPrivateActivity(Developer developer, int startTime, int endTime, String activityName) throws Exception {
-		if(!privateActivities.contains(activityName)) {
-			throw new Exception();
-		}
+	public void registerPrivateActivity(String developerInitials, int startTime, int endTime, String activityName) throws Exception {
+		Developer developer = getDeveloper(developerInitials);
 		if(developer.isAvailable(startTime, endTime) > 0) {
 			throw new PrivateActivityDuringWorkActivityException();
 		}
@@ -123,7 +123,8 @@ public class SoftwareHuset {
 		developer.addPrivateActivity(privateActivity);
 	}
 	
-	public void createAndAddActivityToProject(Developer developer, String projectName, String activityName) throws Exception {
+	public void createAndAddActivityToProject(String developerInitials, String projectName, String activityName) throws Exception {
+		Developer developer = getDeveloper(developerInitials);
 		Project project = getProject(projectName);
 		if(!project.getProjectLeader().equals(developer)) {
 			throw new NotProjectLeaderException();
@@ -131,20 +132,31 @@ public class SoftwareHuset {
 		project.createAndAddActivity(activityName);
 	}
 	
-	public void setActivityStartTime(Developer developer, WorkActivity workActivity, int time) throws Exception {
+	public void setActivityStartTime(int projectID, String developerInitials, String activityName, int time) throws Exception {
+		Project project = getProject(projectID);
+		WorkActivity workActivity = project.getActivity(activityName);
+		Developer developer = getDeveloper(developerInitials);
 		workActivity.setStartTime(developer, time);
 	}
 	
-	public void setActivityBudgettetTime(Developer developer, WorkActivity workActivity, int time) throws NotProjectLeaderException {
+	public void setActivityBudgettetTime(int projectID, String developerInitials, String activityName, int time) throws Exception {
+		Project project = getProject(projectID);
+		WorkActivity workActivity = project.getActivity(activityName);
+		Developer developer = getDeveloper(developerInitials);
 		workActivity.setBudgetetTime(developer, time);
 	}
 	
-	public void setActivityEndTime(Developer developer, WorkActivity workActivity, int time) throws Exception {
+	public void setActivityEndTime(int projectID, String developerInitials, String activityName, int time) throws Exception {
+		Project project = getProject(projectID);
+		WorkActivity workActivity = project.getActivity(activityName);
+		Developer developer = getDeveloper(developerInitials);
 		workActivity.setEndTime(developer, time);
 	}
 	
-	public void addDeveloperToProjectActivity(Developer projectLeader, Developer developer, 
+	public void addDeveloperToProjectActivity(String leaderInitials, String developerInitials, 
 												String projectName, String activityName) throws Exception {
+		Developer projectLeader = getDeveloper(leaderInitials);
+		Developer developer = getDeveloper(developerInitials);
 		Project project = getProject(projectName);
 		WorkActivity workActivity = project.getActivity(activityName);
 		project.addDeveloperToActivity(projectLeader,developer, workActivity);
@@ -204,30 +216,51 @@ public class SoftwareHuset {
 	}
 	
 	public void addDeveloper(Developer developer) {
-		this.developers.add(developer);
+		if(developers.contains(developer)) {
+			return;
+		}
+		developers.add(developer);
 	}
 
-	public void setProjectStartTime(Project project, int time) throws Exception {
-		 project.setStartTime(time);
+	public void setProjectStartTime(int projectID, int time) throws Exception {
+		Project project = getProject(projectID);
+		project.setStartTime(time);
 	}
 
-	public void setProjectLeader(Project project, Developer developer) throws NotProjectLeaderException {
+	public void setProjectLeader(int projectID, String developerInitials) throws Exception {
+		Project project = getProject(projectID);
+		Developer developer = getDeveloper(developerInitials);
 		project.setProjectLeader(developer);
 	}
 
-	public void setProjectLeader(Project project, Developer leader, Developer newLeader) throws NotProjectLeaderException {
+	public void setProjectLeader(int projectID, String leaderInitials, String developerInitials) throws Exception {
+		Project project = getProject(projectID);
+		Developer leader = getDeveloper(leaderInitials);
+		Developer newLeader = getDeveloper(developerInitials);
 		project.setProjectLeader(leader, newLeader);
 	}
 
-	public void setProjectEndTime(Project project, int time) throws Exception {
-		 project.setEndTime(time);
+	public void setProjectEndTime(int projectID, int time) throws Exception {
+		Project project = getProject(projectID); 
+		project.setEndTime(time);
 	}
 
-	public void editDeveloperActivityTime(Developer worker, WorkActivity workActivity, int int2) {
-		workActivity.editDeveloperActivityTime(worker, int2);
+	public void editDeveloperActivityTime(int projectID, String developerInitials, String activityName, int time) throws Exception {
+		Developer developer = getDeveloper(developerInitials);
+		Project project = getProject(projectID);
+		WorkActivity workActivity = project.getActivity(activityName);
+		workActivity.editDeveloperActivityTime(developer, time);
 	}
 	
-	public void setDeveloperCanWorkOn20Activities(Developer developer, boolean b) {
+	public void setDeveloperCanWorkOn20Activities(String developerInitials, boolean b) throws Exception {
+		Developer developer = getDeveloper(developerInitials);
 		developer.setCanWorkOn20Activities(b);
+	}
+
+	public double getDevWorkTime(int projectID, String developerInitials, String activityName) throws Exception {
+		Developer developer = getDeveloper(developerInitials);
+		Project project = getProject(projectID);
+		WorkActivity workActivity = project.getActivity(activityName);
+		return workActivity.getDevWorkTime(developer);
 	}
 }

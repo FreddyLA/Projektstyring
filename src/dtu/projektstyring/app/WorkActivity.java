@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import dtu.projektstyring.exceptions.NotProjectLeaderException;
+import dtu.projektstyring.exceptions.PrivateActivityDuringWorkActivityException;
 import dtu.projektstyring.exceptions.StartDateException;
 import dtu.projektstyring.exceptions.TooManyActivitesException;
 
@@ -89,16 +90,11 @@ public class WorkActivity {
 		} else if (developer.isAvailable(activityStartTime, activityEndTime) >= 10 && !developer.getCanWorkOn20Activities()) {
 			throw new TooManyActivitesException();
 		}
+		if(developer.hasPrivateActivity(activityStartTime, activityEndTime)) {
+			throw new PrivateActivityDuringWorkActivityException();
+		}
 		this.developers.add(developer);
 		developer.addWorkActivity(this);
-	}
-	
-	public double getTotalWorkHours() {
-		double totalWorkHours = 0;
-		for(DeveloperActivityTime work: totalWork) {
-			totalWorkHours += work.getTimeSpent();
-		}
-		return totalWorkHours;
 	}
 	
 	//Developer registers an amount of work on an activity
@@ -152,23 +148,12 @@ public class WorkActivity {
 		this.budgetedTime = budgetedTime;
 	}
 	
-	public int getCreationTime() {
-		return activityCreationTime;
-	}
 
 	public Project getAttachedProject() {
 		return attachedProject;
 	}
-
-	public void setAttachedProject(Project attachedProject) {
-		this.attachedProject = attachedProject;
-	}
 	
 	public String getName() {
 		return activityName;
-	}
-
-	public void setName(String name) {
-		this.activityName = name;
 	}
 }

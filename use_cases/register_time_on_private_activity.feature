@@ -15,4 +15,4 @@ Scenario: A development worker registers time on a private activity, when the de
 Given a development worker is assigned the activity
 And the activity has a start date and end date
 When a development worker registers the private activity "Vacation"
-Then an error message "Can't register personal activity, when worker has an activity" is presented
+Then an error message "Private activity not allowed during work activity" is presented

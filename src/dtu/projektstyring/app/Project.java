@@ -38,10 +38,6 @@ public class Project {
 		WorkActivity newActivity = new WorkActivity(this, activityName);
 		workActivities.add(newActivity);
 	}
-
-	public void addActivity(WorkActivity workActivity) {
-		this.workActivities.add(workActivity);
-	}
 	
 	public ArrayList<WorkActivity> getActivities() {
 		ArrayList<WorkActivity> rActivities = new ArrayList<>();;
@@ -127,9 +123,5 @@ public class Project {
 	
 	public String getName() {
 		return projectName;
-	}
-
-	public void setName(String projectName) {
-		this.projectName = projectName;
 	}
 }

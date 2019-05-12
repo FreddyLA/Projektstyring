@@ -56,7 +56,7 @@ public class Main {
 			projectsMenu();
 			in = input.nextLine();
 			projectsMenuLogic(d, in);
-			break;
+			break;	
 		case "4":
 			showFullPersonelSchedule();
 			break;
