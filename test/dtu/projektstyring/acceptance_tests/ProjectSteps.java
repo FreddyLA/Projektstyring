@@ -4,19 +4,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
-import java.util.Date;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import dtu.projektstyring.app.WorkActivity;
 import dtu.projektstyring.app.Developer;
 import dtu.projektstyring.app.Project;
-import dtu.projektstyring.app.Report;
 import dtu.projektstyring.app.SoftwareHuset;
-import dtu.projektstyring.exceptions.NotProjectLeaderException;
 import test_helpers.ErrorMessageHolder;
-import test_helpers.MockDateHolder;
 import test_helpers.ProjectHelper;
 import test_helpers.UserHelper;
 
@@ -29,17 +23,15 @@ public class ProjectSteps {
 	private Calendar calendar;
 	
 	private UserHelper userHelper;
-	private MockDateHolder dateHolder;
 	private ProjectHelper projectHelper;
 	
 	
 	public ProjectSteps(SoftwareHuset softwareHuset, ErrorMessageHolder errorMessage, 
-								UserHelper userHelper, MockDateHolder dateHolder, ProjectHelper projectHelper) {
+								UserHelper userHelper, ProjectHelper projectHelper) {
 		this.softwareHuset = softwareHuset;
 		this.errorMessage = errorMessage;
 		this.userHelper = userHelper;
 		userHelper.setSoftwareHuset(softwareHuset);
-		this.dateHolder = dateHolder;
 		this.projectHelper = projectHelper;
 		projectHelper.setSoftwareHuset(softwareHuset);
 	}

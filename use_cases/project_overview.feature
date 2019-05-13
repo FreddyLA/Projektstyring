@@ -16,7 +16,8 @@ When the project leader asks for time spent on the activity with the name "Activ
 Then the project leader is told that 8 hours has been spent on the activity
 
 Scenario: Project leader gets time spent on a project
-Given the development worker inputs 4 hours worked on the activity into the system
+Given the project leader creates a new activity with the name "Activity2"
+And a development worker inputs 4 hours worked on the activity with the name "Activity2"
 When the project leader asks for time spent on the project
 Then the project leader is told that 12 hours has been spent on the project
 

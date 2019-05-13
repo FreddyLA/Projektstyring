@@ -2,13 +2,6 @@ package dtu.projektstyring.acceptance_tests;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -28,7 +21,7 @@ public class RegisterTimeSteps {
 
 	private Project project;
 	private WorkActivity workActivity;
-	private Developer developer, worker, worker2;
+	private Developer worker, worker2;
 	private ErrorMessageHolder errorMessage;
 	private double workDone;
 	

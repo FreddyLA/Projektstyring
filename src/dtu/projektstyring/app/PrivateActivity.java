@@ -4,7 +4,7 @@ import dtu.projektstyring.exceptions.StartDateException;
 
 public class PrivateActivity {
 	private String activityName; //Unique for activities in project
-	private int activityStartTime, activityEndTime, activityCreationTime;
+	private int activityStartTime, activityEndTime;
 	
 	public PrivateActivity(String activityName, int activityStartTime, int activityEndTime) throws Exception {
 		if(activityStartTime > activityEndTime) {

@@ -35,17 +35,6 @@ public class WorkActivity {
 		activityCreationTime = attachedProject.getSoftwareHuset().getDateServer().getDate().get(Calendar.WEEK_OF_YEAR);
 	}
 	
-	//Returns amount of work a developer has done on an activity
-	public double getDevWorkTime(Developer developer) {
-		double developerWorkTime = 0;
-		for(DeveloperActivityTime work: totalWork) {
-			if(work.getDeveloper().equals(developer)) {
-				developerWorkTime += work.getTimeSpent();
-			}
-		}
-		return developerWorkTime;
-	}
-	
 	public double getTotalWorkHours() {
 		double totalWorkHours = 0;
 		for(DeveloperActivityTime work: totalWork) {

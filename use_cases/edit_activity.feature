@@ -20,6 +20,5 @@ When a development worker attempts to edit an activity's budgettet time
 Then an error message "Action for project leader only" is presented
 
 Scenario: Create an activity with deadline before start time
-When the project leader changes the activity's start time
-And the project leader assigns a deadline to the activity that is before the assigned start date
+When the project leader assigns a deadline to the activity that is before the assigned start date
 Then an error message "Deadline cannot be before the assigned start date" is presented

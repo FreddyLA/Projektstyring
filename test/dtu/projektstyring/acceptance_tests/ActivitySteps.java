@@ -14,10 +14,8 @@ import dtu.projektstyring.app.PrivateActivity;
 import dtu.projektstyring.app.Project;
 import dtu.projektstyring.app.SoftwareHuset;
 import dtu.projektstyring.exceptions.ActivityDoesNotExistException;
-import dtu.projektstyring.exceptions.NotProjectLeaderException;
 import test_helpers.ActivityHolder;
 import test_helpers.ErrorMessageHolder;
-import test_helpers.MockDateHolder;
 import test_helpers.ProjectHelper;
 import test_helpers.UserHelper;
 
@@ -27,24 +25,21 @@ public class ActivitySteps {
 	private Project project;
 	private WorkActivity workActivity;
 	private PrivateActivity privateActivity;
-	private Developer developer, worker, worker2;
+	private Developer worker, worker2, worker3;
 	private ErrorMessageHolder errorMessage;
 	
 	private UserHelper userHelper;
-	private MockDateHolder dateHolder;
 	private ProjectHelper projectHelper;
 	private ActivityHolder activityHolder;
 	
 	private Calendar calendar;
 	
 	public ActivitySteps(SoftwareHuset softwareHuset, ErrorMessageHolder errorMessage, 
-			UserHelper userHelper, MockDateHolder dateHolder, ProjectHelper projectHelper, 
-			 ActivityHolder activityHolder) {
+			UserHelper userHelper, ProjectHelper projectHelper, ActivityHolder activityHolder) {
 		this.softwareHuset = softwareHuset;
 		this.errorMessage = errorMessage;
 		this.userHelper = userHelper;
 		userHelper.setSoftwareHuset(softwareHuset);
-		this.dateHolder = dateHolder;
 		this.projectHelper = projectHelper;
 		projectHelper.setSoftwareHuset(softwareHuset);
 		this.activityHolder = activityHolder;
@@ -52,19 +47,20 @@ public class ActivitySteps {
 	
 	@When("the project leader creates a new activity with the name {string}")
 	public void theProjectLeaderCreatesANewActivityWithTheName(String string) throws Exception {
-	    this.developer = userHelper.getUser();
-	    this.project = projectHelper.getProject();
-	    softwareHuset.createAndAddActivityToProject(developer.getInitials(), project.getProjectNumber(), string);
+	    worker = userHelper.getUser();
+	    project = projectHelper.getProject();
+	    softwareHuset.createAndAddActivityToProject(worker.getInitials(), project.getProjectNumber(), string);
 	    workActivity = softwareHuset.getProject(project.getName()).getActivity(string);
 	    activityHolder.setActivity(workActivity);
 	    assertTrue(workActivity.getName().matches(string));
 	    assertTrue(workActivity.getAttachedProject().equals(project));
+	    assertTrue(project.getActivities().contains(workActivity));
 	}
 	
 	@When("the project leader changes budgettet time to {int}")
 	public void theProjectLeaderEditsActivity(int time) throws Exception {
-		developer = userHelper.getUser();
-		softwareHuset.setActivityBudgettetTime(project.getProjectNumber() ,developer.getInitials(), workActivity.getName(), time);
+		worker = userHelper.getUser();
+		softwareHuset.setActivityBudgettetTime(project.getProjectNumber() ,worker.getInitials(), workActivity.getName(), time);
 	    assertTrue(workActivity.getBudgetedTime() == time);
 	}
 
@@ -75,10 +71,10 @@ public class ActivitySteps {
 
 	@Given("a development worker attempts to edit an activity's budgettet time")
 	public void aDevelopmentWorkerAttemptsToEditAnActivity() {
-	    worker = userHelper.getUser2();
-	    softwareHuset.addDeveloper(worker);
+		worker2 = userHelper.getUser2();
+	    softwareHuset.addDeveloper(worker2);
 	    try {
-		    softwareHuset.setActivityBudgettetTime(project.getProjectNumber(), worker.getInitials(), workActivity.getName(), 10);
+		    softwareHuset.setActivityBudgettetTime(project.getProjectNumber(), worker2.getInitials(), workActivity.getName(), 10);
 	    } catch (Exception e) {
 	    	errorMessage.setErrorMessage(e.getMessage());
 	    }
@@ -91,11 +87,11 @@ public class ActivitySteps {
 
 	@When("a development worker creates an activity for the project")
 	public void aDevelopmentWorkerCreatesAnActivityForTheProject() {
-	    worker = userHelper.getUser2();
-	    softwareHuset.addDeveloper(worker);
+		worker2 = userHelper.getUser2();
+	    softwareHuset.addDeveloper(worker2);
 	    project = projectHelper.getProject();
 	    try {
-	    	softwareHuset.createAndAddActivityToProject(worker.getInitials(), project.getProjectNumber(), "test");
+	    	softwareHuset.createAndAddActivityToProject(worker2.getInitials(), project.getProjectNumber(), "test");
 	    } catch (Exception e) {
 	    	errorMessage.setErrorMessage(e.getMessage());
 	    }
@@ -104,11 +100,11 @@ public class ActivitySteps {
 	@When("the project leader assigns a deadline to the activity that is before the assigned start date")
 	public void theProjectLeaderAssignsAStartDateToTheActivity() throws Exception {
 		Calendar startDate = Calendar.getInstance();
-		softwareHuset.setActivityEndTime(project.getProjectNumber(), developer.getInitials(), workActivity.getName(), startDate.get(Calendar.WEEK_OF_YEAR));
+		softwareHuset.setActivityEndTime(project.getProjectNumber(), worker.getInitials(), workActivity.getName(), startDate.get(Calendar.WEEK_OF_YEAR));
 	    Calendar prevDate = Calendar.getInstance();
 		prevDate.add(Calendar.DAY_OF_MONTH, -10);
 		try {
-			softwareHuset.setActivityEndTime(project.getProjectNumber(), developer.getInitials(), workActivity.getName(), prevDate.get(Calendar.WEEK_OF_YEAR));
+			softwareHuset.setActivityEndTime(project.getProjectNumber(), worker.getInitials(), workActivity.getName(), prevDate.get(Calendar.WEEK_OF_YEAR));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -117,7 +113,7 @@ public class ActivitySteps {
 	@When("the project leader changes the activity's start time")
 	public void theProjectLeaderChangesTheActivitySStartTime() throws Exception {
 		calendar = softwareHuset.getDateServer().getDate();
-		softwareHuset.setActivityStartTime(project.getProjectNumber(),developer.getInitials(), workActivity.getName(), calendar.get(Calendar.WEEK_OF_YEAR));
+		softwareHuset.setActivityStartTime(project.getProjectNumber(), worker.getInitials(), workActivity.getName(), calendar.get(Calendar.WEEK_OF_YEAR));
 	    assertTrue(workActivity.getStartTime() == calendar.get(Calendar.WEEK_OF_YEAR));
 	}
 
@@ -128,36 +124,35 @@ public class ActivitySteps {
 	
 	@Given("a development worker is assigned the activity")
 	public void aDevelopmentWorkerIsAssignedTheActivity() throws Exception {
-		developer = userHelper.getUser();
-		worker = userHelper.getUser2();
-		softwareHuset.addDeveloper(worker);
+		worker = userHelper.getUser();
+		worker2 = userHelper.getUser2();
+		softwareHuset.addDeveloper(worker2);
 		workActivity = activityHolder.getActivity();
-		softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker.getInitials(), project.getProjectNumber(), workActivity.getName());
-	    assertTrue(softwareHuset.getProjectActivityDevelopers(project.getProjectNumber(), workActivity.getName()).contains(worker));
+		softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker2.getInitials(), project.getProjectNumber(), workActivity.getName());
+	    assertTrue(softwareHuset.getProjectActivityDevelopers(project.getProjectNumber(), workActivity.getName()).contains(worker2));
 	}
 	
 	@Given("a development worker is not assigned the activity")
 	public void aDevelopmentWorkerIsNotAssignedTheActivity() {
-	    worker = userHelper.getUser2();
-	    softwareHuset.addDeveloper(worker);
-	    assertFalse(workActivity.getDevelopers().contains(worker));
-	}
-	
-	@Given("a different development worker is not assigned the activity")
-	public void aDifferentDevelopmentWorkerIsAssignedTheActivity() {
-	    worker2 = userHelper.getUser3();
+		worker2 = userHelper.getUser2();
 	    softwareHuset.addDeveloper(worker2);
 	    assertFalse(workActivity.getDevelopers().contains(worker2));
 	}
 	
+	@Given("a different development worker is not assigned the activity")
+	public void aDifferentDevelopmentWorkerIsAssignedTheActivity() {
+		worker3 = userHelper.getUser3();
+	    softwareHuset.addDeveloper(worker3);
+	    assertFalse(workActivity.getDevelopers().contains(worker3));
+	}
+	
 	@When("the project leader adds a development worker to the activity")
 	public void theProjectLeaderAddsADevelopmentWorkerToAnActivity() {
-		worker = userHelper.getUser2();
-		softwareHuset.addDeveloper(worker);
-	    developer = userHelper.getUser();
+		worker2 = userHelper.getUser2();
+		softwareHuset.addDeveloper(worker2);
 	    try {
-	    	softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker.getInitials(), project.getProjectNumber(), workActivity.getName());
-			assertTrue(workActivity.getDevelopers().contains(worker));
+	    	softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker2.getInitials(), project.getProjectNumber(), workActivity.getName());
+			assertTrue(workActivity.getDevelopers().contains(worker2));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -165,32 +160,34 @@ public class ActivitySteps {
 
 	@Then("the development worker has been added to the activity")
 	public void theDevelopmentWorkerHasBeenAddedToTheActivity() {
-		assertTrue(workActivity.getDevelopers().contains(worker));
+		assertTrue(workActivity.getDevelopers().contains(worker2));
 	}
 
 	@Given("a development worker has {int} activities")
 	public void theDevelopmentWorkerHasActivities(Integer int1) throws Exception {
-		this.developer = userHelper.getUser();
-		this.project = projectHelper.getProject(); 
-		this.worker = userHelper.getUser2();
-		softwareHuset.addDeveloper(worker);
-		WorkActivity workActivity = null;
+		worker = userHelper.getUser();
+		project = projectHelper.getProject(); 
+		worker2 = userHelper.getUser2();
+		softwareHuset.addDeveloper(worker2);
+		WorkActivity trashActivity = null;
 		for(int i = 0; i < int1; i++) {
-			softwareHuset.createAndAddActivityToProject(developer.getInitials(), project.getProjectNumber(), "n"+i);
-			workActivity = project.getActivity("n"+i);
-			softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker.getInitials(), project.getProjectNumber(), workActivity.getName());
+			softwareHuset.createAndAddActivityToProject(worker.getInitials(), project.getProjectNumber(), "n"+i);
+			trashActivity = project.getActivity("n"+i);
+			softwareHuset.setActivityStartTime(project.getProjectNumber(), worker.getInitials(), trashActivity.getName(), workActivity.getStartTime());
+			softwareHuset.setActivityEndTime(project.getProjectNumber(), worker.getInitials(), trashActivity.getName(), workActivity.getEndTime());
+			softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker2.getInitials(), project.getProjectNumber(), workActivity.getName());
 		}
-		assertTrue(worker.getWorkActivities().size() == int1);
+		assertTrue(worker2.getWorkActivities().size() == int1);
 	}
 	
 	@When("a development worker assigns a new development worker to the activity")
 	public void aDevelopmentWorkerAssignsANewDevelopmentWorkerTheTheActivity() {
-		worker = userHelper.getUser2();
-	    worker2 = userHelper.getUser3();
-	    softwareHuset.addDeveloper(worker);
+		worker2 = userHelper.getUser2();
+		worker3 = userHelper.getUser3();
 	    softwareHuset.addDeveloper(worker2);
+	    softwareHuset.addDeveloper(worker3);
 	    try {
-	    	softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker2.getInitials(), project.getProjectNumber(), workActivity.getName());
+	    	softwareHuset.addDeveloperToProjectActivity(worker2.getInitials(), worker3.getInitials(), project.getProjectNumber(), workActivity.getName());
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -198,13 +195,13 @@ public class ActivitySteps {
 	
 	@When("the development worker changes the hours worked on the activity from {int} to {int}")
 	public void theDevelopmentWorkerChangesTheHoursWorkedOnTheActivityFromTo(Integer int1, Integer int2) throws Exception {
-		assertTrue(workActivity.getDevWorkTimeToday(worker) == int1);
-		softwareHuset.editDeveloperActivityTime(project.getProjectNumber(), worker.getInitials(), workActivity.getName(), int2);
+		assertTrue(workActivity.getDevWorkTimeToday(worker2) == int1);
+		softwareHuset.editDeveloperActivityTime(project.getProjectNumber(), worker2.getInitials(), workActivity.getName(), int2);
 	}
 
 	@Then("the development worker's hours on the activity is {int}")
 	public void theDevelopmentWorkerSHoursOnTheActivityIs(Integer int1) {
-		assertTrue(workActivity.getDevWorkTimeToday(worker) == int1);
+		assertTrue(workActivity.getDevWorkTimeToday(worker2) == int1);
 	}
 	
 	@Given("the activity has a start date and end date")
@@ -216,11 +213,11 @@ public class ActivitySteps {
 	
 	@When("a development worker registers the private activity {string}")
 	public void theDevelopmentWorkerRegistersThePrivateActivity(String string){
-		worker = userHelper.getUser2();
-		softwareHuset.addDeveloper(worker);
+		worker2 = userHelper.getUser2();
+		softwareHuset.addDeveloper(worker2);
 	    try {
-			softwareHuset.registerPrivateActivity(worker.getInitials(), workActivity.getStartTime(), workActivity.getEndTime(), string);
-			privateActivity = worker.getPrivateActivity(string);
+			softwareHuset.registerPrivateActivity(worker2.getInitials(), workActivity.getStartTime(), workActivity.getEndTime(), string);
+			privateActivity = worker2.getPrivateActivity(string);
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -229,17 +226,17 @@ public class ActivitySteps {
 	@Then("the delopment worker has a private activity {string}")
 	public void theDelopmentWorkerHasAPrivateActivity(String string) {
 		assertTrue(privateActivity.getName().matches(string));
-	    assertTrue(worker.getPrivateActivities().contains(privateActivity));
+	    assertTrue(worker2.getPrivateActivities().contains(privateActivity));
 	}
 	
 	@Given("the development worker can work on {int} activities")
 	public void theDevelopmentWorkerCanWorkOnActivities(int number) throws Exception {
-		softwareHuset.setDeveloperCanWorkOn20Activities(worker.getInitials(), true);
+		softwareHuset.setDeveloperCanWorkOn20Activities(worker2.getInitials(), true);
 	}
 	
 	@Given("a development worker inputs {int} hours worked on the activity with the name {string}")
 	public void aDevelopmentWorkerInputsHoursWorkedOnTheActivityWithTheName(Integer hours, String string) throws Exception {
-		softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker.getInitials(), project.getProjectNumber(), workActivity.getName());
-		softwareHuset.registerTime(worker.getInitials(), project.getProjectNumber(), string, hours);
+		softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker2.getInitials(), project.getProjectNumber(), workActivity.getName());
+		softwareHuset.registerTime(worker2.getInitials(), project.getProjectNumber(), string, hours);
 	}
 }

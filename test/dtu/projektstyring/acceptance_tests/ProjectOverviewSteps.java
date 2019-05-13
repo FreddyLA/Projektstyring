@@ -15,7 +15,6 @@ import dtu.projektstyring.app.Project;
 import dtu.projektstyring.app.SoftwareHuset;
 import test_helpers.ActivityHolder;
 import test_helpers.ErrorMessageHolder;
-import test_helpers.MockDateHolder;
 import test_helpers.ProjectHelper;
 import test_helpers.UserHelper;
 
@@ -23,24 +22,22 @@ public class ProjectOverviewSteps {
 	private SoftwareHuset softwareHuset;
 	private Project project;
 	private WorkActivity workActivity;
-	private Developer developer, worker, worker2;
+	private Developer worker, worker2, worker3;
 	private ErrorMessageHolder errorMessage;
 	private List<Developer> availableDevelopers = new ArrayList<>();
 	private double timeSpentActivity, timeSpentProject, timeRemainingProject;
 	
 	private UserHelper userHelper;
-	private MockDateHolder dateHolder;
 	private ProjectHelper projectHelper;
 	private ActivityHolder activityHolder;
 	
 	public ProjectOverviewSteps(SoftwareHuset softwareHuset, ErrorMessageHolder errorMessage, 
-			UserHelper userHelper, MockDateHolder dateHolder, ProjectHelper projectHelper, 
+			UserHelper userHelper, ProjectHelper projectHelper, 
 			 ActivityHolder activityHolder) {
 		this.softwareHuset = softwareHuset;
 		this.errorMessage = errorMessage;
 		this.userHelper = userHelper;
 		userHelper.setSoftwareHuset(softwareHuset);
-		this.dateHolder = dateHolder;
 		this.projectHelper = projectHelper;
 		projectHelper.setSoftwareHuset(softwareHuset);
 		this.activityHolder = activityHolder;
@@ -48,28 +45,28 @@ public class ProjectOverviewSteps {
 	
 	@Given("a development worker is available in the given timeperiod")
 	public void aDevelopmentWorkerIsAvailableInTheGivenTimeperiod() {
-	    worker = userHelper.getUser2();
-	    softwareHuset.addDeveloper(worker);
+		worker2 = userHelper.getUser2();
+	    softwareHuset.addDeveloper(worker2);
 	    workActivity = activityHolder.getActivity();
-	    assertTrue(worker.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()) < 10);
+	    assertTrue(worker2.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()) < 10);
 	}
 	
 	@Given("a development worker is not available in the given timeperiod")
 	public void anotherDevelopemntWorkerIsNotAvailableInTheGivenTimeperiod() throws Exception {
-		developer = userHelper.getUser();
+		worker = userHelper.getUser();
 		project = projectHelper.getProject();
 		workActivity = activityHolder.getActivity();
-	    worker2 = userHelper.getUser3();
-	    softwareHuset.addDeveloper(worker2);
+		worker3 = userHelper.getUser3();
+	    softwareHuset.addDeveloper(worker3);
 	    WorkActivity trashActivity = null;
 	    for(int i = 0; i < 10; i++) {
-			softwareHuset.createAndAddActivityToProject(developer.getInitials(), project.getProjectNumber(), "n"+i);
+			softwareHuset.createAndAddActivityToProject(worker.getInitials(), project.getProjectNumber(), "n"+i);
 			trashActivity = project.getActivity("n"+i);
-			softwareHuset.setActivityStartTime(project.getProjectNumber(), developer.getInitials(), trashActivity.getName(), workActivity.getStartTime());
-			softwareHuset.setActivityEndTime(project.getProjectNumber(), developer.getInitials(), trashActivity.getName(), workActivity.getEndTime());
-			softwareHuset.addDeveloperToProjectActivity(developer.getInitials(), worker2.getInitials(), project.getProjectNumber(), trashActivity.getName());
+			softwareHuset.setActivityStartTime(project.getProjectNumber(), worker.getInitials(), trashActivity.getName(), workActivity.getStartTime());
+			softwareHuset.setActivityEndTime(project.getProjectNumber(), worker.getInitials(), trashActivity.getName(), workActivity.getEndTime());
+			softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker3.getInitials(), project.getProjectNumber(), trashActivity.getName());
 		}
-	    assertFalse(worker2.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()) < 10);
+	    assertFalse(worker3.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()) < 10);
 	}
 	
 	@When("the project leader wants a list of available developers")
@@ -84,12 +81,12 @@ public class ProjectOverviewSteps {
 	
 	@Then("the project leader gets a list of developers, which contains the available development worker")
 	public void theProjectLeaderGetsAListOfDevelopersWhichContainsTheAvailableDevelopmentWorker() {
-	    assertTrue(availableDevelopers.contains(worker));
+	    assertTrue(availableDevelopers.contains(worker2));
 	}
 
 	@Then("the list doesn't contain the unavailable developer")
 	public void theListDoesnTContainTheUnavailableDeveloper() {
-		assertFalse(availableDevelopers.contains(worker2));
+		assertFalse(availableDevelopers.contains(worker3));
 	}
 	
 	@Given("the activity doesn't has a start date")
@@ -106,9 +103,9 @@ public class ProjectOverviewSteps {
 	
 	@When("the project leader asks for time spent on the activity with the name {string}")
 	public void theProjectLeaderAsksForTimeSpentOnTheActivityWithTheName(String string) throws Exception {
-		developer = userHelper.getUser();
+		worker = userHelper.getUser();
 		project = projectHelper.getProject();
-		timeSpentActivity = softwareHuset.getTimeSpentActivity(developer.getInitials(), project.getProjectNumber(), string);
+		timeSpentActivity = softwareHuset.getTimeSpentActivity(worker.getInitials(), project.getProjectNumber(), string);
 	}
 	
 	@Then("the project leader is told that {int} hours has been spent on the activity")
@@ -118,9 +115,9 @@ public class ProjectOverviewSteps {
 	
 	@When("the project leader asks for time spent on the project")
 	public void theProjectLeaderAsksForTimeSpentOnTheProject() throws Exception {
-		developer = userHelper.getUser();
+		worker = userHelper.getUser();
 		project = projectHelper.getProject();
-		timeSpentProject = softwareHuset.getTimeSpentProject(developer.getInitials(), project.getProjectNumber());
+		timeSpentProject = softwareHuset.getTimeSpentProject(worker.getInitials(), project.getProjectNumber());
 	}
 	
 	@Then("the project leader is told that {int} hours has been spent on the project")
@@ -130,9 +127,9 @@ public class ProjectOverviewSteps {
 	
 	@When("the project leader asks work remains on the project")
 	public void theProjectLeaderAsksWorkRemainsOnTheProject() throws Exception {
-		developer = userHelper.getUser();
+		worker = userHelper.getUser();
 		project = projectHelper.getProject();
-		timeRemainingProject = softwareHuset.getProjectWorkRemaining(developer.getInitials(), project.getProjectNumber());
+		timeRemainingProject = softwareHuset.getProjectWorkRemaining(worker.getInitials(), project.getProjectNumber());
 	}
 	
 	@Then("the project leader is told that {int} hours remain on the project")

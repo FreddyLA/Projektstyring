@@ -24,6 +24,7 @@ public class SoftwareHuset {
 	
 	//**********TIL TESTING**********//
 	public SoftwareHuset() {
+		/**
 		Developer defDev = new Developer("John Doe", "JDO", this);
 		developers.add(defDev);
 		
@@ -41,6 +42,7 @@ public class SoftwareHuset {
 			e.printStackTrace();
 		}
 		projects.add(defProj);
+		**/
 	}
 	//*******************************//
 	
@@ -116,7 +118,7 @@ public class SoftwareHuset {
 			throw new NotOnActivityException();
 		}
 		
-		DeveloperActivityTime work = new DeveloperActivityTime(developer, workActivity, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
+		DeveloperActivityTime work = new DeveloperActivityTime(developer, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
 		workActivity.registerTime(work);
 		developer.registerWork(work);
 	}
@@ -142,8 +144,7 @@ public class SoftwareHuset {
 		if(!workActivity.getDevelopers().contains(activityDeveloper)) {
 			throw new NotOnActivityException();
 		}
-		DeveloperActivityTime work = new DeveloperActivityTime(activityDeveloper, helperDeveloper, 
-																workActivity, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
+		DeveloperActivityTime work = new DeveloperActivityTime(activityDeveloper, helperDeveloper, hours, dateServer.getDate().get(Calendar.DAY_OF_YEAR));
 		workActivity.registerTime(work);
 	}
 	
@@ -154,6 +155,15 @@ public class SoftwareHuset {
 		}
 		if(developer.isAvailable(startTime, endTime) > 0) {
 			throw new PrivateActivityDuringWorkActivityException();
+		}
+		boolean stringMatch = false;
+		for(String string: privateActivities) {
+			if(string.matches(activityName)) {
+				stringMatch = true;
+			}
+		}
+		if(!stringMatch) {
+			throw new ActivityDoesNotExistException();
 		}
 		PrivateActivity privateActivity = new PrivateActivity(activityName, startTime, endTime);
 		developer.addPrivateActivity(privateActivity);
@@ -253,60 +263,6 @@ public class SoftwareHuset {
 			throw new ActivityDoesNotExistException();
 		}
 		return project.getActivityDevelopers(workActivity);
-	}
-	
-	public DateServer getDateServer() {
-		return this.dateServer;
-	}
-	
-	public void setDateServer(DateServer dateServer) {
-		this.dateServer = dateServer;
-	}
-
-	public List<Project> getProjects() {
-		return projects;
-	}
-	
-	public Project getProject(int projectNumber) throws Exception {
-		for(Project project : projects) {
-			if(project.getProjectNumber() == projectNumber) {
-				return project;
-			}
-		}
-		return null;
-	}
-	
-	public Project getProject(String projectName) throws ProjectDoesNotExistException{
-		for(Project project : projects) {
-			if(project.getName().equals(projectName)) {
-				return project;
-			}
-		}
-		throw new ProjectDoesNotExistException();
-	}
-
-	public void addProject(Project project) {
-		this.projects.add(project);
-	}
-	
-	public List<Developer> getDevelopers() {
-		return developers;
-	}
-
-	public Developer getDeveloper(String initials) throws Exception {
-		for(Developer d : developers) {
-			if(d.getInitials().equals(initials)) {
-				return d;
-			}
-		}
-		return null;
-	}
-	
-	public void addDeveloper(Developer developer) {
-		if(developers.contains(developer)) {
-			return;
-		}
-		developers.add(developer);
 	}
 
 	public void setProjectStartTime(String developerInitials, int projectID, int time) throws Exception {
@@ -452,5 +408,59 @@ public class SoftwareHuset {
 			throw new ProjectDoesNotExistException();
 		}
 		return project.getWorkRemaining();
+	}
+	
+	public DateServer getDateServer() {
+		return this.dateServer;
+	}
+	
+	public void setDateServer(DateServer dateServer) {
+		this.dateServer = dateServer;
+	}
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+	
+	public Project getProject(int projectNumber){
+		for(Project project : projects) {
+			if(project.getProjectNumber() == projectNumber) {
+				return project;
+			}
+		}
+		return null;
+	}
+	
+	public Project getProject(String projectName) throws ProjectDoesNotExistException{
+		for(Project project : projects) {
+			if(project.getName().equals(projectName)) {
+				return project;
+			}
+		}
+		throw new ProjectDoesNotExistException();
+	}
+
+	public void addProject(Project project) {
+		this.projects.add(project);
+	}
+	
+	public List<Developer> getDevelopers() {
+		return developers;
+	}
+
+	public Developer getDeveloper(String initials){
+		for(Developer d : developers) {
+			if(d.getInitials().equals(initials)) {
+				return d;
+			}
+		}
+		return null;
+	}
+	
+	public void addDeveloper(Developer developer) {
+		if(developers.contains(developer)) {
+			return;
+		}
+		developers.add(developer);
 	}
 }

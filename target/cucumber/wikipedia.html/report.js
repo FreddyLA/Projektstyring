@@ -407,18 +407,8 @@ formatter.scenario({
   "keyword": "Scenario"
 });
 formatter.step({
-  "name": "the project leader changes the activity\u0027s start time",
-  "keyword": "When "
-});
-formatter.match({
-  "location": "ActivitySteps.theProjectLeaderChangesTheActivitySStartTime()"
-});
-formatter.result({
-  "status": "passed"
-});
-formatter.step({
   "name": "the project leader assigns a deadline to the activity that is before the assigned start date",
-  "keyword": "And "
+  "keyword": "When "
 });
 formatter.match({
   "location": "ActivitySteps.theProjectLeaderAssignsAStartDateToTheActivity()"
@@ -1427,11 +1417,21 @@ formatter.scenario({
   "keyword": "Scenario"
 });
 formatter.step({
-  "name": "the development worker inputs 4 hours worked on the activity into the system",
+  "name": "the project leader creates a new activity with the name \"Activity2\"",
   "keyword": "Given "
 });
 formatter.match({
-  "location": "RegisterTimeSteps.theDevelopmentWorkerInputsAmountOfHoursWorkedForTheDayIntoTheSystem(double)"
+  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a development worker inputs 4 hours worked on the activity with the name \"Activity2\"",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.aDevelopmentWorkerInputsHoursWorkedOnTheActivityWithTheName(Integer,String)"
 });
 formatter.result({
   "status": "passed"
@@ -1653,8 +1653,18 @@ formatter.scenario({
   "keyword": "Scenario"
 });
 formatter.step({
-  "name": "a development worker has 10 activities",
+  "name": "the activity has a start date and end date",
   "keyword": "Given "
+});
+formatter.match({
+  "location": "ActivitySteps.theActivityHasAStartDateAndEndDate()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a development worker has 10 activities",
+  "keyword": "And "
 });
 formatter.match({
   "location": "ActivitySteps.theDevelopmentWorkerHasActivities(Integer)"
@@ -1733,8 +1743,18 @@ formatter.scenario({
   "keyword": "Scenario"
 });
 formatter.step({
-  "name": "a development worker has 10 activities",
+  "name": "the activity has a start date and end date",
   "keyword": "Given "
+});
+formatter.match({
+  "location": "ActivitySteps.theActivityHasAStartDateAndEndDate()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a development worker has 10 activities",
+  "keyword": "And "
 });
 formatter.match({
   "location": "ActivitySteps.theDevelopmentWorkerHasActivities(Integer)"
