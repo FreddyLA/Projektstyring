@@ -62,18 +62,18 @@ public class ProjectOverviewSteps {
 	    for(int i = 0; i < 10; i++) {
 			softwareHuset.createAndAddActivityToProject(worker.getInitials(), project.getProjectNumber(), "n"+i);
 			trashActivity = project.getActivity("n"+i);
-			softwareHuset.setActivityStartTime(project.getProjectNumber(), worker.getInitials(), trashActivity.getName(), workActivity.getStartTime());
-			softwareHuset.setActivityEndTime(project.getProjectNumber(), worker.getInitials(), trashActivity.getName(), workActivity.getEndTime());
+			softwareHuset.setActivityStartTime(worker.getInitials(), project.getProjectNumber(), trashActivity.getName(), workActivity.getStartTime());
+			softwareHuset.setActivityEndTime(worker.getInitials(), project.getProjectNumber(), trashActivity.getName(), workActivity.getEndTime());
 			softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker3.getInitials(), project.getProjectNumber(), trashActivity.getName());
 		}
 	    assertFalse(worker3.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()) < 10);
 	}
 	
-	@When("the project leader wants a list of available developers")
-	public void theProjectLeaderWantsAListOfAvailableDevelopers(){
+	@When("the project leader wants a list of available developers for the activity {string}")
+	public void theProjectLeaderWantsAListOfAvailableDevelopers(String activityName){
 		project = projectHelper.getProject();
 	    try {
-			availableDevelopers = softwareHuset.findAvailableDevelopers(project.getProjectNumber(), workActivity.getName());
+			availableDevelopers = softwareHuset.findAvailableDevelopers(project.getProjectNumber(), activityName);
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}

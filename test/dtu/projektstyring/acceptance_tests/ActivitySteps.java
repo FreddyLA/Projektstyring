@@ -46,21 +46,25 @@ public class ActivitySteps {
 	}
 	
 	@When("the project leader creates a new activity with the name {string}")
-	public void theProjectLeaderCreatesANewActivityWithTheName(String string) throws Exception {
+	public void theProjectLeaderCreatesANewActivityWithTheName(String string) throws Exception{
 	    worker = userHelper.getUser();
 	    project = projectHelper.getProject();
-	    softwareHuset.createAndAddActivityToProject(worker.getInitials(), project.getProjectNumber(), string);
-	    workActivity = softwareHuset.getProject(project.getName()).getActivity(string);
-	    activityHolder.setActivity(workActivity);
-	    assertTrue(workActivity.getName().matches(string));
-	    assertTrue(workActivity.getAttachedProject().equals(project));
-	    assertTrue(project.getActivities().contains(workActivity));
+	    try {
+			softwareHuset.createAndAddActivityToProject(worker.getInitials(), project.getProjectNumber(), string);
+			workActivity = softwareHuset.getProject(project.getName()).getActivity(string);
+		    activityHolder.setActivity(workActivity);
+		    assertTrue(workActivity.getName().matches(string));
+		    assertTrue(workActivity.getAttachedProject().equals(project));
+		    assertTrue(project.getActivities().contains(workActivity));
+		} catch (Exception e) {
+			errorMessage.setErrorMessage(e.getMessage());
+		}
 	}
 	
 	@When("the project leader changes budgettet time to {int}")
 	public void theProjectLeaderEditsActivity(int time) throws Exception {
 		worker = userHelper.getUser();
-		softwareHuset.setActivityBudgettetTime(project.getProjectNumber() ,worker.getInitials(), workActivity.getName(), time);
+		softwareHuset.setActivityBudgettetTime(worker.getInitials(), project.getProjectNumber(), workActivity.getName(), time);
 	    assertTrue(workActivity.getBudgetedTime() == time);
 	}
 
@@ -74,7 +78,7 @@ public class ActivitySteps {
 		worker2 = userHelper.getUser2();
 	    softwareHuset.addDeveloper(worker2);
 	    try {
-		    softwareHuset.setActivityBudgettetTime(project.getProjectNumber(), worker2.getInitials(), workActivity.getName(), 10);
+		    softwareHuset.setActivityBudgettetTime(worker2.getInitials(), project.getProjectNumber(), workActivity.getName(), 10);
 	    } catch (Exception e) {
 	    	errorMessage.setErrorMessage(e.getMessage());
 	    }
@@ -100,11 +104,11 @@ public class ActivitySteps {
 	@When("the project leader assigns a deadline to the activity that is before the assigned start date")
 	public void theProjectLeaderAssignsAStartDateToTheActivity() throws Exception {
 		Calendar startDate = Calendar.getInstance();
-		softwareHuset.setActivityEndTime(project.getProjectNumber(), worker.getInitials(), workActivity.getName(), startDate.get(Calendar.WEEK_OF_YEAR));
+		softwareHuset.setActivityEndTime(worker.getInitials(), project.getProjectNumber(), workActivity.getName(), startDate.get(Calendar.WEEK_OF_YEAR));
 	    Calendar prevDate = Calendar.getInstance();
 		prevDate.add(Calendar.DAY_OF_MONTH, -10);
 		try {
-			softwareHuset.setActivityEndTime(project.getProjectNumber(), worker.getInitials(), workActivity.getName(), prevDate.get(Calendar.WEEK_OF_YEAR));
+			softwareHuset.setActivityEndTime(worker.getInitials(), project.getProjectNumber(), workActivity.getName(), prevDate.get(Calendar.WEEK_OF_YEAR));
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -113,7 +117,7 @@ public class ActivitySteps {
 	@When("the project leader changes the activity's start time")
 	public void theProjectLeaderChangesTheActivitySStartTime() throws Exception {
 		calendar = softwareHuset.getDateServer().getDate();
-		softwareHuset.setActivityStartTime(project.getProjectNumber(), worker.getInitials(), workActivity.getName(), calendar.get(Calendar.WEEK_OF_YEAR));
+		softwareHuset.setActivityStartTime(worker.getInitials(), project.getProjectNumber(), workActivity.getName(), calendar.get(Calendar.WEEK_OF_YEAR));
 	    assertTrue(workActivity.getStartTime() == calendar.get(Calendar.WEEK_OF_YEAR));
 	}
 
@@ -173,8 +177,8 @@ public class ActivitySteps {
 		for(int i = 0; i < int1; i++) {
 			softwareHuset.createAndAddActivityToProject(worker.getInitials(), project.getProjectNumber(), "n"+i);
 			trashActivity = project.getActivity("n"+i);
-			softwareHuset.setActivityStartTime(project.getProjectNumber(), worker.getInitials(), trashActivity.getName(), workActivity.getStartTime());
-			softwareHuset.setActivityEndTime(project.getProjectNumber(), worker.getInitials(), trashActivity.getName(), workActivity.getEndTime());
+			softwareHuset.setActivityStartTime(worker.getInitials(), project.getProjectNumber(), trashActivity.getName(), workActivity.getStartTime());
+			softwareHuset.setActivityEndTime(worker.getInitials(), project.getProjectNumber(), trashActivity.getName(), workActivity.getEndTime());
 			softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker2.getInitials(), project.getProjectNumber(), workActivity.getName());
 		}
 		assertTrue(worker2.getWorkActivities().size() == int1);
@@ -196,7 +200,7 @@ public class ActivitySteps {
 	@When("the development worker changes the hours worked on the activity from {int} to {int}")
 	public void theDevelopmentWorkerChangesTheHoursWorkedOnTheActivityFromTo(Integer int1, Integer int2) throws Exception {
 		assertTrue(workActivity.getDevWorkTimeToday(worker2) == int1);
-		softwareHuset.editDeveloperActivityTime(project.getProjectNumber(), worker2.getInitials(), workActivity.getName(), int2);
+		softwareHuset.editDeveloperActivityTime(worker2.getInitials(), project.getProjectNumber(), workActivity.getName(), int2);
 	}
 
 	@Then("the development worker's hours on the activity is {int}")
@@ -207,8 +211,8 @@ public class ActivitySteps {
 	@Given("the activity has a start date and end date")
 	public void theActivityHasAStartDateAndEndDate() throws Exception {
 		Calendar currTime = softwareHuset.getDateServer().getDate();
-		softwareHuset.setActivityStartTime(project.getProjectNumber(),userHelper.getUser().getInitials(), workActivity.getName(), currTime.get(Calendar.WEEK_OF_YEAR)+1);
-		softwareHuset.setActivityEndTime(project.getProjectNumber(),userHelper.getUser().getInitials(), workActivity.getName(), currTime.get(Calendar.WEEK_OF_YEAR)+3);
+		softwareHuset.setActivityStartTime(userHelper.getUser().getInitials(), project.getProjectNumber(), workActivity.getName(), currTime.get(Calendar.WEEK_OF_YEAR)+1);
+		softwareHuset.setActivityEndTime(userHelper.getUser().getInitials(), project.getProjectNumber(), workActivity.getName(), currTime.get(Calendar.WEEK_OF_YEAR)+3);
 	}
 	
 	@When("a development worker registers the private activity {string}")
@@ -216,7 +220,7 @@ public class ActivitySteps {
 		worker2 = userHelper.getUser2();
 		softwareHuset.addDeveloper(worker2);
 	    try {
-			softwareHuset.registerPrivateActivity(worker2.getInitials(), workActivity.getStartTime(), workActivity.getEndTime(), string);
+			softwareHuset.registerPrivateActivity(worker2.getInitials(), string, workActivity.getStartTime(), workActivity.getEndTime());
 			privateActivity = worker2.getPrivateActivity(string);
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());

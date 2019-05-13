@@ -90,7 +90,7 @@ public class ProjectSteps {
     public void aProjectLeaderHasBeenSelected() throws Exception {
     	worker = userHelper.getUser();
     	softwareHuset.addDeveloper(worker);
-    	softwareHuset.setProjectLeader(project.getProjectNumber(), worker.getInitials());
+    	softwareHuset.setProjectLeader(worker.getInitials(), project.getProjectNumber());
         assertTrue(project.getProjectLeader().equals(worker));
     }
     
@@ -133,7 +133,7 @@ public class ProjectSteps {
         worker3 = userHelper.getUser3();
         softwareHuset.addDeveloper(worker3);
         try {
-			softwareHuset.setProjectLeader(project.getProjectNumber(), worker2.getInitials(), worker3.getInitials());
+			softwareHuset.setProjectLeader(worker2.getInitials(), worker3.getInitials(), project.getProjectNumber());
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -144,7 +144,7 @@ public class ProjectSteps {
         worker2 = userHelper.getUser2();
         softwareHuset.addDeveloper(worker2);
         try {
-			softwareHuset.setProjectLeader(project.getProjectNumber(), worker.getInitials(), worker2.getInitials());
+			softwareHuset.setProjectLeader(worker.getInitials(), worker2.getInitials(), project.getProjectNumber());
 		} catch (Exception e) {
 			errorMessage.setErrorMessage(e.getMessage());
 		}
@@ -206,6 +206,6 @@ public class ProjectSteps {
     
     @Given("the bugettet time on the project is {int} hours")
     public void theBugettetTimeOnTheProjectIsHours(Integer time) throws Exception {
-        softwareHuset.setProjectBudgettetTime(project.getProjectNumber(), worker.getInitials(), time);
+        softwareHuset.setProjectBudgettetTime(worker.getInitials(), project.getProjectNumber(), time);
     }
 }

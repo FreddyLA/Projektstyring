@@ -94,6 +94,51 @@ formatter.match({
 formatter.result({
   "status": "passed"
 });
+formatter.scenario({
+  "name": "Creating an activity without a name",
+  "description": "",
+  "keyword": "Scenario"
+});
+formatter.step({
+  "name": "a project with the name \"Project 1\" exists",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectWithTheNameAlreadyExists(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a project leader has been selected",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader creates a new activity with the name \"\"",
+  "keyword": "When "
+});
+formatter.match({
+  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "an error message \"Can\u0027t create a object with no name\" is presented",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "ProjectSteps.anErrorMessageIsPresented(String)"
+});
+formatter.result({
+  "status": "passed"
+});
 formatter.uri("use_cases\\create_project.feature");
 formatter.feature({
   "name": "Creating project",
@@ -108,6 +153,61 @@ formatter.scenario({
 formatter.step({
   "name": "a development worker is registered in the system",
   "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aDevelopmentWorkerIsRegisteredInTheSystem()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a development worker creates a project with the name \"New Project\"",
+  "keyword": "When "
+});
+formatter.match({
+  "location": "ProjectSteps.aDevelopmentWorkerCreatesANewProjectWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a new project is created with the name \"New Project\"",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "ProjectSteps.aNewProjectIsCreatedWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project is given a unique number for identification.",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectSteps.theProjectIsGivenAUniqueNumberForIdentification()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.scenario({
+  "name": "Create a project",
+  "description": "",
+  "keyword": "Scenario"
+});
+formatter.step({
+  "name": "a project with the name \"Project 1\" exists",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectWithTheNameAlreadyExists(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a development worker is registered in the system",
+  "keyword": "And "
 });
 formatter.match({
   "location": "ProjectSteps.aDevelopmentWorkerIsRegisteredInTheSystem()"
@@ -172,6 +272,41 @@ formatter.result({
 });
 formatter.step({
   "name": "an error message \"Project with specified name already exists\" is presented",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "ProjectSteps.anErrorMessageIsPresented(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.scenario({
+  "name": "Create a project with no name",
+  "description": "",
+  "keyword": "Scenario"
+});
+formatter.step({
+  "name": "a development worker is registered in the system",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aDevelopmentWorkerIsRegisteredInTheSystem()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a development worker creates a project with the name \"\"",
+  "keyword": "When "
+});
+formatter.match({
+  "location": "ProjectSteps.aDevelopmentWorkerCreatesANewProjectWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "an error message \"Can\u0027t create a object with no name\" is presented",
   "keyword": "Then "
 });
 formatter.match({
@@ -955,11 +1090,11 @@ formatter.result({
   "status": "passed"
 });
 formatter.step({
-  "name": "the project leader wants a list of available developers",
+  "name": "the project leader wants a list of available developers for the activity \"Activity\"",
   "keyword": "When "
 });
 formatter.match({
-  "location": "ProjectOverviewSteps.theProjectLeaderWantsAListOfAvailableDevelopers()"
+  "location": "ProjectOverviewSteps.theProjectLeaderWantsAListOfAvailableDevelopers(String)"
 });
 formatter.result({
   "status": "passed"
@@ -1020,6 +1155,66 @@ formatter.result({
   "status": "passed"
 });
 formatter.scenario({
+  "name": "Project leader want available developers for an activity that doesn\u0027t exist",
+  "description": "",
+  "keyword": "Scenario"
+});
+formatter.step({
+  "name": "the project leader wants a list of available developers for the activity \"\"",
+  "keyword": "When "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theProjectLeaderWantsAListOfAvailableDevelopers(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "an error message \"Activity with specified name does not exist\" is presented",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "ProjectSteps.anErrorMessageIsPresented(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.background({
+  "name": "A project and an activity exists",
+  "description": "",
+  "keyword": "Background"
+});
+formatter.step({
+  "name": "a project with the name \"Project 1\" exists",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectWithTheNameAlreadyExists(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "a project leader has been selected",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectSteps.aProjectLeaderHasBeenSelected()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
+  "name": "the project leader creates a new activity with the name \"Activity\"",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ActivitySteps.theProjectLeaderCreatesANewActivityWithTheName(String)"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.scenario({
   "name": "Project leader want available developers for an activity that doesnt\u0027t have a start date",
   "description": "",
   "keyword": "Scenario"
@@ -1035,11 +1230,11 @@ formatter.result({
   "status": "passed"
 });
 formatter.step({
-  "name": "the project leader wants a list of available developers",
+  "name": "the project leader wants a list of available developers for the activity \"Activity\"",
   "keyword": "When "
 });
 formatter.match({
-  "location": "ProjectOverviewSteps.theProjectLeaderWantsAListOfAvailableDevelopers()"
+  "location": "ProjectOverviewSteps.theProjectLeaderWantsAListOfAvailableDevelopers(String)"
 });
 formatter.result({
   "status": "passed"
@@ -1105,11 +1300,11 @@ formatter.result({
   "status": "passed"
 });
 formatter.step({
-  "name": "the project leader wants a list of available developers",
+  "name": "the project leader wants a list of available developers for the activity \"Activity\"",
   "keyword": "When "
 });
 formatter.match({
-  "location": "ProjectOverviewSteps.theProjectLeaderWantsAListOfAvailableDevelopers()"
+  "location": "ProjectOverviewSteps.theProjectLeaderWantsAListOfAvailableDevelopers(String)"
 });
 formatter.result({
   "status": "passed"

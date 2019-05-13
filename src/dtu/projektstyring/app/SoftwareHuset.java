@@ -8,6 +8,7 @@ import java.util.List;
 import dtu.projektstyring.exceptions.ActivityDoesNotExistException;
 import dtu.projektstyring.exceptions.DeveloperDoesNotExistException;
 import dtu.projektstyring.exceptions.DuplicateNameException;
+import dtu.projektstyring.exceptions.EmptyNameException;
 import dtu.projektstyring.exceptions.MissingDateException;
 import dtu.projektstyring.exceptions.NotOnActivityException;
 import dtu.projektstyring.exceptions.NotProjectLeaderException;
@@ -47,6 +48,9 @@ public class SoftwareHuset {
 	//*******************************//
 	
 	public void makeProject(String projectName) throws Exception {
+		if(projectName.length() <= 0) {
+			throw new EmptyNameException();
+		}
 		for(Project project: projects) {
 			if(project.getName().equals(projectName)) {
 				throw new DuplicateNameException();
@@ -57,8 +61,8 @@ public class SoftwareHuset {
 	}
 	
 	//Finds developers available in the time frame of the activity
-	public List<Developer> findAvailableDevelopers(int projectNumber, String activityName) throws Exception {
-		Project project = getProject(projectNumber);
+	public List<Developer> findAvailableDevelopers(int projectID, String activityName) throws Exception {
+		Project project = getProject(projectID);
 		if(project == null) {
 			throw new ProjectDoesNotExistException();
 		}
@@ -78,12 +82,12 @@ public class SoftwareHuset {
 		return availableDevs;
 	}
 
-	public Report getRapport(String developerInitials, int projectNumber) throws Exception {
+	public Report getRapport(String developerInitials, int projectID) throws Exception {
 		Developer developer = getDeveloper(developerInitials);
 		if(developer == null) {
 			throw new DeveloperDoesNotExistException();
 		}
-		Project project = getProject(projectNumber);
+		Project project = getProject(projectID);
 		if(project == null) {
 			throw new ProjectDoesNotExistException();
 		}
@@ -101,12 +105,12 @@ public class SoftwareHuset {
         return project.getProjectLeader(); 
     }
 	
-	public void registerTime(String developerInitials, int projectNumber, String activityName, double hours) throws Exception {
+	public void registerTime(String developerInitials, int projectID, String activityName, double hours) throws Exception {
 		Developer developer = getDeveloper(developerInitials);
 		if(developer == null) {
 			throw new DeveloperDoesNotExistException();
 		}
-		Project project = getProject(projectNumber);
+		Project project = getProject(projectID);
 		if(project == null) {
 			throw new ProjectDoesNotExistException();
 		}
@@ -124,7 +128,7 @@ public class SoftwareHuset {
 	}
 	
 	public void registerHelpedTime(String developerInitials, String helperInitialsr, 
-									int projectNumber, String activityName, int hours) throws Exception {
+									int projectID, String activityName, int hours) throws Exception {
 		Developer activityDeveloper = getDeveloper(developerInitials);
 		if(activityDeveloper == null) {
 			throw new DeveloperDoesNotExistException();
@@ -133,7 +137,7 @@ public class SoftwareHuset {
 		if(helperDeveloper == null) {
 			throw new DeveloperDoesNotExistException();
 		}
-		Project project = getProject(projectNumber);
+		Project project = getProject(projectID);
 		if(project == null) {
 			throw new ProjectDoesNotExistException();
 		}
@@ -148,7 +152,7 @@ public class SoftwareHuset {
 		workActivity.registerTime(work);
 	}
 	
-	public void registerPrivateActivity(String developerInitials, int startTime, int endTime, String activityName) throws Exception {
+	public void registerPrivateActivity(String developerInitials, String activityName, int startTime, int endTime) throws Exception {
 		Developer developer = getDeveloper(developerInitials);
 		if(developer == null) {
 			throw new DeveloperDoesNotExistException();
@@ -170,6 +174,9 @@ public class SoftwareHuset {
 	}
 	
 	public void createAndAddActivityToProject(String developerInitials, int projectID, String activityName) throws Exception {
+		if(activityName.length() <=0) {
+			throw new EmptyNameException();
+		}
 		Developer developer = getDeveloper(developerInitials);
 		if(developer == null) {
 			throw new DeveloperDoesNotExistException();
@@ -184,7 +191,7 @@ public class SoftwareHuset {
 		project.createAndAddActivity(activityName);
 	}
 	
-	public void setActivityStartTime(int projectID, String developerInitials, String activityName, int time) throws Exception {
+	public void setActivityStartTime(String developerInitials, int projectID, String activityName, int time) throws Exception {
 		Project project = getProject(projectID);
 		if(project == null) {
 			throw new ProjectDoesNotExistException();
@@ -197,10 +204,11 @@ public class SoftwareHuset {
 		if(developer == null) {
 			throw new DeveloperDoesNotExistException();
 		}
+		
 		workActivity.setStartTime(developer, time);
 	}
 	
-	public void setActivityBudgettetTime(int projectID, String developerInitials, String activityName, int time) throws Exception {
+	public void setActivityBudgettetTime(String developerInitials, int projectID, String activityName, int time) throws Exception {
 		Project project = getProject(projectID);
 		if(project == null) {
 			throw new ProjectDoesNotExistException();
@@ -216,7 +224,7 @@ public class SoftwareHuset {
 		workActivity.setBudgetetTime(developer, time);
 	}
 	
-	public void setActivityEndTime(int projectID, String developerInitials, String activityName, int time) throws Exception {
+	public void setActivityEndTime(String developerInitials, int projectID, String activityName, int time) throws Exception {
 		Project project = getProject(projectID);
 		if(project == null) {
 			throw new ProjectDoesNotExistException();
@@ -277,7 +285,7 @@ public class SoftwareHuset {
 		project.setStartTime(developer, time);
 	}
 
-	public void setProjectLeader(int projectID, String developerInitials) throws Exception {
+	public void setProjectLeader(String developerInitials, int projectID) throws Exception {
 		Project project = getProject(projectID);
 		if(project == null) {
 			throw new ProjectDoesNotExistException();
@@ -289,7 +297,7 @@ public class SoftwareHuset {
 		project.setProjectLeader(developer);
 	}
 
-	public void setProjectLeader(int projectID, String leaderInitials, String developerInitials) throws Exception {
+	public void setProjectLeader(String leaderInitials, String developerInitials, int projectID) throws Exception {
 		Project project = getProject(projectID);
 		if(project == null) {
 			throw new ProjectDoesNotExistException();
@@ -318,7 +326,7 @@ public class SoftwareHuset {
 		project.setEndTime(developer, time);
 	}
 
-	public void editDeveloperActivityTime(int projectID, String developerInitials, String activityName, int time) throws Exception {
+	public void editDeveloperActivityTime(String developerInitials, int projectID, String activityName, int time) throws Exception {
 		Developer developer = getDeveloper(developerInitials);
 		if(developer == null) {
 			throw new DeveloperDoesNotExistException();
@@ -342,7 +350,7 @@ public class SoftwareHuset {
 		developer.setCanWorkOn20Activities(b);
 	}
 
-	public double getDevWorkTimeToday(int projectID, String developerInitials, String activityName) throws Exception {
+	public double getDevWorkTimeToday(String developerInitials, int projectID, String activityName) throws Exception {
 		Developer developer = getDeveloper(developerInitials);
 		if(developer == null) {
 			throw new DeveloperDoesNotExistException();
@@ -386,7 +394,7 @@ public class SoftwareHuset {
 		return project.getTotalWorkHours();
 	}
 
-	public void setProjectBudgettetTime(int projectID, String developerInitials, double time) throws Exception {
+	public void setProjectBudgettetTime(String developerInitials, int projectID, double time) throws Exception {
 		Developer developer = getDeveloper(developerInitials);
 		if(developer == null) {
 			throw new DeveloperDoesNotExistException();
@@ -422,9 +430,9 @@ public class SoftwareHuset {
 		return projects;
 	}
 	
-	public Project getProject(int projectNumber){
+	public Project getProject(int projectID){
 		for(Project project : projects) {
-			if(project.getProjectNumber() == projectNumber) {
+			if(project.getProjectNumber() == projectID) {
 				return project;
 			}
 		}
@@ -448,9 +456,9 @@ public class SoftwareHuset {
 		return developers;
 	}
 
-	public Developer getDeveloper(String initials){
+	public Developer getDeveloper(String developerInitials){
 		for(Developer d : developers) {
-			if(d.getInitials().equals(initials)) {
+			if(d.getInitials().equals(developerInitials)) {
 				return d;
 			}
 		}
