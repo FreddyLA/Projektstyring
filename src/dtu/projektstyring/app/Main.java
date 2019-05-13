@@ -142,7 +142,7 @@ public class Main {
 					input.nextLine();
 					return;
 				}
-				
+				input.nextLine();
 				if( tmp.getProjectLeader() == null) {
 					manageProjectMenu(tmp);
 				}
