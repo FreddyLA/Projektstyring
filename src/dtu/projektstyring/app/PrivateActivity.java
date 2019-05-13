@@ -26,4 +26,14 @@ public class PrivateActivity {
 	public String getName() {
 		return activityName;
 	}
+	public int getActivityStartTime() {
+		return activityStartTime;
+	}
+	public int getActivityEndTime() {
+		return activityEndTime;
+	}
+
+	public int getActivityCreationTime() {
+		return activityCreationTime;
+	}
 }

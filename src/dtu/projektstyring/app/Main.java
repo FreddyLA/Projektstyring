@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,10 +30,16 @@ public class Main {
 		
 		System.out.println("Enter initials:");
 		in = input.nextLine();
+		
+		while(sh.getDeveloper(in) == null) {
+			System.out.println("Wrong initials - Enter initials:");
+			in = input.nextLine();
+		}
 		devInitials = in;
 		while(!in.equals("quit")) {
 			mainMenu();
 		}		
+		
 	}
 	
 	private static void mainMenu() throws Exception {
@@ -48,12 +55,30 @@ public class Main {
 		switch(choice) {
 		case "1":
 			System.out.println("Enter project number:");
-			projectNumber = input.nextInt();
+			try {
+				if(sh.getProject(projectNumber = input.nextInt()) == null) {
+					System.out.println("Wrong project number");
+					input.nextLine();
+					return;
+				}
+			} catch (InputMismatchException e) {
+				System.out.println(e.getMessage());
+			}
+			input.nextLine();
+			
 			System.out.println("Enter activity name:");
-			activityName = input.nextLine();
-			System.out.println(activityName);
+			
+			if(sh.getProject(projectNumber).getActivity(activityName = input.nextLine()) == null) {
+				System.out.println("Wrong activity");
+				return;
+			}
+			
 			System.out.println("Enter worked hours of the day:");
-			hours = input.nextInt();
+			try {
+				hours = input.nextInt();
+			} catch (InputMismatchException e) {
+				System.out.println(e.getMessage());
+			}
 			sh.registerTime(devInitials, projectNumber, activityName, hours);
 			break;
 		case "2":
@@ -84,15 +109,19 @@ public class Main {
 	private static void projectsMenuLogic(String choice) throws Exception {
 		switch(choice) {
 		case "1":
-			System.out.println("ID  |Name\t|Start\t\t\t\t|Deadline\t\\t\t\t|Activities");
+			System.out.println("ID  |Name\t|Start\t\t\t\t|Deadline\t\t\t\t|Activities");
 			for(Project p : sh.getProjects()) {
-				if(p.getProjectLeader().getInitials().equals(devInitials)) {
-					System.out.print(p.getProjectNumber());
-					System.out.print("   |"+p.getName());
-					System.out.print("\t|"+p.getStartTime());
-					System.out.print("\t|"+p.getEndTime());
-					System.out.print("\t|"+p.getActivities().size());
-					System.out.println();
+				try {
+					if(p.getProjectLeader().getInitials().equals(devInitials)) {
+						System.out.print(p.getProjectNumber());
+						System.out.print("   |"+p.getName());
+						System.out.print("\t|"+p.getStartTime());
+						System.out.print("\t|"+p.getEndTime());
+						System.out.print("\t|"+p.getActivities().size());
+						System.out.println();
+					}
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
 				}
 			}
 			break;
@@ -110,13 +139,24 @@ public class Main {
 			break;
 		case "3":
 			System.out.println("Enter project number:");
-			in = input.nextLine();
-			int projNum = Integer.parseInt(in);
-			Project tmp = sh.getProject(projNum);
-			if( tmp.getProjectLeader().equals(null) || tmp.getProjectLeader().getInitials().equals(devInitials)) {
-				manageProjectMenu(tmp);
-			} else {
-				System.out.println("You cannot manage a project you are not the leader of");
+			Project tmp;
+			if((tmp = sh.getProject(input.nextInt())) == null) {
+				System.out.println("Project doesn't exist");
+				input.nextLine();
+				return;
+			}
+			input.nextLine();
+			try {
+				if( tmp.getProjectLeader() == null) {
+					manageProjectMenu(tmp);
+				}
+				else if (tmp.getProjectLeader().getInitials().equals(devInitials)) {
+					manageProjectMenu(tmp);
+				} else {
+					System.out.println("You cannot manage a project you are not the leader of");
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
 			break;
 		case "4":
@@ -155,25 +195,51 @@ public class Main {
 		Calendar calendar;
 		switch(in2) {
 		case "1":
-			System.out.println("Current start time: "+p.getStartTime());
-			System.out.println("Enter new start time for project (dd-MM-yyyy):");
-			startTime = input.nextInt();
-			p.setStartTime(sh.getDeveloper(devInitials), startTime);
+			System.out.println("Current creation time: "+p.getCreationTime());
+			System.out.println("Enter new start time for project:");
+			try {	
+				startTime = input.nextInt();
+				input.nextLine();
+			} catch (Exception e)
+			{
+				System.out.println("Wrong input - not integers");
+				break;
+			}
+			try {
+				p.setStartTime(sh.getDeveloper(devInitials), startTime);
+			} catch (Exception e) {
+				System.out.println("You are not project leader or start time is before creation time");
+			}
 			break;
 		case "2":
 			System.out.println("Current deadline: "+p.getEndTime());
-			System.out.println("Enter new deadline for project (dd-MM-yyyy):");
-			endTime = input.nextInt();
-			p.setEndTime(sh.getDeveloper(devInitials), endTime);
+			System.out.println("Enter new deadline for project:");
+			try {	
+				endTime = input.nextInt();
+				input.nextLine();
+			} catch (Exception e)
+			{
+				System.out.println("Wrong input - not integers");
+				break;
+			}
+			try {
+				p.setEndTime(sh.getDeveloper(devInitials), endTime);
+			} catch (Exception e) {
+				System.out.println("You are not project leader or deadline is before creation time");			
+			}
 			break;
 		case "3":
-			for(Developer dev : sh.getDevelopers()) {
-				System.out.println(dev.getInitials());
-			}
+//			for(Developer dev : sh.getDevelopers()) {
+//				System.out.println(dev.getInitials());
+//			}
 			System.out.println("Enter initials of new project leader:");
 			in = input.nextLine();
-			Developer tmp = sh.getDeveloper(in);
-			if(tmp != null) p.setProjectLeader(tmp);
+			Developer tmp; 
+			if((tmp = sh.getDeveloper(in)) == null) {
+				System.out.println("Wrong initials - developer doesn't exist");
+				break;
+			};
+			p.setProjectLeader(tmp);
 			break;
 		case "4":
 			manageProjectActivitiesMenu(p);
@@ -184,7 +250,9 @@ public class Main {
 		System.out.println("1. Show all activities");
 		System.out.println("2. Show all work for an activity");
 		System.out.println("3. Edit activity");
-		System.out.println("4. Add new activity");
+		System.out.println("4. Show available developers for an activity");
+		System.out.println("5. Add developer to an activity");
+		System.out.println("6. Add new activity");
 		in = input.nextLine();
 		manageProjectActivitiesMenuLogic(in, p);
 	}
@@ -205,8 +273,12 @@ public class Main {
 			break;
 		case "2":
 			System.out.println("Enter name of activity:");
-			in = input.nextLine();
-			p.getActivity(in).getTotalWorkHours();
+			try {
+				in = input.nextLine();
+				System.out.println(p.getActivity(in).getTotalWorkHours());
+			} catch (Exception e) {
+				System.out.println("Wrong input or activity doesn't exist: " + e.getMessage());
+			}
 			break;
 		case "3":
 			System.out.println("Which activity do you want to edit:");
@@ -215,6 +287,32 @@ public class Main {
 			editActivityMenu(tmpA);			
 			break;
 		case "4":
+			System.out.println("For which activity do you want to see available developers:");
+			activityName = input.nextLine();
+			if((p.getActivity(activityName)) == null) {
+				System.out.println("Activity does not exist.");
+				break;
+			} else if(p.getActivity(activityName).getStartTime() <= 0 || p.getActivity(activityName).getEndTime() <= 0) {
+				System.out.println("Please specify start and end time before checking available devs");
+			} else {
+				for(Developer d : sh.findAvailableDevelopers(p.getProjectNumber(), activityName)) {
+					System.out.println("- "+d.getInitials());
+				}
+			}
+			break;
+		case "5":
+			System.out.println("Which activity do you want to add a developer to:");		
+			activityName = input.nextLine();
+			if((p.getActivity(activityName)) == null) {
+				System.out.println("Activity does not exist.");
+				break;
+			} else if(p.getActivity(activityName).getStartTime() <= 0 || p.getActivity(activityName).getEndTime() <= 0) {
+				System.out.println("Please specify start and end time before checking available devs");
+				break;
+			} else {
+				sh.addDeveloperToProjectActivity(p.getProjectLeader().getInitials(), devInitials, p.getProjectNumber(), activityName);
+			}
+		case "6":
 			System.out.println("Enter name of activity:");
 			activityName = input.nextLine();
 			sh.createAndAddActivityToProject(devInitials, p.getProjectNumber(), activityName);
@@ -224,9 +322,9 @@ public class Main {
 
 	private static void editActivityMenu(WorkActivity tmpA) {
 		System.out.println("What do you want to edit? ");
-		System.out.println("2. Start time");
-		System.out.println("3. Deadline");
-		System.out.println("4. Budgeted time");
+		System.out.println("1. Start time");
+		System.out.println("2. Deadline");
+		System.out.println("3. Budgeted time");
 		in = input.nextLine();
 		editActivityMenuLogic(tmpA, in);
 		
@@ -236,18 +334,22 @@ public class Main {
 		switch(in2) {
 		case "1":
 			System.out.println("Enter new start date:");
-			startTime = input.nextInt();
-			try {
-				tmpA.setStartTime(sh.getDeveloper(devInitials), date);
+
+			try {			
+				startTime = input.nextInt();
+				input.nextLine();
+				tmpA.setStartTime(sh.getDeveloper(devInitials), startTime);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 			break;
 		case "2":
 			System.out.println("Enter new end date:");
-			in = input.nextLine();
 			try {
-				tmpA.setEndTime(sh.getDeveloper(devInitials), date);
+				endTime = input.nextInt();
+				input.nextLine();
+				
+				tmpA.setEndTime(sh.getDeveloper(devInitials), endTime);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -283,16 +385,29 @@ public class Main {
 			for(PrivateActivity tmp : dpa1) {
 				System.out.print((++i)+". "+devInitials+"\t");
 				System.out.println(tmp.getName());
+				System.out.println(tmp.getActivityStartTime());
+				System.out.println(tmp.getActivityEndTime());
+				
 			}
 			break;
 		case "2":
 			System.out.println("Is it vacation or sickness? (v, s)");				
 			String answer = input.nextLine();
 			System.out.println("Enter to start time in week number");
-			startTime = input.nextInt();
+			try {
+				startTime = input.nextInt();
+				input.nextLine();
+			} catch (Exception e) {
+				System.out.println("Wrong input or " + e.getMessage());
+			}
 			System.out.println("Enter to end time in week number");
-			endTime = input.nextInt();
-			sh.registerPrivateActivity(devInitials, startTime, endTime, answer);
+			try {
+				endTime = input.nextInt();
+				input.nextLine();
+				sh.registerPrivateActivity(devInitials, startTime, endTime, answer);
+			}catch (Exception e) {
+				System.out.println("Wrong input or " + e.getMessage());
+			}
 			break;
 		}
 	}
@@ -307,6 +422,7 @@ public class Main {
 				System.out.print(wa.getEndTime()+"\t");
 				System.out.println(wa.getName());
 			}
+			System.out.println();
 		}
 		
 	}

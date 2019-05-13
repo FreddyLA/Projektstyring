@@ -27,8 +27,8 @@ public class SoftwareHuset {
 //		Developer defDev = new Developer("John Doe", "JDO", this);
 //		developers.add(defDev);
 //		
-//		Developer newDev = new Developer("Mike Johnson", "MJO", this);
-//		developers.add(newDev);
+		Developer newDev = new Developer("Mike Johnson", "MJO", this);
+		developers.add(newDev);
 //		newDev = new Developer("Elias Sandder", "ESA", this);
 //		developers.add(newDev);
 //		newDev = new Developer("Melissa Kullins", "MKU", this);
