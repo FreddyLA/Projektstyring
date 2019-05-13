@@ -25,25 +25,23 @@ public class SoftwareHuset {
 	
 	//**********TIL TESTING**********//
 	public SoftwareHuset() {
-		/**
-		Developer defDev = new Developer("John Doe", "JDO", this);
-		developers.add(defDev);
-		
+//		Developer defDev = new Developer("John Doe", "JDO", this);
+//		developers.add(defDev);
+//		
 		Developer newDev = new Developer("Mike Johnson", "MJO", this);
 		developers.add(newDev);
-		newDev = new Developer("Elias Sandder", "ESA", this);
-		developers.add(newDev);
-		newDev = new Developer("Melissa Kullins", "MKU", this);
-		developers.add(newDev);
-		
-		Project defProj = new Project("Proj1", dateServer.getDate().get(Calendar.WEEK_OF_YEAR), this);
-		try {
-			defProj.setProjectLeader(defDev);
-		} catch (NotProjectLeaderException e) {
-			e.printStackTrace();
-		}
-		projects.add(defProj);
-		**/
+//		newDev = new Developer("Elias Sandder", "ESA", this);
+//		developers.add(newDev);
+//		newDev = new Developer("Melissa Kullins", "MKU", this);
+//		developers.add(newDev);
+//		
+//		Project defProj = new Project("Proj1", dateServer.getDate().get(Calendar.WEEK_OF_YEAR), this);
+//		try {
+//			defProj.setProjectLeader(defDev);
+//		} catch (NotProjectLeaderException e) {
+//			e.printStackTrace();
+//		}
+//		projects.add(defProj);
 	}
 	//*******************************//
 	
