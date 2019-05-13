@@ -38,6 +38,7 @@ public class Main {
 		
 	}
 	
+	//Author: Martin
 	private static void mainMenu() throws Exception {
 		System.out.println("1. Register time on activity");
 		System.out.println("2. Manage personal schedule");
@@ -47,6 +48,7 @@ public class Main {
 		mainMenuLogic(in);
 	}
 	
+	//Author: Martin
 	private static void mainMenuLogic(String choice) throws Exception {
 		switch(choice) {
 		case "1":
@@ -94,6 +96,7 @@ public class Main {
 		
 	}
 	
+	//Author: Martin
 	private static void projectsMenu() {
 		System.out.println("1. Show projects you are leading");
 		System.out.println("2. Show all projects");
@@ -102,6 +105,7 @@ public class Main {
 		System.out.println("5. Delete a specific project");
 	}
 	
+	//Author: Michael
 	private static void projectsMenuLogic(String choice) throws Exception {
 		switch(choice) {
 		case "1":
@@ -172,6 +176,7 @@ public class Main {
 		
 	}
 
+	//Author: Michael
 	private static void manageProjectMenu(Project p) throws Exception {
 		System.out.print(p.getProjectNumber());
 		System.out.print("   |"+p.getName());
@@ -188,6 +193,7 @@ public class Main {
 		manageProjectMenuLogic(in, p);
 	}
 
+	//Author: Michael
 	private static void manageProjectMenuLogic(String in2, Project p) throws Exception {
 		switch(in2) {
 		case "1":
@@ -242,6 +248,8 @@ public class Main {
 			break;
 		}
 	}
+	
+	//Author: Michael
 	private static void manageProjectActivitiesMenu(Project p) throws Exception {
 		System.out.println("1. Show all activities");
 		System.out.println("2. Show all work for an activity");
@@ -253,6 +261,7 @@ public class Main {
 		manageProjectActivitiesMenuLogic(in, p);
 	}
 
+	//Author: Michael
 	private static void manageProjectActivitiesMenuLogic(String in2, Project p) throws Exception {
 		switch(in2) {
 		case "1":
@@ -316,6 +325,7 @@ public class Main {
 		}
 	}
 
+	//Author: Frederik
 	private static void editActivityMenu(WorkActivity tmpA) {
 		System.out.println("What do you want to edit? ");
 		System.out.println("1. Start time");
@@ -326,6 +336,7 @@ public class Main {
 		
 	}
 
+	//Author: Frederik
 	private static void editActivityMenuLogic(WorkActivity tmpA, String in2) {
 		switch(in2) {
 		case "1":
@@ -367,11 +378,13 @@ public class Main {
 		}
 	}
 
+	//Author: Frederik
 	private static void personalScheduleMenu() {
 		System.out.println("1. Show personal schedule");
 		System.out.println("2. Add to personal schedule");
 	}
 	
+	//Author: Frederik
 	private static void personalScheduleMenuLogic(String choice) throws Exception {
 		
 		switch(choice) {
