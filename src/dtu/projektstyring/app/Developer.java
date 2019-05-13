@@ -20,6 +20,7 @@ public class Developer {
 		this.softwareHuset = softwareHuset;
 	}
 	
+	//Author: Martin
 	//Returns true if a developer is free in a given time frame
 	public int isAvailable(int startTime, int endTime) {
 		int activitiesInTimeFrame = 0;
@@ -32,6 +33,7 @@ public class Developer {
 		return activitiesInTimeFrame;
 	}
 	
+	//Author: Michael
 	public boolean hasPrivateActivity(int activityStartTime, int activityEndTime) {
 		for(PrivateActivity privateActivity: privateActivities) {
 			if(privateActivity.inTimeFrame(activityStartTime, activityEndTime)) {
@@ -41,6 +43,7 @@ public class Developer {
 		return false;
 	}
 	
+	//Author: Frederik
 	public double workDoneToday() {
 		double workDoneToday = 0;
 		for(int i = workDone.size() - 1; i >= 0; i--) {

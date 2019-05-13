@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cucumber.api.java.en.Given;
@@ -43,6 +44,7 @@ public class ProjectOverviewSteps {
 		this.activityHolder = activityHolder;
 	}
 	
+	//Author: Kuno
 	@Given("a development worker is available in the given timeperiod")
 	public void aDevelopmentWorkerIsAvailableInTheGivenTimeperiod() {
 		worker2 = userHelper.getUser2();
@@ -51,6 +53,7 @@ public class ProjectOverviewSteps {
 	    assertTrue(worker2.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()) < 10);
 	}
 	
+	//Author: Kuno
 	@Given("a development worker is not available in the given timeperiod")
 	public void anotherDevelopemntWorkerIsNotAvailableInTheGivenTimeperiod() throws Exception {
 		worker = userHelper.getUser();
@@ -69,6 +72,7 @@ public class ProjectOverviewSteps {
 	    assertFalse(worker3.isAvailable(workActivity.getStartTime(), workActivity.getEndTime()) < 10);
 	}
 	
+	//Author: Martin
 	@When("the project leader wants a list of available developers for the activity {string}")
 	public void theProjectLeaderWantsAListOfAvailableDevelopers(String activityName){
 		project = projectHelper.getProject();
@@ -79,28 +83,33 @@ public class ProjectOverviewSteps {
 		}
 	}
 	
+	//Author: Martin
 	@Then("the project leader gets a list of developers, which contains the available development worker")
 	public void theProjectLeaderGetsAListOfDevelopersWhichContainsTheAvailableDevelopmentWorker() {
 	    assertTrue(availableDevelopers.contains(worker2));
 	}
 
+	//Author: Martin
 	@Then("the list doesn't contain the unavailable developer")
 	public void theListDoesnTContainTheUnavailableDeveloper() {
 		assertFalse(availableDevelopers.contains(worker3));
 	}
 	
+	//Author: Martin
 	@Given("the activity doesn't has a start date")
 	public void theActivityDoesnTHasAStartDate() {
 		workActivity = activityHolder.getActivity();
 	    assertTrue(workActivity.getStartTime() == 0);
 	}
 
+	//Author: Martin
 	@Given("the activity doesn't has a end date")
 	public void theActivityDoesnTHasAEndDate() {
 		workActivity = activityHolder.getActivity();
 	    assertTrue(workActivity.getEndTime() == 0);
 	}
 	
+	//Author: Michael
 	@When("the project leader asks for time spent on the activity with the name {string}")
 	public void theProjectLeaderAsksForTimeSpentOnTheActivityWithTheName(String string) throws Exception {
 		worker = userHelper.getUser();
@@ -108,11 +117,13 @@ public class ProjectOverviewSteps {
 		timeSpentActivity = softwareHuset.getTimeSpentActivity(worker.getInitials(), project.getProjectNumber(), string);
 	}
 	
+	//Author: Michael
 	@Then("the project leader is told that {int} hours has been spent on the activity")
 	public void theProjectLeaderIsToldThatHoursHasBeenSpentOnTheActivity(Integer int1) {
 	    assertTrue(timeSpentActivity == int1);
 	}
-	
+
+	//Author: Michael
 	@When("the project leader asks for time spent on the project")
 	public void theProjectLeaderAsksForTimeSpentOnTheProject() throws Exception {
 		worker = userHelper.getUser();
@@ -120,11 +131,13 @@ public class ProjectOverviewSteps {
 		timeSpentProject = softwareHuset.getTimeSpentProject(worker.getInitials(), project.getProjectNumber());
 	}
 	
+	//Author: Michael
 	@Then("the project leader is told that {int} hours has been spent on the project")
 	public void theProjectLeaderIsToldThatHoursHasBeenSpentOnTheProject(Integer int1) {
 		assertTrue(timeSpentProject == int1);
 	}
 	
+	//Author: Michael
 	@When("the project leader asks work remains on the project")
 	public void theProjectLeaderAsksWorkRemainsOnTheProject() throws Exception {
 		worker = userHelper.getUser();
@@ -132,8 +145,17 @@ public class ProjectOverviewSteps {
 		timeRemainingProject = softwareHuset.getProjectWorkRemaining(worker.getInitials(), project.getProjectNumber());
 	}
 	
+	//Author: Frederik
 	@Then("the project leader is told that {int} hours remain on the project")
 	public void theProjectLeaderIsToldThatHoursRemainOnTheProject(Integer int1) {
 	    assertTrue(timeRemainingProject == int1);
+	}
+	
+	//Author: Frederik
+	@Given("the activity has a start date")
+	public void theActivityHasAStartDate() throws Exception {
+		worker = userHelper.getUser();
+		project = projectHelper.getProject();
+	    softwareHuset.setActivityStartTime(worker.getInitials(), project.getProjectNumber(), workActivity.getName(), Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)+1);
 	}
 }

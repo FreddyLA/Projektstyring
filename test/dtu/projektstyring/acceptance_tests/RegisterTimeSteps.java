@@ -42,6 +42,7 @@ public class RegisterTimeSteps {
 		this.activityHolder = activityHolder;
 	}
 
+	//Author: Kuno
 	@Given("the development worker inputs {int} hours worked on the activity into the system")
 	public void theDevelopmentWorkerInputsAmountOfHoursWorkedForTheDayIntoTheSystem(double hours){
 		workActivity = activityHolder.getActivity();
@@ -53,16 +54,19 @@ public class RegisterTimeSteps {
 		}
 	}
 	
+	//Author: Kuno
 	@Then("the development worker has worked {int} hours on the activity")
 	public void theSystemIsUpdatedWithTheGivenData(double hours) throws Exception {
 		assertTrue(softwareHuset.getDevWorkTimeToday(userHelper.getUser2().getInitials(), project.getProjectNumber(),workActivity.getName()) == hours);
 	}
 	
+	//Author: Kuno
 	@Then("the other worker has worked {int} hours on the activity")
 	public void theOtherWorkerHasWorked(double hours) throws Exception {
 		assertTrue(softwareHuset.getDevWorkTimeToday(userHelper.getUser3().getInitials(), project.getProjectNumber(), workActivity.getName()) == hours);
 	}
 	
+	//Author: Kuno
 	@When("the other worker inputs {int} hours to the activity together with the development workers initials")
 	public void theWorkerInputsHelpingWorkhoursToTheActivityTogetherWithTheHelpedWorkersInitials(int hours) {
 		workActivity = activityHolder.getActivity();
@@ -76,6 +80,7 @@ public class RegisterTimeSteps {
 		}
 	}
 	
+	//Author: Kuno
 	@Given("the development worker the next day inputs {int} hours worked on the activity into the system")
 	public void theDevelopmentWorkerTheNextDayInputsHoursWorkedOnTheActivityIntoTheSystem(Integer int1) {
 	    dateHolder.advanceDateByDays(1);
@@ -88,16 +93,19 @@ public class RegisterTimeSteps {
 		}
 	}
 	
+	//Author: Martin
 	@When("the development worker wants to know how many hours he has worked on the day")
 	public void theDevelopmentWorkerWantsToKnowHowManyHoursHeHasWorkedOnTheDay() {
 	    workDone = userHelper.getUser2().workDoneToday();
 	}
 
+	//Author: Martin
 	@Then("the development worker is told that he has worked {int} hours on the day")
 	public void theDevelopmentWorkerIsToldThatHeHasWorkedHoursOnTheDay(Integer int1) {
 	    assertTrue(int1 == workDone);
 	}
 	
+	//Author: Martin
 	@When("a development worker registers time on activity that doesn't excist")
 	public void aDevelopmentWorkerRegistersTimeOnActivityThatDoesnTExcist() {
 		project = projectHelper.getProject();

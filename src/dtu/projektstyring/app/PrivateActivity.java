@@ -15,6 +15,7 @@ public class PrivateActivity {
 		this.activityEndTime = activityEndTime;
 	}
 	
+	//Author: Kuno
 	public boolean inTimeFrame(int startTime, int endTime) {
 		if((startTime < this.activityStartTime && endTime < this.activityStartTime) || 
 				startTime > this.activityEndTime && endTime > this.activityEndTime) {

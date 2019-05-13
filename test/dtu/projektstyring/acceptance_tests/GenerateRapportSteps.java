@@ -35,6 +35,7 @@ public class GenerateRapportSteps {
 		projectHelper.setSoftwareHuset(softwareHuset);
 	}
 	
+	//Author: Kuno
     @When("a development worker generates a project development rapport of a project")
     public void aDevelopmentWorkerGeneratesAProjectDevelopmentRapportOfAProject() {
     	project = projectHelper.getProject();
@@ -47,6 +48,7 @@ public class GenerateRapportSteps {
 		}
     } 
 	
+    //Author: Kuno
 	@When("the project leader generates a project development rapport of the project of which the project leader is the project leader of")
 	public void theProjectLeaderGeneratesAProjectDevelopmentRapportOfTheProjectOfWhichTheProjectLeaderIsTheProjectLeaderOf() {
 	    project = projectHelper.getProject();
@@ -58,6 +60,7 @@ public class GenerateRapportSteps {
 		}
 	}
 
+	//Author: Kuno
 	@Then("the development rapport is generated")
 	public void theGeneratedDevelopmentRapportIsGenerated() {
 	    assertTrue(projectReport.getProjectLeader().matches(project.getProjectLeader().getInitials()));

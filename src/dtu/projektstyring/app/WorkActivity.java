@@ -35,6 +35,7 @@ public class WorkActivity {
 		activityCreationTime = attachedProject.getSoftwareHuset().getDateServer().getDate().get(Calendar.WEEK_OF_YEAR);
 	}
 	
+	//Author: Michael
 	public double getTotalWorkHours() {
 		double totalWorkHours = 0;
 		for(DeveloperActivityTime work: totalWork) {
@@ -43,6 +44,7 @@ public class WorkActivity {
 		return totalWorkHours;
 	}
 	
+	//Author: Frederik
 	//Returns the amount of work a developer has done on an activity on the current day
 	public double getDevWorkTimeToday(Developer developer) {
 		double developerWorkTime = 0;
@@ -56,6 +58,7 @@ public class WorkActivity {
 		return developerWorkTime;
 	}
 	
+	//Author: Kuno
 	//For changing the amount of hours a developer has worked on the activity. Assumes work was on the same day
 	//and only one piece of work has be registered
 	public void editDeveloperActivityTime(Developer developer, double newHours) {
@@ -69,6 +72,7 @@ public class WorkActivity {
 		}
 	}
 	
+	//Author: Martin
 	//Check if an activity overlaps with a given timeframe
 	public boolean inTimeFrame(int startTime, int endTime) {
 		if((startTime < this.activityStartTime && endTime < this.activityStartTime) || 
@@ -78,6 +82,7 @@ public class WorkActivity {
 		return true;
 	}
 	
+	//Author: Michael
 	public void addDeveloper(Developer projectLeader, Developer developer) throws Exception {
 		if(!attachedProject.getProjectLeader().equals(projectLeader)) {
 			throw new NotProjectLeaderException();
@@ -94,11 +99,13 @@ public class WorkActivity {
 		developer.addWorkActivity(this);
 	}
 	
+	//Author: Frederik
 	//Developer registers an amount of work on an activity
 	public void registerTime(DeveloperActivityTime work){
 		totalWork.add(work);
 	}
 	
+	//Author: Kuno
 	public List<Developer> getDevelopers() {
 		List<Developer> developersCopy = new ArrayList<>();
 		for(Developer developer: developers) {

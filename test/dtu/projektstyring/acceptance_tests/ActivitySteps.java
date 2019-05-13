@@ -45,6 +45,7 @@ public class ActivitySteps {
 		this.activityHolder = activityHolder;
 	}
 	
+	//Author: Kuno
 	@When("the project leader creates a new activity with the name {string}")
 	public void theProjectLeaderCreatesANewActivityWithTheName(String string) throws Exception{
 	    worker = userHelper.getUser();
@@ -61,6 +62,7 @@ public class ActivitySteps {
 		}
 	}
 	
+	//Author: Kuno
 	@When("the project leader changes budgettet time to {int}")
 	public void theProjectLeaderEditsActivity(int time) throws Exception {
 		worker = userHelper.getUser();
@@ -68,11 +70,13 @@ public class ActivitySteps {
 	    assertTrue(workActivity.getBudgetedTime() == time);
 	}
 
+	//Author: Kuno
 	@Then("the activity's budgettet time is {int}")
 	public void theActivityIsChanged(int number) {
 		assertTrue(workActivity.getBudgetedTime() == number);
 	}
 
+	//Author: Kuno
 	@Given("a development worker attempts to edit an activity's budgettet time")
 	public void aDevelopmentWorkerAttemptsToEditAnActivity() {
 		worker2 = userHelper.getUser2();
@@ -84,11 +88,13 @@ public class ActivitySteps {
 	    }
 	}
 
+	//Author: Kuno
 	@Then("a new activity with the name {string} is created")
 	public void aNewActivityWithTheNameIsCreated(String string) throws ActivityDoesNotExistException {
 	    assertTrue(project.getActivity(string).equals(workActivity));
 	}
 
+	//Author: Martin
 	@When("a development worker creates an activity for the project")
 	public void aDevelopmentWorkerCreatesAnActivityForTheProject() {
 		worker2 = userHelper.getUser2();
@@ -114,6 +120,7 @@ public class ActivitySteps {
 		}
 	}
 	
+	//Author: Martin
 	@When("the project leader changes the activity's start time")
 	public void theProjectLeaderChangesTheActivitySStartTime() throws Exception {
 		calendar = softwareHuset.getDateServer().getDate();
@@ -121,11 +128,13 @@ public class ActivitySteps {
 	    assertTrue(workActivity.getStartTime() == calendar.get(Calendar.WEEK_OF_YEAR));
 	}
 
+	//Author: Martin
 	@Then("the activity's start time has been changed")
 	public void theActivitySStartTimeHasBeenChanged() {
 		assertTrue(workActivity.getStartTime() == calendar.get(Calendar.WEEK_OF_YEAR));
 	} 
 	
+	//Author: Martin
 	@Given("a development worker is assigned the activity")
 	public void aDevelopmentWorkerIsAssignedTheActivity() throws Exception {
 		worker = userHelper.getUser();
@@ -136,6 +145,7 @@ public class ActivitySteps {
 	    assertTrue(softwareHuset.getProjectActivityDevelopers(project.getProjectNumber(), workActivity.getName()).contains(worker2));
 	}
 	
+	//Author: Martin
 	@Given("a development worker is not assigned the activity")
 	public void aDevelopmentWorkerIsNotAssignedTheActivity() {
 		worker2 = userHelper.getUser2();
@@ -143,6 +153,7 @@ public class ActivitySteps {
 	    assertFalse(workActivity.getDevelopers().contains(worker2));
 	}
 	
+	//Author: Martin
 	@Given("a different development worker is not assigned the activity")
 	public void aDifferentDevelopmentWorkerIsAssignedTheActivity() {
 		worker3 = userHelper.getUser3();
@@ -150,6 +161,7 @@ public class ActivitySteps {
 	    assertFalse(workActivity.getDevelopers().contains(worker3));
 	}
 	
+	//Author: Michael
 	@When("the project leader adds a development worker to the activity")
 	public void theProjectLeaderAddsADevelopmentWorkerToAnActivity() {
 		worker2 = userHelper.getUser2();
@@ -162,11 +174,13 @@ public class ActivitySteps {
 		}
 	}
 
+	//Author: Michael
 	@Then("the development worker has been added to the activity")
 	public void theDevelopmentWorkerHasBeenAddedToTheActivity() {
 		assertTrue(workActivity.getDevelopers().contains(worker2));
 	}
 
+	//Author: Michael
 	@Given("a development worker has {int} activities")
 	public void theDevelopmentWorkerHasActivities(Integer int1) throws Exception {
 		worker = userHelper.getUser();
@@ -184,6 +198,7 @@ public class ActivitySteps {
 		assertTrue(worker2.getWorkActivities().size() == int1);
 	}
 	
+	//Author: Michael
 	@When("a development worker assigns a new development worker to the activity")
 	public void aDevelopmentWorkerAssignsANewDevelopmentWorkerTheTheActivity() {
 		worker2 = userHelper.getUser2();
@@ -197,17 +212,20 @@ public class ActivitySteps {
 		}
 	}
 	
+	//Author: Michael
 	@When("the development worker changes the hours worked on the activity from {int} to {int}")
 	public void theDevelopmentWorkerChangesTheHoursWorkedOnTheActivityFromTo(Integer int1, Integer int2) throws Exception {
 		assertTrue(workActivity.getDevWorkTimeToday(worker2) == int1);
 		softwareHuset.editDeveloperActivityTime(worker2.getInitials(), project.getProjectNumber(), workActivity.getName(), int2);
 	}
 
+	//Author: Frederik
 	@Then("the development worker's hours on the activity is {int}")
 	public void theDevelopmentWorkerSHoursOnTheActivityIs(Integer int1) {
 		assertTrue(workActivity.getDevWorkTimeToday(worker2) == int1);
 	}
 	
+	//Author: Frederik
 	@Given("the activity has a start date and end date")
 	public void theActivityHasAStartDateAndEndDate() throws Exception {
 		Calendar currTime = softwareHuset.getDateServer().getDate();
@@ -215,6 +233,7 @@ public class ActivitySteps {
 		softwareHuset.setActivityEndTime(userHelper.getUser().getInitials(), project.getProjectNumber(), workActivity.getName(), currTime.get(Calendar.WEEK_OF_YEAR)+3);
 	}
 	
+	//Author: Frederik
 	@When("a development worker registers the private activity {string}")
 	public void theDevelopmentWorkerRegistersThePrivateActivity(String string){
 		worker2 = userHelper.getUser2();
@@ -227,17 +246,20 @@ public class ActivitySteps {
 		}
 	}
 
+	//Author: Frederik
 	@Then("the delopment worker has a private activity {string}")
 	public void theDelopmentWorkerHasAPrivateActivity(String string) {
 		assertTrue(privateActivity.getName().matches(string));
 	    assertTrue(worker2.getPrivateActivities().contains(privateActivity));
 	}
 	
+	//Author: Frederik
 	@Given("the development worker can work on {int} activities")
 	public void theDevelopmentWorkerCanWorkOnActivities(int number) throws Exception {
 		softwareHuset.setDeveloperCanWorkOn20Activities(worker2.getInitials(), true);
 	}
 	
+	//Author: Frederik
 	@Given("a development worker inputs {int} hours worked on the activity with the name {string}")
 	public void aDevelopmentWorkerInputsHoursWorkedOnTheActivityWithTheName(Integer hours, String string) throws Exception {
 		softwareHuset.addDeveloperToProjectActivity(worker.getInitials(), worker2.getInitials(), project.getProjectNumber(), workActivity.getName());

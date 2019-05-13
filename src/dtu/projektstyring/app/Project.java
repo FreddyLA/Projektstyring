@@ -74,6 +74,7 @@ public class Project {
 		this.projectLeader = projectLeader;
 	}
 	
+	//Author: Michael
 	//Set a new project leader for a project. Can only be done by project leader
 	public void setProjectLeader(Developer projectLeader, Developer newProjectLeader) throws NotProjectLeaderException {
 		if(!projectLeader.equals(this.projectLeader)) {
@@ -138,7 +139,8 @@ public class Project {
 	public String getName() {
 		return projectName;
 	}
-
+	
+	//Author: Frederik
 	public double getTotalWorkHours() {
 		double totalWorkHours = 0;
 		for(WorkActivity workActivity: workActivities) {

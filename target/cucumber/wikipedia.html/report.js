@@ -1300,6 +1300,16 @@ formatter.result({
   "status": "passed"
 });
 formatter.step({
+  "name": "the activity has a start date",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "ProjectOverviewSteps.theActivityHasAStartDate()"
+});
+formatter.result({
+  "status": "passed"
+});
+formatter.step({
   "name": "the project leader wants a list of available developers for the activity \"Activity\"",
   "keyword": "When "
 });

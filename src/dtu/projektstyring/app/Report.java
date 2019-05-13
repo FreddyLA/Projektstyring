@@ -19,6 +19,7 @@ public class Report {
 		this.startTime = project.getStartTime();
 	}
 	
+	//Author: Martin
 	public String toString() {
 		String projectInfo = String.format("Report for project: %s \n"
 								  + "Project number: %d \n"
