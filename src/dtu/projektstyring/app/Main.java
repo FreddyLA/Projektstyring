@@ -1,9 +1,5 @@
 package dtu.projektstyring.app;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -46,7 +42,7 @@ public class Main {
 		System.out.println("1. Register time on activity");
 		System.out.println("2. Manage personal schedule");
 		System.out.println("3. Manage projects");
-		System.out.println("4. View full personel schedule");
+//		System.out.println("4. View full personel schedule");
 		in = input.nextLine();
 		mainMenuLogic(in);
 	}
@@ -91,9 +87,9 @@ public class Main {
 			in = input.nextLine();
 			projectsMenuLogic(in);
 			break;
-		case "4":
-			showFullPersonelSchedule();
-			break;
+//		case "4":
+//			showFullPersonelSchedule();
+//			break;
 		}
 		
 	}
@@ -140,13 +136,13 @@ public class Main {
 		case "3":
 			System.out.println("Enter project number:");
 			Project tmp;
-			if((tmp = sh.getProject(input.nextInt())) == null) {
-				System.out.println("Project doesn't exist");
-				input.nextLine();
-				return;
-			}
-			input.nextLine();
 			try {
+				if((tmp = sh.getProject(input.nextInt())) == null) {
+					System.out.println("Project doesn't exist");
+					input.nextLine();
+					return;
+				}
+				
 				if( tmp.getProjectLeader() == null) {
 					manageProjectMenu(tmp);
 				}
@@ -156,7 +152,9 @@ public class Main {
 					System.out.println("You cannot manage a project you are not the leader of");
 				}
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				System.out.println("Wrong input: " + e.getMessage());
+				input.nextLine();
+				
 			}
 			break;
 		case "4":
@@ -191,8 +189,6 @@ public class Main {
 	}
 
 	private static void manageProjectMenuLogic(String in2, Project p) throws Exception {
-		Date date; 
-		Calendar calendar;
 		switch(in2) {
 		case "1":
 			System.out.println("Current creation time: "+p.getCreationTime());
@@ -385,13 +381,13 @@ public class Main {
 			for(PrivateActivity tmp : dpa1) {
 				System.out.print((++i)+". "+devInitials+"\t");
 				System.out.println(tmp.getName());
-				System.out.println(tmp.getActivityStartTime());
-				System.out.println(tmp.getActivityEndTime());
+				System.out.println("\tStart: week " + tmp.getActivityStartTime());
+				System.out.println("\tEnd: week " +tmp.getActivityEndTime());
 				
 			}
 			break;
 		case "2":
-			System.out.println("Is it vacation or sickness? (v, s)");				
+			System.out.println("Is it vacation or sickness? (Vacation, Sickness)");				
 			String answer = input.nextLine();
 			System.out.println("Enter to start time in week number");
 			try {
@@ -404,7 +400,7 @@ public class Main {
 			try {
 				endTime = input.nextInt();
 				input.nextLine();
-				sh.registerPrivateActivity(devInitials, startTime, endTime, answer);
+				sh.registerPrivateActivity(devInitials, answer, startTime, endTime);
 			}catch (Exception e) {
 				System.out.println("Wrong input or " + e.getMessage());
 			}
@@ -412,18 +408,18 @@ public class Main {
 		}
 	}
 
-	private static void showFullPersonelSchedule() {
-		int i = 0;
-		List<Developer> devs = sh.getDevelopers();
-		for(Developer tmp : devs) {
-			System.out.print((++i)+". "+tmp.getInitials()+"\t");
-			for(WorkActivity wa : tmp.getWorkActivities()) {
-				System.out.print(wa.getStartTime()+"\t");
-				System.out.print(wa.getEndTime()+"\t");
-				System.out.println(wa.getName());
-			}
-			System.out.println();
-		}
-		
-	}
+//	private static void showFullPersonelSchedule() {
+//		int i = 0;
+//		List<Developer> devs = sh.getDevelopers();
+//		for(Developer tmp : devs) {
+//			System.out.print((++i)+". "+tmp.getInitials()+"\t");
+//			for(WorkActivity wa : tmp.getWorkActivities()) {
+//				System.out.print(wa.getStartTime()+"\t");
+//				System.out.print(wa.getEndTime()+"\t");
+//				System.out.println(wa.getName());
+//			}
+//			System.out.println();
+//		}
+//		
+//	}
 }

@@ -32,8 +32,4 @@ public class PrivateActivity {
 	public int getActivityEndTime() {
 		return activityEndTime;
 	}
-
-	public int getActivityCreationTime() {
-		return activityCreationTime;
-	}
 }
